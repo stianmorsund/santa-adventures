@@ -12,14 +12,20 @@ export class RaceTrack {
     new THREE.Vector3(0, 40, 40),
     new THREE.Vector3(0, -40, 40)
   ]);
-  private readonly EXTRUSION_SEGMENTS = 50;
+  private readonly EXTRUSION_SEGMENTS = 100;
   private readonly RADIUS_SEGMENTS = 10;
   public SCALE = 4;
 
   constructor() {
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0xaaaaaa,
-      wireframe: true
+    const snowImg = require('../assets/textures/snow.jpg');
+    const texture = new THREE.TextureLoader().load(snowImg);
+    texture.anisotropy = 4;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.format = THREE.RGBFormat;
+    this.material = new THREE.MeshLambertMaterial({
+      map: texture,
+      combine: THREE.MixOperation
     });
 
     this.geometry = new THREE.TubeBufferGeometry(this.CURVE, this.EXTRUSION_SEGMENTS, 2, this.RADIUS_SEGMENTS, true);

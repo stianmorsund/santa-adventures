@@ -4,18 +4,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline --open",
+    "start": "webpack-dev-server --inline",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "Stian Morsund",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^10.12.12",
     "awesome-typescript-loader": "latest",
     "browser-sync": "latest",
     "browser-sync-webpack-plugin": "latest",
     "css-loader": "latest",
     "extract-text-webpack-plugin": "latest",
+    "file-loader": "^2.0.0",
     "html-webpack-plugin": "latest",
     "json-loader": "latest",
     "progress-bar-webpack-plugin": "latest",
