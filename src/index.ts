@@ -4,6 +4,7 @@ import './style.css';
 import * as THREE from 'three';
 import { RaceTrack } from './models/racetrack';
 import { Camera } from './controls/camera';
+import { Snow } from './models/snow';
 
 // create the scene
 let scene = new THREE.Scene();
@@ -43,6 +44,9 @@ parent.add(camera.getCameraEye());
 let raceTrack = new RaceTrack();
 let raceTrackMesh = raceTrack.getMesh();
 parent.add(raceTrackMesh);
+
+let snow = new Snow();
+scene.add(snow.getMesh())
 
 window.addEventListener('resize', onWindowResize, false);
 
@@ -93,6 +97,16 @@ function render(): void {
   camera.getCamera().matrix.lookAt(camera.getCamera().position, lookAt, normal);
   camera.getCamera().rotation.setFromRotationMatrix(camera.getCamera().matrix, camera.getCamera().rotation.order);
   camera.getCameraHelper().update();
+  
+
+  snow.simulateSnow();
+  const snowMesh = snow.getMesh();
+  
+  snowMesh.position.copy(camera.getCamera().position);
+  snowMesh.rotation.copy(camera.getCamera().rotation);
+  snowMesh.updateMatrix();
+  // snowMesh.translateZ(-10);
+
   renderer.render(scene, camera.getCamera());
 }
 

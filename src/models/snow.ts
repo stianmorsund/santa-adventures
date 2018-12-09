@@ -2,16 +2,17 @@ import * as THREE from 'three';
 
 export class Snow {
   public readonly NUMBER_OF_SNOWFLAKES = 2000;
+  public readonly SPEED = 2;
   public material: THREE.PointsMaterial;
   public particles: THREE.Geometry;
   public particleSystem: THREE.Points;
 
   constructor() {
-    // this.state = State.getInstance(); // get the state
+    const snowFlake = require('../assets/textures/snowflake.png');
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 2,
-      map: new THREE.TextureLoader().load('textures/snowflake.png'),
+      map: new THREE.TextureLoader().load(snowFlake),
       blending: THREE.AdditiveBlending,
       depthTest: true,
       transparent: true
@@ -36,7 +37,7 @@ export class Snow {
     }
   }
 
-  private simulateSnow() {
+  public simulateSnow() {
     let pCount = this.NUMBER_OF_SNOWFLAKES;
     while (pCount--) {
       let particle = this.particles.vertices[pCount];
@@ -45,7 +46,7 @@ export class Snow {
       }
 
       // Give random y-value
-      const velocity = 0 - Math.random() * 0.02;
+      const velocity = 0 - Math.random() * this.SPEED;
       particle.y += velocity;
     }
 
