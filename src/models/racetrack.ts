@@ -23,9 +23,8 @@ export class RaceTrack {
     });
 
     this.geometry = new THREE.TubeBufferGeometry(this.CURVE, this.EXTRUSION_SEGMENTS, 2, this.RADIUS_SEGMENTS, true);
-    // 3D shape
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    var wireframe = new THREE.Mesh(this.geometry, this.material);
+    const wireframe = new THREE.Mesh(this.geometry, this.material);
     this.mesh.add(wireframe);
     this.mesh.scale.set(this.SCALE, this.SCALE, this.SCALE);
   }
@@ -35,6 +34,6 @@ export class RaceTrack {
   }
 
   getMesh() {
-      return this.mesh;
+    return this.mesh;
   }
 }

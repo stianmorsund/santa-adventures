@@ -3,13 +3,11 @@ import './style.css';
 // three.js
 import * as THREE from 'three';
 import { RaceTrack } from './models/racetrack';
+import { Camera } from './controls/camera';
 
 // create the scene
 let scene = new THREE.Scene();
 // scene.background = new THREE.Color( 0xf0f0f0 );
-
-// create the camera
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 let renderer = new THREE.WebGLRenderer();
 
@@ -18,7 +16,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 // add canvas to dom
 document.body.appendChild(renderer.domElement);
-
 
 // add lights
 let light = new THREE.DirectionalLight(0xffffff, 1.0);
@@ -29,13 +26,8 @@ let light2 = new THREE.DirectionalLight(0xffffff, 1.0);
 light2.position.set(-100, 100, -100);
 scene.add(light2);
 
-
 let parent = new THREE.Object3D();
 scene.add(parent);
-
-let mesh;
-
-let tubeGeometry;
 
 const SCALE = 4;
 const LOOKAHEAD = true;
@@ -43,14 +35,10 @@ const LOOKAHEAD = true;
 let binormal = new THREE.Vector3();
 let normal = new THREE.Vector3();
 
-let splineCamera = new THREE.PerspectiveCamera(84, window.innerWidth / window.innerHeight, 0.01, 1000);
-parent.add(splineCamera);
-let cameraHelper = new THREE.CameraHelper(splineCamera);
-scene.add(cameraHelper);
-
-// debug camera
-let cameraEye = new THREE.Mesh(new THREE.SphereBufferGeometry(5), new THREE.MeshBasicMaterial({ color: 0xdddddd }));
-parent.add(cameraEye);
+let camera = new Camera();
+parent.add(camera.getCamera());
+scene.add(camera.getCameraHelper());
+parent.add(camera.getCameraEye());
 
 let raceTrack = new RaceTrack();
 let raceTrackMesh = raceTrack.getMesh();
@@ -59,8 +47,8 @@ parent.add(raceTrackMesh);
 window.addEventListener('resize', onWindowResize, false);
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
+  camera.getCamera().aspect = window.innerWidth / window.innerHeight;
+  camera.getCamera().updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
@@ -91,8 +79,8 @@ function render(): void {
   normal.copy(binormal).cross(dir);
   // we move on a offset on its binormal
   pos.add(normal.clone().multiplyScalar(offset));
-  splineCamera.position.copy(pos);
-  cameraEye.position.copy(pos);
+  camera.getCamera().position.copy(pos);
+  camera.getCameraEye().position.copy(pos);
   // using arclength for stablization in look ahead
   let lookAt = raceTrackGeometry.parameters.path
     .getPointAt((t + 30 / raceTrackGeometry.parameters.path.getLength()) % 1)
@@ -102,10 +90,10 @@ function render(): void {
     lookAt.copy(pos).add(dir);
   }
 
-  splineCamera.matrix.lookAt(splineCamera.position, lookAt, normal);
-  splineCamera.rotation.setFromRotationMatrix(splineCamera.matrix, splineCamera.rotation.order);
-  cameraHelper.update();
-  renderer.render(scene, splineCamera);
+  camera.getCamera().matrix.lookAt(camera.getCamera().position, lookAt, normal);
+  camera.getCamera().rotation.setFromRotationMatrix(camera.getCamera().matrix, camera.getCamera().rotation.order);
+  camera.getCameraHelper().update();
+  renderer.render(scene, camera.getCamera());
 }
 
 animate();
