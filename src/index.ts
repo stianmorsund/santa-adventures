@@ -19,9 +19,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // add canvas to dom
 document.body.appendChild(renderer.domElement);
 
-// add axis to the scene
-// let axis = new THREE.AxesHelper(10);
-// scene.add(axis);
 
 // add lights
 let light = new THREE.DirectionalLight(0xffffff, 1.0);

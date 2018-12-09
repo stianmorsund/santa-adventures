@@ -37,8 +37,5 @@ dist
 lib
 .DS_Store
 
-# Yarn
-yarn.lock
-
 # awesome-typescript
 .awcache
