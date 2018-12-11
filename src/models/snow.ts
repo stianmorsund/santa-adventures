@@ -58,8 +58,6 @@ export class Snow {
    */
   update() {
     this.simulateSnow();
-    // this.particleSystem.position.copy(this.state.controlImp.controls.getObject().position);
-    // this.particleSystem.rotation.copy( this.state.camera.rotation );
     this.particleSystem.updateMatrix();
     this.particleSystem.translateZ(-10);
   }

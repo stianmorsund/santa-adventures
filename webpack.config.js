@@ -1,5 +1,7 @@
 /* Configure HTMLWebpack plugin */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/src/index.html',
   filename: 'index.html',
@@ -84,5 +86,10 @@ module.exports = {
     ]
   },
   resolve: { extensions: ['.web.ts', '.web.js', '.ts', '.js'] },
-  plugins: [HTMLWebpackPluginConfig, BrowserSyncPluginConfig, ProgressBarPluginConfig]
+  plugins: [
+    HTMLWebpackPluginConfig,
+    BrowserSyncPluginConfig,
+    ProgressBarPluginConfig,
+    new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets'}])
+  ]
 };

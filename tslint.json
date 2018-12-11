@@ -5,7 +5,9 @@
   "rules": {
     "trailing-comma": false,
     "member-access": false,
-    "quotemark": [true, "single"]
+    "quotemark": [true, "single"],
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }
