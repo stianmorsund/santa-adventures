@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@types/three": "latest",
-    "three": "latest"
+    "three": "latest",
+    "three-orbit-controls": "^82.1.0"
   }
 }
