@@ -6,12 +6,13 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 
 import { Camera } from './controls/camera';
 import { Snow } from './models/snow';
+import { Scene } from './scene';
+import { Track } from './models/track';
 
 // create the scene
-const scene = new THREE.Scene();
-// scene.background = new THREE.Color( 0xf0f0f0 );
-
-const renderer = new THREE.WebGLRenderer();
+const scene: Scene = Scene.getInstance();
+const threeScene: THREE.Scene = scene.scene;
+const renderer = new THREE.WebGLRenderer({ alpha: true });
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000); //perspective camera
 
 // set size
@@ -30,28 +31,26 @@ document.body.appendChild(renderer.domElement);
 // scene.add(parent);
 
 //add items to scene
-let heroGeometry = new THREE.BoxGeometry(1, 1, 1); //cube
-let heroMaterial = new THREE.MeshStandardMaterial({ color: 0x883333 });
-let hero = new THREE.Mesh(heroGeometry, heroMaterial);
-hero.castShadow = true;
-hero.receiveShadow = false;
-hero.position.y = 2;
-scene.add(hero);
+
+
+scene.addModel(new Track());
+
 let planeGeometry = new THREE.PlaneGeometry(5, 5, 4, 4);
 let planeMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 let ground = new THREE.Mesh(planeGeometry, planeMaterial);
 ground.receiveShadow = true;
 ground.castShadow = false;
 ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
+threeScene.add(ground);
 
 camera.position.z = 5;
 camera.position.y = 1;
 
+// Refactor lights to model
 let sun = new THREE.DirectionalLight(0xffffff, 0.8);
 sun.position.set(0, 4, 1);
 sun.castShadow = true;
-scene.add(sun);
+threeScene.add(sun);
 //Set up shadow properties for the sun light
 sun.shadow.mapSize.width = 256;
 sun.shadow.mapSize.height = 256;
@@ -85,11 +84,13 @@ function render(): void {
   const time = Date.now();
   const looptime = 20 * 1000;
   const t = (time % looptime) / looptime;
-  //animate
-  hero.rotation.x += 0.01;
-  hero.rotation.y += 0.01;
+  if (scene.models) {
+    scene.models.forEach(m => {
+      m.update();
+    });
+  }
 
-  renderer.render(scene, camera);
+  renderer.render(threeScene, camera);
 }
 
 animate();
