@@ -9,7 +9,7 @@ export class Track extends ThreeModel {
 
   constructor() {
     super();
-    this.geometry = new THREE.SphereGeometry(1, 32, 32);
+    this.geometry = new THREE.SphereGeometry(9, 32, 32);
     const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
@@ -20,12 +20,14 @@ export class Track extends ThreeModel {
       combine: THREE.MixOperation
     });
     this.mesh = new THREE.Mesh(this.geometry, material);
-    this.mesh.castShadow = true;
-    this.mesh.receiveShadow = false;
-    this.mesh.position.y = 2;
+    this.mesh.castShadow = false;
+    this.mesh.receiveShadow = true;
+    this.mesh.position.y = 0.3;
+    this.mesh.position.z = 5;
+    this
   }
 
   update() {
-    this.mesh.rotation.x += 0.01;
+    this.mesh.rotation.x += 0.005;
   }
 }
