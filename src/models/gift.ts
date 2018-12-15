@@ -8,6 +8,7 @@ export class Gift extends ThreeModel {
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
+  isVisible: boolean = true;
   private readonly SIZE = 0.3;
 
   constructor() {
@@ -22,12 +23,15 @@ export class Gift extends ThreeModel {
   }
 
   update() {
+    this.mesh.visible = this.isVisible;
+
     this.mesh.rotation.z += 0.05;
     this.mesh.position.y -= 0.08;
     // Set new position if behind camera, we dont want to create more gifts,
     // Only reposition to increase performance
     if (this.isBehindCamera()) {
       const { x, y, z } = this.getRandomGiftPosition();
+      this.isVisible = true;
       this.mesh.position.set(x, y, z);
     }
   }

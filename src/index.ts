@@ -2,6 +2,9 @@
 import './style.css';
 // three.js
 import * as THREE from 'three';
+import { of, Observable, fromEvent } from 'rxjs';
+import { distinctUntilChanged, tap, map } from 'rxjs/operators';
+
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 import { Camera } from './controls/camera';
@@ -34,17 +37,26 @@ document.body.appendChild(renderer.domElement);
  * Add models
  * */
 
+const scoreElement: HTMLElement = document.getElementById('score');
+let score = 0;
+
 const track = new Track();
 scene.addModel(track);
 
 const hero = new Hero();
 scene.addModel(hero);
 
-function isCollision() {
+/**
+ * @returns the gift our hero collided with
+ */
+function getCollidedGift(): Gift {
+  return track.gifts.find(
+    g => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
+  );
   // const heroPos = hero.mesh.position.x
-  hero.mesh.children.forEach(gift => {
-    gift.position.y === this;
-  });
+  // track.gifts.forEach(gift => {
+  //   hero.mesh.position.x === gift.mesh.position.y === this;
+  // });
 }
 // Orbit
 
@@ -75,6 +87,13 @@ function render(): void {
     scene.models.forEach(m => {
       m.update(clock);
     });
+  }
+  const collided = getCollidedGift();
+  if (collided) {
+    console.log('collided', collided);
+    collided.isVisible = false;
+    score++;
+    scoreElement.textContent = score.toString();
   }
 
   renderer.render(threeScene, camera);

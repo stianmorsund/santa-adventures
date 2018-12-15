@@ -13,12 +13,7 @@ export class Hero extends ThreeModel {
 
   // Game logic
   isJumbing = false;
-  currentPosition: 'left' | 'center' | 'right' = 'center';
-  positionMap = {
-    left: -1,
-    center: 0,
-    right: 1
-  };
+  currentPosition: -1 | 0 | 1 = 0; // from left to right
   bounceValue = 0;
 
   constructor() {
@@ -35,23 +30,22 @@ export class Hero extends ThreeModel {
   }
 
   update(clock: THREE.Clock) {
-      if(this.isJumbing) {
-        this.mesh.rotation.x -= 10;
-      } else {
-        this.mesh.rotation.x -= 0.05;
-      }
-    
+    if (this.isJumbing) {
+      this.mesh.rotation.x -= 10;
+    } else {
+      this.mesh.rotation.x -= 0.05;
+    }
 
     if (this.mesh.position.y <= GROUND_LEVEL) {
       this.isJumbing = false;
-        this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
+      this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
       // this.bounceValue = this.GRAVITY;
     }
     this.mesh.position.y += this.bounceValue;
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
-      this.positionMap[this.currentPosition],
+      this.currentPosition,
       this.MOVE_SPEED_FACTOR * clock.getDelta()
     );
 
@@ -59,15 +53,16 @@ export class Hero extends ThreeModel {
   }
 
   onkeydown(event: KeyboardEvent) {
+    event.preventDefault();
     if (this.isJumbing) return;
     switch (event.key) {
       case 'a':
       case 'ArrowLeft':
-        this.currentPosition = this.currentPosition === 'right' ? 'center' : 'left';
+        this.currentPosition = this.currentPosition === 1 ? 0 : -1;
         break;
       case 'd':
       case 'ArrowRight':
-        this.currentPosition = this.currentPosition === 'left' ? 'center' : 'right';
+        this.currentPosition = this.currentPosition === -1 ? 0 : 1;
         break;
       case ' ':
         console.log('jump');

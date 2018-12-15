@@ -21,6 +21,7 @@
     "html-webpack-plugin": "latest",
     "json-loader": "latest",
     "progress-bar-webpack-plugin": "latest",
+    "rxjs": "^6.3.3",
     "style-loader": "latest",
     "tslint": "^5.11.0",
     "typescript": "latest",
