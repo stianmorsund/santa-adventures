@@ -46,10 +46,12 @@ scene.addModel(track);
 const hero = new Hero();
 scene.addModel(hero);
 
+let previouslyCollected: Gift;
+
 /**
  * @returns the gift our hero collided with
  */
-function getCollidedGift(): Gift {
+function getCollectedGift(): Gift {
   return track.gifts.find(
     g => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
   );
@@ -58,6 +60,8 @@ function getCollidedGift(): Gift {
   //   hero.mesh.position.x === gift.mesh.position.y === this;
   // });
 }
+
+
 // Orbit
 
 // let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
@@ -88,12 +92,14 @@ function render(): void {
       m.update(clock);
     });
   }
-  const collided = getCollidedGift();
-  if (collided) {
-    console.log('collided', collided);
-    collided.isVisible = false;
-    score++;
-    scoreElement.textContent = score.toString();
+  const collected: Gift = getCollectedGift();
+  if (collected) {
+    if (collected !== previouslyCollected) {
+      previouslyCollected = collected;
+      collected.isCollected = true;
+      score++;
+      scoreElement.textContent = score.toString();
+    }
   }
 
   renderer.render(threeScene, camera);
