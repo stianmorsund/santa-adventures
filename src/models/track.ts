@@ -14,19 +14,13 @@ export class Track extends ThreeModel {
   constructor() {
     super();
     this.geometry = new THREE.PlaneGeometry(5, TRACK_LENGTH, 32);
-    //     let geometry = new THREE.PlaneGeometry( 5, 20, 32 );
-    // let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-    // let plane = new THREE.Mesh( geometry, material );
-      const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
-      texture.anisotropy = 4;
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.format = THREE.RGBFormat;
-      const material = new THREE.MeshLambertMaterial({
-        color: 0x78909c
-        // map: texture,
-        // combine: THREE.MixOperation
-      });
+
+    const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
+    texture.anisotropy = 4;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.format = THREE.RGBFormat;
+    const material = new THREE.MeshLambertMaterial({ color: 0x78909c });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
@@ -34,16 +28,11 @@ export class Track extends ThreeModel {
     this.mesh.position.z = 5;
     this.mesh.rotation.x = 5;
 
-    /**
-     * Detect collsion;
-     * Check if a gift is in one of the lanes of our hero
-     */
     this.gifts = Array.from({ length: this.NUMBER_OF_GIFTS }, () => new Gift());
     this.mesh.add(...this.gifts.map(g => g.mesh));
   }
 
   update(_clock: THREE.Clock) {
-
     this.gifts.forEach(g => g.update());
   }
 }
