@@ -61,7 +61,6 @@ function getCollectedGift(): Gift {
   // });
 }
 
-
 // Orbit
 
 // let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
@@ -69,9 +68,6 @@ function getCollectedGift(): Gift {
 // orbitControl.enableDamping = true;
 // orbitControl.dampingFactor = 0.8;
 // orbitControl.enableZoom = true;
-
-// const snow = new Snow();
-// scene.add(snow.getMesh());
 
 window.addEventListener('resize', onWindowResize, false);
 
@@ -98,7 +94,12 @@ function render(): void {
       previouslyCollected = collected;
       collected.isCollected = true;
       score++;
+      scoreElement.classList.add('pulse');
       scoreElement.textContent = score.toString();
+
+      setTimeout(() => {
+        scoreElement.classList.remove('pulse');
+      }, 1000);
     }
   }
 

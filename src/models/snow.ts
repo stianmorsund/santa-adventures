@@ -1,13 +1,15 @@
 import * as THREE from 'three';
+import { ThreeModel } from './three.abstract';
 
-export class Snow {
+export class Snow extends ThreeModel {
   public readonly NUMBER_OF_SNOWFLAKES = 2000;
   public readonly SPEED = 2;
   public material: THREE.PointsMaterial;
   public particles: THREE.Geometry;
-  public particleSystem: THREE.Points;
+  public mesh: THREE.Points;
 
   constructor() {
+    super();
     const snowFlake = require('../assets/textures/snowflake.png');
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
@@ -19,7 +21,9 @@ export class Snow {
     });
     this.particles = new THREE.Geometry();
     this.makeSnow();
-    this.particleSystem = new THREE.Points(this.particles, this.material);
+    this.mesh = new THREE.Points(this.particles, this.material);
+    // this.mesh.position.y = 5;
+    // this.mesh.position.z = 1;
   }
 
   /**
@@ -58,13 +62,14 @@ export class Snow {
    */
   update() {
     this.simulateSnow();
-    // this.particleSystem.position.copy(this.state.controlImp.controls.getObject().position);
-    // this.particleSystem.rotation.copy( this.state.camera.rotation );
-    this.particleSystem.updateMatrix();
-    this.particleSystem.translateZ(-10);
+    // this.mesh.position.copy(this.state.controlImp.controls.getObject().position);
+    // this.mesh.rotation.copy( this.state.camera.rotation );
+  
+    // this.mesh.updateMatrix();
+    // this.mesh.translateZ(-10);
   }
 
   getMesh() {
-    return this.particleSystem;
+    return this.mesh;
   }
 }

@@ -15,7 +15,17 @@ export class Gift extends ThreeModel {
   constructor(position?: { x; y; z }) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
-    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+
+    const texture = new THREE.TextureLoader().load(require('../assets/textures/gift.jpg'));
+    texture.anisotropy = 4;
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.format = THREE.RGBFormat;
+    const material = new THREE.MeshLambertMaterial({
+      color: Math.random() * 0xffffff,
+      map: texture,
+      combine: THREE.MixOperation
+    });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;

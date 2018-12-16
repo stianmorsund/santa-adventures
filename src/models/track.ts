@@ -17,16 +17,16 @@ export class Track extends ThreeModel {
     //     let geometry = new THREE.PlaneGeometry( 5, 20, 32 );
     // let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
     // let plane = new THREE.Mesh( geometry, material );
-    const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
-    texture.anisotropy = 4;
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.format = THREE.RGBFormat;
-    const material = new THREE.MeshLambertMaterial({
-      color: 0x78909c
-      // map: texture,
-      // combine: THREE.MixOperation
-    });
+      const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
+      texture.anisotropy = 4;
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.format = THREE.RGBFormat;
+      const material = new THREE.MeshLambertMaterial({
+        color: 0x78909c
+        // map: texture,
+        // combine: THREE.MixOperation
+      });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
@@ -43,6 +43,7 @@ export class Track extends ThreeModel {
   }
 
   update(_clock: THREE.Clock) {
+
     this.gifts.forEach(g => g.update());
   }
 }
