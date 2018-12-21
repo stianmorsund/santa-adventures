@@ -53,7 +53,7 @@ export class Hero extends ThreeModel {
   }
 
   onkeydown(event: KeyboardEvent) {
-    event.preventDefault();
+    // event.preventDefault();
     if (this.isJumbing) return;
     switch (event.key) {
       case 'a':

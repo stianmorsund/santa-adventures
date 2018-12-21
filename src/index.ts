@@ -2,8 +2,6 @@
 import './style.css';
 // three.js
 import * as THREE from 'three';
-import { of, Observable, fromEvent } from 'rxjs';
-import { distinctUntilChanged, tap, map } from 'rxjs/operators';
 
 const OrbitControls = require('three-orbit-controls')(THREE);
 
@@ -13,6 +11,7 @@ import { Scene } from './scene';
 import { Track } from './models/track';
 import { Hero } from './models/hero';
 import { Gift } from './models/gift';
+import { Forest } from './models/christmas-tree';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -46,6 +45,8 @@ scene.addModel(track);
 const hero = new Hero();
 scene.addModel(hero);
 
+const forest = new Forest();
+
 let previouslyCollected: Gift;
 
 /**
@@ -59,6 +60,15 @@ function getCollectedGift(): Gift {
   // track.gifts.forEach(gift => {
   //   hero.mesh.position.x === gift.mesh.position.y === this;
   // });
+}
+
+function animateScore() {
+  scoreElement.classList.add('pulse');
+  scoreElement.textContent = score.toString();
+
+  setTimeout(() => {
+    scoreElement.classList.remove('pulse');
+  }, 1000);
 }
 
 // Orbit
@@ -94,12 +104,7 @@ function render(): void {
       previouslyCollected = collected;
       collected.isCollected = true;
       score++;
-      scoreElement.classList.add('pulse');
-      scoreElement.textContent = score.toString();
-
-      setTimeout(() => {
-        scoreElement.classList.remove('pulse');
-      }, 1000);
+      animateScore();
     }
   }
 
