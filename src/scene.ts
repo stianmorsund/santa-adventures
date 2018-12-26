@@ -14,8 +14,9 @@ export class Scene {
       instance = this;
     }
     this._scene = new THREE.Scene();
+    
     // Add some fog
-    this._scene.fog = new THREE.FogExp2(0xf0fff0, 0.06);
+    this._scene.fog = new THREE.FogExp2(0x333333, 0.06);
     const hemisphereLight = new THREE.HemisphereLight(0xfffafa, 0x000000, 1.2);
     this._scene.add(hemisphereLight);
     const sun = new THREE.DirectionalLight(0xcdc1c5, 0.4);

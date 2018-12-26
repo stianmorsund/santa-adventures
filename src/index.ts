@@ -13,7 +13,7 @@ import { Scene } from './scene';
 import { Track } from './models/track';
 import { Hero } from './models/hero';
 import { Gift } from './models/gift';
-import { Forest } from './models/christmas-tree';
+import { Forest } from './models/forest';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -37,7 +37,6 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 const canvas = renderer.domElement;
 // add canvas to dom
 document.body.appendChild(canvas);
-
 
 // refactor
 const mc = new Hammer.Manager(canvas);
@@ -65,7 +64,7 @@ const hero = new Hero();
 scene.addModel(hero);
 
 const forest = new Forest();
-
+scene.addModel(forest);
 let previouslyCollected: Gift;
 
 /**
