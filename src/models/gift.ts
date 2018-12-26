@@ -9,6 +9,8 @@ export class Gift extends ThreeModel {
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
   isCollected: boolean = false;
+  private readonly SPEED = 0.08;
+  private readonly ROTATION_SPEED = 0.05;
   private readonly SIZE = 0.3;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
@@ -24,7 +26,8 @@ export class Gift extends ThreeModel {
     const material = new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
       map: texture,
-      combine: THREE.MixOperation
+      // combine: THREE.MixOperation,
+      flatShading: true
     });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
@@ -37,8 +40,8 @@ export class Gift extends ThreeModel {
     if (this.isCollected) {
       this.animateCollected();
     } else {
-      this.mesh.rotation.z += 0.05;
-      this.mesh.position.y -= 0.08;
+      this.mesh.rotation.z += this.ROTATION_SPEED;
+      this.mesh.position.y -= this.SPEED;
     }
 
     // Reset state when behind camera or done collected animation

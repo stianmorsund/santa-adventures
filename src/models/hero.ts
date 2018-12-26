@@ -19,7 +19,7 @@ export class Hero extends ThreeModel {
   constructor() {
     super();
     this.geometry = new THREE.DodecahedronGeometry(this.RADIUS, 1);
-    const material = new THREE.MeshStandardMaterial({ color: 0xffcc00 });
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
@@ -38,8 +38,8 @@ export class Hero extends ThreeModel {
 
     if (this.mesh.position.y <= GROUND_LEVEL) {
       this.isJumbing = false;
-      this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
-      // this.bounceValue = this.GRAVITY;
+      // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
+      this.bounceValue = this.GRAVITY;
     }
     this.mesh.position.y += this.bounceValue;
 
@@ -65,7 +65,6 @@ export class Hero extends ThreeModel {
         this.currentPosition = this.currentPosition === -1 ? 0 : 1;
         break;
       case ' ':
-        console.log('jump');
         this.bounceValue = 0.16;
         this.isJumbing = true;
         break;

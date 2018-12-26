@@ -62,7 +62,7 @@ export class Forest extends ThreeModel {
         child.receiveShadow = true;
       }
       tree.position.y = GROUND_LEVEL;
-      const size = getRandomInteger(0.65, 0.67);
+      const size = getRandomInteger(0.65, 0.65);
       tree.scale.set(size, size, size);
       tree.position.x = side === 'left' ? -3.1 : 3.1;
       tree.position.z = index - 50 + 1;
