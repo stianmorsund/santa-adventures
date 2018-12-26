@@ -3,6 +3,8 @@ import './style.css';
 // three.js
 import * as THREE from 'three';
 
+import * as Hammer from 'hammerjs';
+
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 import { Camera } from './controls/camera';
@@ -18,10 +20,13 @@ const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
 clock.start();
 const threeScene: THREE.Scene = scene.scene;
-const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setClearColor(0xfffafa, 1);
+// const renderer = new THREE.WebGLRenderer({ alpha: false });
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setClearColor(0x000000, 0);
+
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 6.5;
+camera.position.z = 7.5;
 camera.position.y = 1;
 
 // set size
@@ -29,8 +34,22 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; //enable shadow
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+const canvas = renderer.domElement;
 // add canvas to dom
-document.body.appendChild(renderer.domElement);
+document.body.appendChild(canvas);
+
+
+// refactor
+const mc = new Hammer.Manager(canvas);
+const swipe = new Hammer.Swipe();
+mc.add(swipe);
+mc.on('swipe', event => {
+  const { direction } = event;
+  if (direction === Hammer.DIRECTION_LEFT) {
+  } else if (direction === Hammer.DIRECTION_RIGHT) {
+  } else if (direction === Hammer.DIRECTION_UP) {
+  }
+});
 
 /***
  * Add models
