@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { ThreeModel } from './three.abstract';
+import { MeshBase } from './meshbase.abstract';
 
-export class Snow extends ThreeModel {
+export class Snow extends MeshBase {
   public readonly NUMBER_OF_SNOWFLAKES = 2000;
   public readonly SPEED = 2;
   public material: THREE.PointsMaterial;

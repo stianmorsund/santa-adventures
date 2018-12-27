@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import { ThreeModel } from './three.abstract';
+import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { Gift } from './gift';
 import { TRACK_LENGTH } from './constants';
 
-export class Track extends ThreeModel {
+export class Track extends MeshBase {
   geometry: THREE.PlaneGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();

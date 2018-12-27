@@ -3,12 +3,12 @@ import * as THREE from 'three';
 const OBJLoader = require('three-obj-loader');
 OBJLoader(THREE);
 
-import { ThreeModel } from './three.abstract';
+import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { GROUND_LEVEL } from './constants';
 
-export class Forest extends ThreeModel {
+export class Forest extends MeshBase {
   public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
   private loader = new THREE.OBJLoader();

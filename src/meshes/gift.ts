@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import { ThreeModel } from './three.abstract';
+import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR } from './constants';
 
-export class Gift extends ThreeModel {
+export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();

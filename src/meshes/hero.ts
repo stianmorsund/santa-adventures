@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { ThreeModel } from './three.abstract';
+import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { GROUND_LEVEL } from './constants';
 
-export class Hero extends ThreeModel {
+export class Hero extends MeshBase {
   geometry: THREE.DodecahedronGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
