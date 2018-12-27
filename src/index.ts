@@ -8,12 +8,12 @@ import * as Hammer from 'hammerjs';
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 import { Camera } from './controls/camera';
-import { Snow } from './models/snow';
+import { Snow } from './meshes/snow';
 import { Scene } from './scene';
-import { Track } from './models/track';
-import { Hero } from './models/hero';
-import { Gift } from './models/gift';
-import { Forest } from './models/forest';
+import { Track } from './meshes/track';
+import { Hero } from './meshes/hero';
+import { Gift } from './meshes/gift';
+import { Forest } from './meshes/forest';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -65,6 +65,9 @@ scene.addModel(hero);
 
 const forest = new Forest();
 scene.addModel(forest);
+
+const snow = new Snow();
+scene.addModel(snow);
 let previouslyCollected: Gift;
 
 /**

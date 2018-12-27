@@ -17,8 +17,13 @@ export class Snow extends ThreeModel {
       map: new THREE.TextureLoader().load(snowFlake),
       blending: THREE.AdditiveBlending,
       depthTest: true,
-      transparent: true
+      transparent: true,
+      flatShading: true,
+      fog: false
     });
+
+    // this.material.flatShading = true;
+
     this.particles = new THREE.Geometry();
     this.makeSnow();
     this.mesh = new THREE.Points(this.particles, this.material);
@@ -57,16 +62,8 @@ export class Snow extends ThreeModel {
     this.particles.verticesNeedUpdate = true;
   }
 
-  /**
-   * MAke snow follow camera
-   */
   update() {
     this.simulateSnow();
-    // this.mesh.position.copy(this.state.controlImp.controls.getObject().position);
-    // this.mesh.rotation.copy( this.state.camera.rotation );
-  
-    // this.mesh.updateMatrix();
-    // this.mesh.translateZ(-10);
   }
 
   getMesh() {

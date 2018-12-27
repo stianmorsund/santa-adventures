@@ -19,7 +19,7 @@ export class Hero extends ThreeModel {
   constructor() {
     super();
     this.geometry = new THREE.DodecahedronGeometry(this.RADIUS, 1);
-    const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, fog: false });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;

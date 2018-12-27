@@ -21,14 +21,13 @@ export class Forest extends ThreeModel {
     super();
     this.buildForest();
   }
-  update() {
+  update(clock: THREE.Clock) {
     // this.leftside.position.z += 0.5;
     this.mesh.position.z += 0.05;
-   
-    if(this.mesh.position.z > 10) {
-      this.mesh.position.z = 0;
+
+    if (this.mesh.position.z > -40) {
+      this.mesh.position.z = -65;
     }
-    // if(this.mesh.position.z )
   }
 
   getMesh() {
@@ -46,7 +45,7 @@ export class Forest extends ThreeModel {
       }
       this.mesh.add(this.leftside);
       this.mesh.add(this.rightside);
-      // this.mesh.rotation.x = 0.05;
+      this.mesh.position.z = -65;
       this.scene.scene.add(this.mesh);
     });
   }
@@ -55,20 +54,17 @@ export class Forest extends ThreeModel {
     tree.traverse(child => {
       if (child instanceof THREE.Mesh) {
         const top: THREE.MeshPhongMaterial = child.material[0];
-        top.color.setHex(0x121212);
+        top.color.setHex(0x232323);
         const trunk = child.material[1];
         trunk.color.setHex(0x000000);
         child.castShadow = true;
         child.receiveShadow = true;
       }
       tree.position.y = GROUND_LEVEL;
-      const size = getRandomInteger(0.65, 0.65);
+      const size = getRandomInteger(0.9, 1);
       tree.scale.set(size, size, size);
       tree.position.x = side === 'left' ? -3.1 : 3.1;
-      tree.position.z = index - 50 + 1;
-      // t.scale.set(0.003, 0.003, 0.003);
-      // t.position.x = getRandomInteger(-1, 1);
-      // t.position.z = getRandomInteger(-1, 1);
+      tree.position.z = index * 1.5;
     });
     return tree;
   }
