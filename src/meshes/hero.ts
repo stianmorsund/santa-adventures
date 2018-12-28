@@ -1,12 +1,16 @@
 import * as THREE from 'three';
+import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
+const FBXLoader = require('wge-three-fbx-loader');
+
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { GROUND_LEVEL } from './constants';
+import { Mesh } from 'three';
 
 export class Hero extends MeshBase {
-  geometry: THREE.DodecahedronGeometry;
-  mesh: THREE.Mesh;
+  mesh: THREE.Group = new THREE.Group();
   scene: Scene = Scene.getInstance();
+  private loader = new FBXLoader();
   private readonly RADIUS = 0.3;
   private readonly MOVE_SPEED_FACTOR = 25;
   private readonly GRAVITY = 99 / 10000;
@@ -18,22 +22,46 @@ export class Hero extends MeshBase {
 
   constructor() {
     super();
-    this.geometry = new THREE.DodecahedronGeometry(this.RADIUS, 1);
-    const material = new THREE.MeshStandardMaterial({ color: 0xffffff, fog: false });
-    this.mesh = new THREE.Mesh(this.geometry, material);
-    this.mesh.castShadow = true;
-    this.mesh.receiveShadow = true;
-    this.mesh.position.y = GROUND_LEVEL;
-    this.mesh.position.z = 4.4;
+    this.buildHero();
+  }
 
-    document.onkeydown = e => this.onkeydown(e);
+  buildHero() {
+    this.loader.load(
+      'src/assets/models/santa/santa.fbx',
+      object => {
+        // console.log('object', object);
+        this.mesh = object;
+        this.mesh.traverse((child: Mesh) => {
+          child.receiveShadow = true;
+          child.castShadow = true;
+          // console.log('child', child)
+          const { material } = child;
+
+          if (material instanceof THREE.MeshPhongMaterial) {
+            material.flatShading = true;
+          }
+        });
+
+        // this.mesh.position.y = 0;
+        this.mesh.position.z = 4.4;
+        this.mesh.rotation.y = Math.PI;
+
+        // this.mesh.scale.set(0.01, 0.01, 0.01);
+        this.scene.scene.add(this.mesh);
+      },
+      () => {},
+      err => {
+        console.log('error', err);
+      }
+    );
   }
 
   update(clock: THREE.Clock) {
+    // this.mesh.rotation.y += 0.05;
     if (this.isJumbing) {
-      this.mesh.rotation.x -= 10;
+      // this.mesh.rotation.x -= 10;
     } else {
-      this.mesh.rotation.x -= 0.05;
+      // this.mesh.rotation.x -= 0.05;
     }
 
     if (this.mesh.position.y <= GROUND_LEVEL) {
@@ -41,7 +69,7 @@ export class Hero extends MeshBase {
       // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
       this.bounceValue = this.GRAVITY;
     }
-    this.mesh.position.y += this.bounceValue;
+    // this.mesh.position.y += this.bounceValue;
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
@@ -52,22 +80,16 @@ export class Hero extends MeshBase {
     this.bounceValue -= this.GRAVITY;
   }
 
-  onkeydown(event: KeyboardEvent) {
-    // event.preventDefault();
-    if (this.isJumbing) return;
-    switch (event.key) {
-      case 'a':
-      case 'ArrowLeft':
-        this.currentPosition = this.currentPosition === 1 ? 0 : -1;
-        break;
-      case 'd':
-      case 'ArrowRight':
-        this.currentPosition = this.currentPosition === -1 ? 0 : 1;
-        break;
-      case ' ':
-        this.bounceValue = 0.16;
-        this.isJumbing = true;
-        break;
-    }
+  handleMoveLeft() {
+    this.currentPosition = this.currentPosition === 1 ? 0 : -1;
+  }
+
+  handleMoveRight() {
+    this.currentPosition = this.currentPosition === -1 ? 0 : 1;
+  }
+
+  handleJump() {
+    this.bounceValue = 0.16;
+    this.isJumbing = true;
   }
 }

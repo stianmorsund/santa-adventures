@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { ThreeModel } from './models/three.abstract';
+import { MeshBase } from './meshes/meshbase.abstract';
 
 let instance = null;
 
 export class Scene {
   private _scene: THREE.Scene;
-  private _models: ThreeModel[] = [];
+  private _models: MeshBase[] = [];
   constructor() {
     // Singleton
     if (instance) {
@@ -14,19 +14,19 @@ export class Scene {
       instance = this;
     }
     this._scene = new THREE.Scene();
-    
+
     // Add some fog
     this._scene.fog = new THREE.FogExp2(0x16122d, 0.06);
     const hemisphereLight = new THREE.HemisphereLight(0x1f305e, 0xffffff, 1.2);
-    
+
     this._scene.add(hemisphereLight);
-    const sun = new THREE.DirectionalLight(0xf3e87f, .7);
-    const sun2 = new THREE.DirectionalLight(0xf3e87f, .3);
+    const sun = new THREE.DirectionalLight(0xf3e87f, 0.7);
+    const sun2 = new THREE.DirectionalLight(0xf3e87f, 0.3);
     sun.position.set(10, 100, -70);
-    sun2.position.set(20, 10, 40)
+    sun2.position.set(20, 10, 40);
     sun.castShadow = true;
     this._scene.add(sun);
-    this._scene.add(sun2)
+    this._scene.add(sun2);
   }
 
   get models() {
@@ -45,8 +45,10 @@ export class Scene {
     }
   }
 
-  addModel(model: ThreeModel) {
-    this._models.push(model);
-    this._scene.add(model.mesh);
+  addModel(...models: MeshBase[]) {
+    models.forEach(m => {
+      this._models.push(m);
+      this._scene.add(m.mesh);
+    });
   }
 }

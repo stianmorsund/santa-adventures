@@ -3,8 +3,6 @@ import './style.css';
 // three.js
 import * as THREE from 'three';
 
-import * as Hammer from 'hammerjs';
-
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 import { Camera } from './controls/camera';
@@ -14,6 +12,7 @@ import { Track } from './meshes/track';
 import { Hero } from './meshes/hero';
 import { Gift } from './meshes/gift';
 import { Forest } from './meshes/forest';
+import { Controls } from './controls/controls';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -38,22 +37,9 @@ const canvas = renderer.domElement;
 // add canvas to dom
 document.body.appendChild(canvas);
 
-// refactor
-const mc = new Hammer.Manager(canvas);
-const swipe = new Hammer.Swipe();
-mc.add(swipe);
-mc.on('swipe', event => {
-  const { direction } = event;
-  if (direction === Hammer.DIRECTION_LEFT) {
-  } else if (direction === Hammer.DIRECTION_RIGHT) {
-  } else if (direction === Hammer.DIRECTION_UP) {
-  }
-});
-
 /***
  * Add models
  * */
-
 const scoreElement: HTMLElement = document.getElementById('score');
 let score = 0;
 
@@ -63,11 +49,14 @@ scene.addModel(track);
 const hero = new Hero();
 scene.addModel(hero);
 
-const forest = new Forest();
-scene.addModel(forest);
+const controls = new Controls(canvas, hero);
 
-const snow = new Snow();
-scene.addModel(snow);
+// const forest = new Forest();
+// scene.addModel(forest);
+
+// const snow = new Snow();
+// scene.addModel(snow);
+
 let previouslyCollected: Gift;
 
 /**
