@@ -20,13 +20,13 @@ export class Track extends MeshBase {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     texture.format = THREE.RGBFormat;
-    const material = new THREE.MeshLambertMaterial({  color: 0xffffff });
+    const material = new THREE.MeshLambertMaterial({ color: 0xffffff });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
     this.mesh.position.y = 0;
     this.mesh.position.z = 5;
-    this.mesh.rotation.x = 4.75 
+    this.mesh.rotation.x = 4.75;
 
     this.gifts = Array.from({ length: this.NUMBER_OF_GIFTS }, () => new Gift());
     this.mesh.add(...this.gifts.map(g => g.mesh));

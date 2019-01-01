@@ -1,8 +1,5 @@
 import * as THREE from 'three';
 
-const OBJLoader = require('three-obj-loader');
-OBJLoader(THREE);
-
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';

@@ -1,11 +1,8 @@
 import * as THREE from 'three';
-import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
 const FBXLoader = require('wge-three-fbx-loader');
 
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
-import { GROUND_LEVEL } from './constants';
-import { Mesh, SkinnedMesh } from 'three';
 
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
@@ -35,13 +32,13 @@ export class Hero extends MeshBase {
         this.mixer = new THREE.AnimationMixer(this.mesh);
         const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
         const action = this.mixer.clipAction(clip);
-        const skinnedMesh: any = this.mesh.children.find(c => c.name === 'Santa_skinned')
+        const skinnedMesh: any = this.mesh.children.find(c => c.name === 'Santa_skinned');
         const uvmap = new THREE.TextureLoader().load(require('../assets/models/santa/Santa_UV.png'));
-        skinnedMesh.material.map = uvmap
+        skinnedMesh.material.map = uvmap;
         skinnedMesh.receiveShadow = true;
         skinnedMesh.castShadow = true;
-        
-        this.mesh.position.y = .6;
+
+        this.mesh.position.y = 0.6;
         this.mesh.position.z = 4.4;
         this.mesh.rotation.x = -(Math.PI / 2);
         this.mesh.rotation.z = Math.PI;
@@ -50,7 +47,6 @@ export class Hero extends MeshBase {
         this.scene.scene.add(this.mesh);
 
         action.play();
-  
       },
       () => {},
       err => {
@@ -69,9 +65,8 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x = -(Math.PI / 2);
     }
 
-    
-// Setting threshold slighlty above "ground level" so we get better jumping controls
-    if (this.mesh.position.y <= .65) {
+    // Setting threshold slighlty above "ground level" so we get better jumping controls
+    if (this.mesh.position.y <= 0.65) {
       this.isJumbing = false;
       // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
       this.bounceValue = this.GRAVITY;
@@ -85,8 +80,6 @@ export class Hero extends MeshBase {
     );
 
     this.bounceValue -= this.GRAVITY;
-
-    
   }
 
   handleMoveLeft() {

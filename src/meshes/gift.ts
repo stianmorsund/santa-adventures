@@ -17,7 +17,6 @@ export class Gift extends MeshBase {
   constructor(position?: { x; y; z }) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
-
     const texture = new THREE.TextureLoader().load(require('../assets/textures/gift.jpg'));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
