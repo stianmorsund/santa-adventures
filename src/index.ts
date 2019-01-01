@@ -51,11 +51,11 @@ scene.addModel(hero);
 
 const controls = new Controls(canvas, hero);
 
-// const forest = new Forest();
-// scene.addModel(forest);
+const forest = new Forest();
+scene.addModel(forest);
 
-// const snow = new Snow();
-// scene.addModel(snow);
+const snow = new Snow();
+scene.addModel(snow);
 
 let previouslyCollected: Gift;
 

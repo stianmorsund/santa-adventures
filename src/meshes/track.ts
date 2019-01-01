@@ -13,7 +13,7 @@ export class Track extends MeshBase {
 
   constructor() {
     super();
-    this.geometry = new THREE.PlaneGeometry(5, TRACK_LENGTH, 32);
+    this.geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32);
 
     const texture = new THREE.TextureLoader().load(require('../assets/textures/snow.jpg'));
     texture.anisotropy = 4;

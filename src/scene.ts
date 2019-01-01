@@ -26,7 +26,7 @@ export class Scene {
     sun2.position.set(20, 10, 40);
     sun.castShadow = true;
     this._scene.add(sun);
-    this._scene.add(sun2);
+    // this._scene.add(sun2);
   }
 
   get models() {

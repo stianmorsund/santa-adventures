@@ -5,15 +5,16 @@ const FBXLoader = require('wge-three-fbx-loader');
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { GROUND_LEVEL } from './constants';
-import { Mesh } from 'three';
+import { Mesh, SkinnedMesh } from 'three';
 
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
   scene: Scene = Scene.getInstance();
   private loader = new FBXLoader();
   private readonly RADIUS = 0.3;
-  private readonly MOVE_SPEED_FACTOR = 25;
+  private readonly MOVE_SPEED_FACTOR = 1500;
   private readonly GRAVITY = 99 / 10000;
+  mixer: THREE.AnimationMixer;
 
   // Game logic
   isJumbing = false;
@@ -27,49 +28,57 @@ export class Hero extends MeshBase {
 
   buildHero() {
     this.loader.load(
-      'src/assets/models/santa/santa.fbx',
+      'src/assets/models/santa/santa_blender.fbx',
       object => {
-        // console.log('object', object);
         this.mesh = object;
-        this.mesh.traverse((child: Mesh) => {
-          child.receiveShadow = true;
-          child.castShadow = true;
-          // console.log('child', child)
-          const { material } = child;
+        const clips = object.animations;
+        this.mixer = new THREE.AnimationMixer(this.mesh);
+        const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
+        const action = this.mixer.clipAction(clip);
+        const skinnedMesh: any = this.mesh.children.find(c => c.name === 'Santa_skinned')
+        const uvmap = new THREE.TextureLoader().load(require('../assets/models/santa/Santa_UV.png'));
+        skinnedMesh.material.map = uvmap
+        skinnedMesh.receiveShadow = true;
+        skinnedMesh.castShadow = true;
+        
 
-          if (material instanceof THREE.MeshPhongMaterial) {
-            material.flatShading = true;
-          }
-        });
-
-        // this.mesh.position.y = 0;
+        this.mesh.position.y = .6;
         this.mesh.position.z = 4.4;
-        this.mesh.rotation.y = Math.PI;
+        this.mesh.rotation.x = -(Math.PI / 2);
+        this.mesh.rotation.z = Math.PI;
 
-        // this.mesh.scale.set(0.01, 0.01, 0.01);
+
+        // this.mesh.scale.set(0.001, 0.001, 0.001);
         this.scene.scene.add(this.mesh);
+
+        action.play();
+  
       },
       () => {},
       err => {
-        console.log('error', err);
+        console.log('error loading santa fbx', err);
       }
     );
   }
 
   update(clock: THREE.Clock) {
-    // this.mesh.rotation.y += 0.05;
+    if (this.mixer) {
+      this.mixer.update(clock.getDelta() * 2);
+    }
+
+    // // this.mesh.rotation.y += 0.05;
     if (this.isJumbing) {
-      // this.mesh.rotation.x -= 10;
+      // this.mesh.rotation.x -= 0.05;
     } else {
       // this.mesh.rotation.x -= 0.05;
     }
 
-    if (this.mesh.position.y <= GROUND_LEVEL) {
+    if (this.mesh.position.y <= .6) {
       this.isJumbing = false;
       // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
       this.bounceValue = this.GRAVITY;
     }
-    // this.mesh.position.y += this.bounceValue;
+    this.mesh.position.y += this.bounceValue;
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
@@ -78,6 +87,8 @@ export class Hero extends MeshBase {
     );
 
     this.bounceValue -= this.GRAVITY;
+
+    
   }
 
   handleMoveLeft() {

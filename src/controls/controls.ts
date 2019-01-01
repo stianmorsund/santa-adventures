@@ -14,13 +14,18 @@ export class Controls {
     this.canvas = canvas;
     this.hero = hero;
     document.onkeydown = e => this.handleKeyDown(e);
-    playButton.addEventListener('click', () => (this.isPlaying = true));
+    playButton.addEventListener('click', () => this.handlePlayBtnClick());
 
     // Setup touch controls
     const mc = new Hammer.Manager(this.canvas);
     const swipe = new Hammer.Swipe();
     mc.add(swipe);
     mc.on('swipe', e => this.handleTouch(e));
+  }
+
+  handlePlayBtnClick() {
+    this.isPlaying = true;
+    this.toggleOverlay();
   }
 
   handleTouch(event: HammerInput) {
@@ -61,10 +66,7 @@ export class Controls {
   }
 
   toggleOverlay() {
-    if (overlay.style.display === 'none') {
-      overlay.style.display = 'flex';
-    } else {
-      overlay.style.display = 'none';
-    }
+    const { display } = overlay.style;
+    overlay.style.display = display === 'none' ? 'flex' : 'none';
   }
 }

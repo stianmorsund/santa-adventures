@@ -7,11 +7,12 @@ import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { GROUND_LEVEL } from './constants';
+const FBXLoader = require('wge-three-fbx-loader');
 
 export class Forest extends MeshBase {
   public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
-  private loader = new THREE.OBJLoader();
+  private loader = new FBXLoader();
   private readonly NUMBER_OF_TREES = 70;
   private scene: Scene = Scene.getInstance();
   private leftside: THREE.Group;
@@ -35,19 +36,41 @@ export class Forest extends MeshBase {
   }
 
   buildForest() {
-    this.loader.load('src/assets/models/tree.obj', tree => {
+    this.loader.load('src/assets/models/tree2.fbx', tree => {
+      // console.log('loaded', tree)
       this.leftside = new THREE.Group();
       this.rightside = new THREE.Group();
       let i = 0;
       for (; i < this.NUMBER_OF_TREES; i++) {
-        this.leftside.add(this.buildTree(tree.clone(), i, 'left'));
-        this.rightside.add(this.buildTree(tree.clone(), i, 'right'));
+        this.leftside.add(this.buildTree2(tree.clone(), i, 'left'));
+        this.rightside.add(this.buildTree2(tree.clone(), i, 'right'));
       }
       this.mesh.add(this.leftside);
       this.mesh.add(this.rightside);
       this.mesh.position.z = -65;
       this.scene.scene.add(this.mesh);
     });
+  }
+
+  buildTree2(tree: any, index: number, side: 'left' | 'right'): THREE.Group {
+    tree.traverse(child => {
+      // console.log('child', child)
+      child.castShadow = true;
+      child.receiveShadow = true
+      if (child.name === 'Cone001') {
+        child.material.color.setHex(0xffffff);
+      } else {
+        if (child && child.material) {
+          child.material.color.setHex(0x6ab24d);
+        }
+      }
+    });
+    let size = 0.0015;
+    tree.scale.set(size, size, size);
+    tree.position.y = .5;
+    tree.position.x = side === 'left' ? -3.1 : 3.1;
+    tree.position.z = index * 1.5;
+    return tree;
   }
 
   buildTree(tree: THREE.Group, index: number, side: 'left' | 'right'): THREE.Group {
