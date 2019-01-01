@@ -1,6 +1,7 @@
 import { Scene } from '../scene';
 import { Hero } from '../meshes/hero';
 import * as Hammer from 'hammerjs';
+import { LoadingManager } from './loading-manager';
 
 const overlay: HTMLElement = document.getElementById('overlay');
 const playButton: HTMLElement = document.getElementById('btn-play');
@@ -12,6 +13,7 @@ export class Controls {
   hero: Hero;
   isPlaying: boolean = false;
   score: number = 0;
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
     this.canvas = canvas;
     this.hero = hero;
@@ -67,6 +69,7 @@ export class Controls {
   }
 
   toggleOverlay() {
+    if (!this.loadingManager.isAllLoaded) return;
     this.isPlaying = !this.isPlaying;
     const { display } = overlay.style;
     overlay.style.display = display === 'none' ? 'flex' : 'none';

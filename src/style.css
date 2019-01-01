@@ -1,5 +1,3 @@
-/* Styles go here. */
-
 html,
 body {
   margin: 0;
@@ -84,5 +82,39 @@ body {
   to {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
+  }
+}
+
+/**
+Progress bar
+**/
+
+.progress {
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  width: 70%;
+  height: 20px;
+}
+
+.progress__bar {
+  width: 0;
+  height: inherit;
+  transition: .5s ease all;
+  background-color: #ef1c1c;
+  box-shadow: none;
+  border-radius: inherit;
+  background-attachment: fixed;
+  background-size: 50px 50px;
+  animation: progress-anim 2s linear infinite;
+  background: repeating-linear-gradient(45deg, #ff0000, #ff0000 20px, #fff 10px, #fff 20px);
+}
+
+@keyframes progress-anim {
+  from {
+    background-position: 50px 0;
+  }
+  to {
+    background-position: 0 0;
   }
 }
