@@ -7,6 +7,7 @@ import { GROUND_LEVEL } from './constants';
 const FBXLoader = require('wge-three-fbx-loader');
 
 export class Forest extends MeshBase {
+  private readonly TREE_MODEL_PATH = 'src/assets/models/tree2.fbx';
   public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
   private loader = new FBXLoader();
@@ -33,8 +34,7 @@ export class Forest extends MeshBase {
   }
 
   buildForest() {
-    this.loader.load('src/assets/models/tree2.fbx', tree => {
-      // console.log('loaded', tree)
+    this.loader.load(this.TREE_MODEL_PATH, tree => {
       this.leftside = new THREE.Group();
       this.rightside = new THREE.Group();
       let i = 0;
@@ -53,7 +53,7 @@ export class Forest extends MeshBase {
     tree.traverse(child => {
       // console.log('child', child)
       child.castShadow = true;
-      child.receiveShadow = true
+      child.receiveShadow = true;
       if (child.name === 'Cone001') {
         child.material.color.setHex(0xffffff);
       } else {
@@ -64,7 +64,7 @@ export class Forest extends MeshBase {
     });
     let size = 0.0015;
     tree.scale.set(size, size, size);
-    tree.position.y = .5;
+    tree.position.y = 0.5;
     tree.position.x = side === 'left' ? -3.1 : 3.1;
     tree.position.z = index * 1.5;
     return tree;

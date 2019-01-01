@@ -7,6 +7,7 @@ import { Scene } from '../scene';
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
   scene: Scene = Scene.getInstance();
+  private readonly SANTA_MODEL_PATH = 'src/assets/models/santa/santa_blender.fbx';
   private loader = new FBXLoader();
   private readonly RADIUS = 0.3;
   private readonly MOVE_SPEED_FACTOR = 1500;
@@ -25,7 +26,7 @@ export class Hero extends MeshBase {
 
   buildHero() {
     this.loader.load(
-      'src/assets/models/santa/santa_blender.fbx',
+      this.SANTA_MODEL_PATH,
       object => {
         this.mesh = object;
         const clips = object.animations;
