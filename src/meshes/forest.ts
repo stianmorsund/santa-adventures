@@ -4,13 +4,15 @@ import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { GROUND_LEVEL } from './constants';
+import { LoadingManager } from '../controls/loading-manager';
 const FBXLoader = require('wge-three-fbx-loader');
 
 export class Forest extends MeshBase {
   private readonly TREE_MODEL_PATH = 'src/assets/models/tree2.fbx';
   public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
-  private loader = new FBXLoader();
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
+  private loader = new FBXLoader(this.loadingManager.manager);
   private readonly NUMBER_OF_TREES = 70;
   private scene: Scene = Scene.getInstance();
   private leftside: THREE.Group;

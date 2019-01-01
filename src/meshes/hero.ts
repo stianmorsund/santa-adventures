@@ -3,16 +3,19 @@ const FBXLoader = require('wge-three-fbx-loader');
 
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
+import { LoadingManager } from '../controls/loading-manager';
 
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
   scene: Scene = Scene.getInstance();
+
+  mixer: THREE.AnimationMixer;
   private readonly SANTA_MODEL_PATH = 'src/assets/models/santa/santa_blender.fbx';
-  private loader = new FBXLoader();
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
+  private loader = new FBXLoader(this.loadingManager.manager);
   private readonly RADIUS = 0.3;
   private readonly MOVE_SPEED_FACTOR = 1500;
   private readonly GRAVITY = 99 / 10000;
-  mixer: THREE.AnimationMixer;
 
   // Game logic
   isJumbing = false;

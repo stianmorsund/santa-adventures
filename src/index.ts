@@ -13,6 +13,7 @@ import { Hero } from './meshes/hero';
 import { Gift } from './meshes/gift';
 import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
+import { LoadingManager } from './controls/loading-manager';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -38,6 +39,8 @@ document.body.appendChild(canvas);
 /***
  * Add models
  * */
+
+const loadingmanager = new LoadingManager();
 
 const track = new Track();
 scene.addModel(track);
