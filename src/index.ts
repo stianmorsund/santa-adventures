@@ -103,6 +103,8 @@ function animate(): void {
 }
 
 function render(): void {
+  if (!controls.isPlaying) return;
+
   if (scene.models) {
     scene.models.forEach(m => {
       m.update(clock);

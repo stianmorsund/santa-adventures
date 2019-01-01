@@ -41,12 +41,10 @@ export class Hero extends MeshBase {
         skinnedMesh.receiveShadow = true;
         skinnedMesh.castShadow = true;
         
-
         this.mesh.position.y = .6;
         this.mesh.position.z = 4.4;
         this.mesh.rotation.x = -(Math.PI / 2);
         this.mesh.rotation.z = Math.PI;
-
 
         // this.mesh.scale.set(0.001, 0.001, 0.001);
         this.scene.scene.add(this.mesh);
@@ -65,15 +63,15 @@ export class Hero extends MeshBase {
     if (this.mixer) {
       this.mixer.update(clock.getDelta() * 2);
     }
-
-    // // this.mesh.rotation.y += 0.05;
     if (this.isJumbing) {
-      // this.mesh.rotation.x -= 0.05;
+      this.mesh.rotation.x -= 0.2;
     } else {
-      // this.mesh.rotation.x -= 0.05;
+      this.mesh.rotation.x = -(Math.PI / 2);
     }
 
-    if (this.mesh.position.y <= .6) {
+    
+// Setting threshold slighlty above "ground level" so we get better jumping controls
+    if (this.mesh.position.y <= .65) {
       this.isJumbing = false;
       // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
       this.bounceValue = this.GRAVITY;

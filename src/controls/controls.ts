@@ -9,7 +9,7 @@ export class Controls {
   canvas: HTMLCanvasElement;
   scene: Scene = Scene.getInstance();
   hero: Hero;
-  isPlaying: boolean = true;
+  isPlaying: boolean = false;
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
     this.canvas = canvas;
     this.hero = hero;
@@ -24,7 +24,6 @@ export class Controls {
   }
 
   handlePlayBtnClick() {
-    this.isPlaying = true;
     this.toggleOverlay();
   }
 
@@ -66,6 +65,7 @@ export class Controls {
   }
 
   toggleOverlay() {
+    this.isPlaying = !this.isPlaying;
     const { display } = overlay.style;
     overlay.style.display = display === 'none' ? 'flex' : 'none';
   }
