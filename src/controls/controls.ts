@@ -4,12 +4,14 @@ import * as Hammer from 'hammerjs';
 
 const overlay: HTMLElement = document.getElementById('overlay');
 const playButton: HTMLElement = document.getElementById('btn-play');
+const scoreElement: HTMLElement = document.getElementById('score');
 
 export class Controls {
   canvas: HTMLCanvasElement;
   scene: Scene = Scene.getInstance();
   hero: Hero;
   isPlaying: boolean = false;
+  score: number = 0;
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
     this.canvas = canvas;
     this.hero = hero;
@@ -68,5 +70,15 @@ export class Controls {
     this.isPlaying = !this.isPlaying;
     const { display } = overlay.style;
     overlay.style.display = display === 'none' ? 'flex' : 'none';
+  }
+
+  increaseScore() {
+    this.score++;
+    scoreElement.classList.add('pulse');
+    scoreElement.textContent = this.score.toString();
+
+    setTimeout(() => {
+      scoreElement.classList.remove('pulse');
+    }, 1000);
   }
 }

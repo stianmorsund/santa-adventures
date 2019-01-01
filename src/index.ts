@@ -19,8 +19,6 @@ const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
 clock.start();
 const threeScene: THREE.Scene = scene.scene;
-// const renderer = new THREE.WebGLRenderer({ alpha: false });
-
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setClearColor(0x000000, 0);
 
@@ -40,8 +38,6 @@ document.body.appendChild(canvas);
 /***
  * Add models
  * */
-const scoreElement: HTMLElement = document.getElementById('score');
-let score = 0;
 
 const track = new Track();
 scene.addModel(track);
@@ -66,19 +62,6 @@ function getCollectedGift(): Gift {
   return track.gifts.find(
     g => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
   );
-  // const heroPos = hero.mesh.position.x
-  // track.gifts.forEach(gift => {
-  //   hero.mesh.position.x === gift.mesh.position.y === this;
-  // });
-}
-
-function animateScore() {
-  scoreElement.classList.add('pulse');
-  scoreElement.textContent = score.toString();
-
-  setTimeout(() => {
-    scoreElement.classList.remove('pulse');
-  }, 1000);
 }
 
 // Orbit
@@ -115,8 +98,7 @@ function render(): void {
     if (collected !== previouslyCollected) {
       previouslyCollected = collected;
       collected.isCollected = true;
-      score++;
-      animateScore();
+      controls.increaseScore();
     }
   }
 
