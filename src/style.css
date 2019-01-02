@@ -1,6 +1,120 @@
-/* Styles go here. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-html, body {
-	margin: 0;
-	padding: 0;
+body {
+  font-family: sans-serif;
+  font-weight: bold;
+  background-image: url('/src/assets/sky.jpg');
+  background-size: cover;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.score-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  right: 10px;
+  font-size: 3.7em;
+  font-weight: 500;
+  padding: 10px;
+  color: #d42426;
+}
+
+.score-wrapper .gift {
+  width: 70px;
+  margin-right: 20px;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.pulse {
+  -webkit-animation-name: pulse;
+  animation-name: pulse;
+}
+
+.glow {
+  -webkit-animation-name: glow;
+  animation-name: glow;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 10px 10px -126px 6px #aef4af;
+  }
+  to {
+    box-shadow: 10px 10px 126px 6px #aef4af;
+  }
+}
+
+@keyframes pulse {
+  from {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.4, 1.4, 1.4);
+    transform: scale3d(1.4, 1.4, 1.4);
+  }
+
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/**
+Progress bar
+**/
+
+.progress {
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  width: 70%;
+  height: 20px;
+}
+
+.progress__bar {
+  width: 0;
+  height: inherit;
+  transition: 0.5s ease all;
+  background-color: #ef1c1c;
+  box-shadow: none;
+  border-radius: inherit;
+  background-attachment: fixed;
+  background-size: 50px 50px;
+  animation: progress-anim 2s linear infinite;
+  background: repeating-linear-gradient(45deg, #ff0000, #ff0000 20px, #fff 10px, #fff 20px);
+}
+
+@keyframes progress-anim {
+  from {
+    background-position: 50px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }

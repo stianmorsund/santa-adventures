@@ -2,66 +2,84 @@
 import './style.css';
 // three.js
 import * as THREE from 'three';
-import { RaceTrack } from './models/racetrack';
+
+const OrbitControls = require('three-orbit-controls')(THREE);
+
 import { Camera } from './controls/camera';
-import { Snow } from './models/snow';
-import { Light } from './models/lights';
-import { Skybox } from './models/skybox';
+import { Snow } from './meshes/snow';
+import { Scene } from './scene';
+import { Track } from './meshes/track';
+import { Hero } from './meshes/hero';
+import { Gift } from './meshes/gift';
+import { Forest } from './meshes/forest';
+import { Controls } from './controls/controls';
+import { LoadingManager } from './controls/loading-manager';
 
 // create the scene
-const scene = new THREE.Scene();
-// scene.background = new THREE.Color( 0xf0f0f0 );
+const scene: Scene = Scene.getInstance();
+const clock = new THREE.Clock();
+clock.start();
+const threeScene: THREE.Scene = scene.scene;
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setClearColor(0x000000, 0);
 
-const renderer = new THREE.WebGLRenderer();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 7.5;
+camera.position.y = 1;
 
 // set size
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true; //enable shadow
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+const canvas = renderer.domElement;
 // add canvas to dom
-document.body.appendChild(renderer.domElement);
+document.body.appendChild(canvas);
 
-// add lights
-const lights = new Light();
+/***
+ * Add models
+ * */
 
-lights.getMesh().position.set(-800.0, 500, -100.0);
+const loadingmanager = new LoadingManager();
 
-scene.add(lights.getMesh());
+const track = new Track();
+scene.addModel(track);
 
-// const light2 = new THREE.DirectionalLight(0xffffff, 1.0);
-// light2.position.set(-100, 100, -100);
-// scene.add(light2);
+const hero = new Hero();
+scene.addModel(hero);
 
-const skybox = new Skybox();
-scene.add(skybox.getMesh());
+const controls = new Controls(canvas, hero);
 
-const parent = new THREE.Object3D();
-scene.add(parent);
-
-const SCALE = 4;
-const LOOKAHEAD = true;
-
-const binormal = new THREE.Vector3();
-const normal = new THREE.Vector3();
-
-const camera = new Camera();
-parent.add(camera.getCamera());
-scene.add(camera.getCameraHelper());
-parent.add(camera.getCameraEye());
-
-const raceTrack = new RaceTrack();
-const raceTrackMesh = raceTrack.getMesh();
-// const plane = raceTrack.getPlane();
-// scene.add(plane);
-parent.add(raceTrackMesh);
+const forest = new Forest();
+scene.addModel(forest);
 
 const snow = new Snow();
-scene.add(snow.getMesh());
+scene.addModel(snow);
+
+let previouslyCollected: Gift;
+
+/**
+ * @returns the gift our hero collided with
+ */
+function getCollectedGift(): Gift {
+  return track.gifts.find(
+    g => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
+  );
+}
+
+// Orbit
+
+// let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+// orbitControl.addEventListener('change', render);
+// orbitControl.enableDamping = true;
+// orbitControl.dampingFactor = 0.8;
+// orbitControl.enableZoom = true;
 
 window.addEventListener('resize', onWindowResize, false);
 
 function onWindowResize() {
-  camera.getCamera().aspect = window.innerWidth / window.innerHeight;
-  camera.getCamera().updateProjectionMatrix();
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
@@ -71,56 +89,23 @@ function animate(): void {
 }
 
 function render(): void {
-  // animate camera along spline
-  const time = Date.now();
-  const looptime = 20 * 1000;
-  const t = (time % looptime) / looptime;
+  if (!controls.isPlaying) return;
 
-  const raceTrackGeometry = raceTrack.getGeometry();
-
-  const pos = raceTrackGeometry.parameters.path.getPointAt(t);
-  pos.multiplyScalar(SCALE);
-  // interpolation
-  const segments = raceTrackGeometry.tangents.length;
-  const pickt = t * segments;
-  const pick = Math.floor(pickt);
-  const pickNext = (pick + 1) % segments;
-  binormal.subVectors(raceTrackGeometry.binormals[pickNext], raceTrackGeometry.binormals[pick]);
-  binormal.multiplyScalar(pickt - pick).add(raceTrackGeometry.binormals[pick]);
-  const dir = raceTrackGeometry.parameters.path.getTangentAt(t);
-  const offset = 15;
-  normal.copy(binormal).cross(dir);
-  // we move on a offset on its binormal
-  pos.add(normal.clone().multiplyScalar(offset));
-  camera.getCamera().position.copy(pos);
-  camera.getCameraEye().position.copy(pos);
-  // using arclength for stablization in look ahead
-  const lookAt = raceTrackGeometry.parameters.path
-    .getPointAt((t + 30 / raceTrackGeometry.parameters.path.getLength()) % 1)
-    .multiplyScalar(SCALE);
-  // camera orientation 2 - up orientation via normal
-  if (LOOKAHEAD) {
-    lookAt.copy(pos).add(dir);
+  if (scene.models) {
+    scene.models.forEach(m => {
+      m.update(clock);
+    });
+  }
+  const collected: Gift = getCollectedGift();
+  if (collected) {
+    if (collected !== previouslyCollected) {
+      previouslyCollected = collected;
+      collected.isCollected = true;
+      controls.increaseScore();
+    }
   }
 
-  camera.getCamera().matrix.lookAt(camera.getCamera().position, lookAt, normal);
-  camera.getCamera().rotation.setFromRotationMatrix(camera.getCamera().matrix, camera.getCamera().rotation.order);
-  camera.getCameraHelper().update();
-
-  snow.simulateSnow();
-  const snowMesh = snow.getMesh();
-
-  snowMesh.position.copy(camera.getCamera().position);
-  snowMesh.rotation.copy(camera.getCamera().rotation);
-  snowMesh.updateMatrix();
-  snowMesh.translateZ(-10);
-
-  skybox.getMesh().position.copy(lookAt);
-  skybox.getMesh().position.x -= 498
-
-
-
-  renderer.render(scene, camera.getCamera());
+  renderer.render(threeScene, camera);
 }
 
 animate();

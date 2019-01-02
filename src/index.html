@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nissespillet</title>
+    <link rel="stylesheet" type="text/css" href="src/style.css" />
+  </head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Three.js Starter</title>
-</head>
-
-<body></body>
-
+  <body>
+    <div id="overlay">
+      <h1>Nissespillet</h1>
+      <div id="progressbar-wrap" class="progress">
+        <div role="progressbar" id="progressbar" class="progress__bar"></div>
+      </div>
+      <button id="btn-play">Spill</button>
+    </div>
+    <div class="score-wrapper">
+      <img class="gift" src="src/assets/gift.svg" />
+      <div class="animated" id="score">0</div>
+    </div>
+  </body>
 </html>
