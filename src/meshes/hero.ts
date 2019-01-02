@@ -19,6 +19,7 @@ export class Hero extends MeshBase {
 
   // Game logic
   isJumbing = false;
+  isJumpAllowed = true;
   currentPosition: -1 | 0 | 1 = 0; // from left to right
   bounceValue = 0;
 
@@ -63,19 +64,6 @@ export class Hero extends MeshBase {
     if (this.mixer) {
       this.mixer.update(clock.getDelta() * 2);
     }
-    if (this.isJumbing) {
-      this.mesh.rotation.x -= 0.2;
-    } else {
-      this.mesh.rotation.x = -(Math.PI / 2);
-    }
-
-    // Setting threshold slighlty above "ground level" so we get better jumping controls
-    if (this.mesh.position.y <= 0.65) {
-      this.isJumbing = false;
-      // this.bounceValue = Math.random() * 0.04 + this.GRAVITY;
-      this.bounceValue = this.GRAVITY;
-    }
-    this.mesh.position.y += this.bounceValue;
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
@@ -83,7 +71,21 @@ export class Hero extends MeshBase {
       this.MOVE_SPEED_FACTOR * clock.getDelta()
     );
 
-    this.bounceValue -= this.GRAVITY;
+    if (this.isJumbing) {
+      this.isJumpAllowed = false;
+      this.mesh.rotation.x -= 0.2;
+      this.mesh.position.y += this.bounceValue;
+      this.bounceValue -= this.GRAVITY;
+    } else {
+      this.mesh.rotation.x = -(Math.PI / 2);
+    }
+
+    // Allow jumping slightly above ground level for better experience
+    this.isJumpAllowed = this.mesh.position.y <= 0.8;
+
+    if (this.mesh.position.y <= 0.62) {
+      this.isJumbing = false;
+    }
   }
 
   handleMoveLeft() {
@@ -95,7 +97,9 @@ export class Hero extends MeshBase {
   }
 
   handleJump() {
-    this.bounceValue = 0.16;
-    this.isJumbing = true;
+    if (this.isJumpAllowed) {
+      this.bounceValue = 0.16;
+      this.isJumbing = true;
+    }
   }
 }
