@@ -5,9 +5,17 @@ const progressbar = document.getElementById('progressbar');
 const progressbarWrap = document.getElementById('progressbar-wrap');
 
 export class LoadingManager {
+  static getInstance() {
+    if (instance) {
+      return instance;
+    } else {
+      return new LoadingManager();
+    }
+  }
   manager = new THREE.LoadingManager();
   isAllLoaded: boolean;
   isError: boolean;
+
   constructor() {
     // Singleton setup
     if (instance) {
@@ -17,15 +25,8 @@ export class LoadingManager {
     }
     this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
     this.manager.onLoad = () => this.setFinished();
-    this.manager.onProgress = (_url, itemsLoaded, itemsTotal) => this.setProgress(itemsLoaded, itemsTotal);
-    this.manager.onError = url => this.setError(url);
-  }
-  static getInstance() {
-    if (instance) {
-      return instance;
-    } else {
-      return new LoadingManager();
-    }
+    this.manager.onProgress = (url, itemsLoaded, itemsTotal) => this.setProgress(itemsLoaded, itemsTotal);
+    this.manager.onError = (url) => this.setError(url);
   }
 
   private setProgress(itemsLoaded: number, itemsTotal: number) {
