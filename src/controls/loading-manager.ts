@@ -3,7 +3,7 @@ import * as THREE from 'three';
 let instance = null;
 const progressbar = document.getElementById('progressbar');
 const progressbarWrap = document.getElementById('progressbar-wrap');
-
+const btnPlay = document.getElementById('btn-play');
 export class LoadingManager {
   static getInstance() {
     if (instance) {
@@ -41,8 +41,12 @@ export class LoadingManager {
 
   private setFinished() {
     this.isAllLoaded = !!!this.isError;
+
     setTimeout(() => {
       progressbarWrap.style.display = `none`;
+      if (this.isAllLoaded) {
+        btnPlay.style.display = 'block';
+      }
     }, 500);
   }
 }

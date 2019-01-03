@@ -17,14 +17,14 @@ export class Controls {
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
     this.canvas = canvas;
     this.hero = hero;
-    document.onkeydown = e => this.handleKeyDown(e);
+    document.onkeydown = (e) => this.handleKeyDown(e);
     playButton.addEventListener('click', () => this.handlePlayBtnClick());
 
     // Setup touch controls
     const mc = new Hammer.Manager(this.canvas);
     const swipe = new Hammer.Swipe();
     mc.add(swipe);
-    mc.on('swipe', e => this.handleTouch(e));
+    mc.on('swipe', (e) => this.handleTouch(e));
   }
 
   handlePlayBtnClick() {
@@ -63,6 +63,7 @@ export class Controls {
         this.hero.handleMoveRight();
         break;
       case ' ':
+      case 'ArrowUp':
         this.hero.handleJump();
         break;
     }
