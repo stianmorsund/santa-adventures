@@ -4,6 +4,7 @@ let instance = null;
 const progressbar = document.getElementById('progressbar');
 const progressbarWrap = document.getElementById('progressbar-wrap');
 const btnPlay = document.getElementById('btn-play');
+const errorMessage = document.getElementById('error-message');
 export class LoadingManager {
   static getInstance() {
     if (instance) {
@@ -36,7 +37,9 @@ export class LoadingManager {
 
   private setError(url: string) {
     this.isError = true;
-    console.log('There was an error loading ' + url);
+    const msg = document.createTextNode(`Klarte ikke å laste url ${url}`);
+    errorMessage.appendChild(msg);
+    errorMessage.style.display = 'block';
   }
 
   private setFinished() {
@@ -47,6 +50,6 @@ export class LoadingManager {
       if (this.isAllLoaded) {
         btnPlay.style.display = 'block';
       }
-    }, 500);
+    }, 1000);
   }
 }
