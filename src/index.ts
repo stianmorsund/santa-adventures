@@ -25,7 +25,8 @@ renderer.setClearColor(0x000000, 0);
 
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 7.5;
-camera.position.y = 1;
+camera.position.y = 1.2;
+camera.rotation.x = -0.15;
 
 // set size
 renderer.setSize(window.innerWidth, window.innerHeight);
