@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-const FBXLoader = require('wge-three-fbx-loader');
+import * as FBXLoader from 'wge-three-fbx-loader';
 
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
@@ -29,35 +29,28 @@ export class Hero extends MeshBase {
   }
 
   buildHero() {
-    this.loader.load(
-      this.SANTA_MODEL_PATH,
-      (object) => {
-        this.mesh = object;
-        const clips = object.animations;
-        this.mixer = new THREE.AnimationMixer(this.mesh);
-        const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
-        const action = this.mixer.clipAction(clip);
-        const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned');
-        const uvmap = new THREE.TextureLoader().load(require('../assets/models/santa/Santa_UV.png'));
-        skinnedMesh.material.map = uvmap;
-        skinnedMesh.receiveShadow = true;
-        skinnedMesh.castShadow = true;
+    this.loader.load(this.SANTA_MODEL_PATH, (object) => {
+      this.mesh = object;
+      const clips = object.animations;
+      this.mixer = new THREE.AnimationMixer(this.mesh);
+      const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
+      const action = this.mixer.clipAction(clip);
+      const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned');
+      const uvmap = new THREE.TextureLoader().load(require('../assets/models/santa/Santa_UV.png'));
+      skinnedMesh.material.map = uvmap;
+      skinnedMesh.receiveShadow = true;
+      skinnedMesh.castShadow = true;
 
-        this.mesh.position.y = 0.6;
-        this.mesh.position.z = 4.4;
-        this.mesh.rotation.x = -(Math.PI / 2);
-        this.mesh.rotation.z = Math.PI;
+      this.mesh.position.y = 0.6;
+      this.mesh.position.z = 4.4;
+      this.mesh.rotation.x = -(Math.PI / 2);
+      this.mesh.rotation.z = Math.PI;
 
-        // this.mesh.scale.set(0.001, 0.001, 0.001);
-        this.scene.scene.add(this.mesh);
+      // this.mesh.scale.set(0.001, 0.001, 0.001);
+      this.scene.scene.add(this.mesh);
 
-        action.play();
-      },
-      () => {},
-      (err) => {
-        console.log('error loading santa fbx', err);
-      }
-    );
+      action.play();
+    });
   }
 
   update(clock: THREE.Clock) {
