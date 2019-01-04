@@ -29,10 +29,10 @@ export class Track extends MeshBase {
     this.mesh.rotation.x = 4.75;
 
     this.gifts = Array.from({ length: this.NUMBER_OF_GIFTS }, () => new Gift());
-    this.mesh.add(...this.gifts.map(g => g.mesh));
+    this.mesh.add(...this.gifts.map((g) => g.mesh));
   }
 
-  update(_clock: THREE.Clock) {
-    this.gifts.forEach(g => g.update());
+  update(clock: THREE.Clock) {
+    this.gifts.forEach((g) => g.update());
   }
 }
