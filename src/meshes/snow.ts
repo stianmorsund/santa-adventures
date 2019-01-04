@@ -31,29 +31,13 @@ export class Snow extends MeshBase {
     // this.mesh.position.z = 1;
   }
 
-  /**
-   * Make N snowflakes with random position
-   * @private
-   */
-  private makeSnow() {
-    for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
-      let pX = Math.random() * 500 - 250,
-        pY = Math.random() * 500 - 250,
-        pZ = Math.random() * 500 - 250,
-        particle = new THREE.Vector3(pX, pY, pZ);
-
-      this.particles.vertices.push(particle);
-    }
-  }
-
-  public simulateSnow() {
+  simulateSnow() {
     let pCount = this.NUMBER_OF_SNOWFLAKES;
     while (pCount--) {
-      let particle = this.particles.vertices[pCount];
+      const particle = this.particles.vertices[pCount];
       if (particle.y < -200) {
         particle.y = 200;
       }
-
       // Give random y-value
       const velocity = 0 - Math.random() * this.SPEED;
       particle.y += velocity;
@@ -68,5 +52,20 @@ export class Snow extends MeshBase {
 
   getMesh() {
     return this.mesh;
+  }
+
+  /**
+   * Make N snowflakes with random position
+   * @private
+   */
+  private makeSnow() {
+    for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
+      const particle = new THREE.Vector3(
+        Math.random() * 500 - 250,
+        Math.random() * 500 - 250,
+        Math.random() * 500 - 250
+      );
+      this.particles.vertices.push(particle);
+    }
   }
 }

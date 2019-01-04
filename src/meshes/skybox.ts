@@ -14,8 +14,8 @@ export class Skybox {
       `${path}/left.${format}`
     ];
 
-    const shader = THREE.ShaderLib['cube'];
-    shader.uniforms['tCube'].value = THREE.ImageUtils.loadTextureCube(urls);
+    const shader = THREE.ShaderLib.cube;
+    shader.uniforms.tCube.value = THREE.ImageUtils.loadTextureCube(urls);
 
     const material = new THREE.ShaderMaterial({
       depthWrite: false,

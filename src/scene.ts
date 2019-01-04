@@ -4,6 +4,22 @@ import { MeshBase } from './meshes/meshbase.abstract';
 let instance = null;
 
 export class Scene {
+
+  get models() {
+    return this._models;
+  }
+
+  get scene() {
+    return this._scene;
+  }
+
+  static getInstance() {
+    if (instance) {
+      return instance;
+    } else {
+      return new Scene();
+    }
+  }
   private _scene: THREE.Scene;
   private _models: MeshBase[] = [];
   constructor() {
@@ -29,24 +45,8 @@ export class Scene {
     // this._scene.add(sun2);
   }
 
-  get models() {
-    return this._models;
-  }
-
-  get scene() {
-    return this._scene;
-  }
-
-  static getInstance() {
-    if (instance) {
-      return instance;
-    } else {
-      return new Scene();
-    }
-  }
-
   addModel(...models: MeshBase[]) {
-    models.forEach(m => {
+    models.forEach((m) => {
       this._models.push(m);
       this._scene.add(m.mesh);
     });

@@ -13,7 +13,7 @@ export class Gift extends MeshBase {
   private readonly SIZE = 0.3;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
-  constructor(position?: { x; y; z }) {
+  constructor(position?: { x: number; y: number; z: number }) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
     const texture = new THREE.TextureLoader().load(require('../assets/textures/gift.jpg'));

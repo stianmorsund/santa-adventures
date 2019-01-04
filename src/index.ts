@@ -29,7 +29,7 @@ camera.position.y = 1;
 
 // set size
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true; //enable shadow
+renderer.shadowMap.enabled = true; // enable shadow
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const canvas = renderer.domElement;
@@ -63,7 +63,7 @@ let previouslyCollected: Gift;
  */
 function getCollectedGift(): Gift {
   return track.gifts.find(
-    g => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
+    (g) => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
   );
 }
 
@@ -92,7 +92,7 @@ function render(): void {
   if (!controls.isPlaying) return;
 
   if (scene.models) {
-    scene.models.forEach(m => {
+    scene.models.forEach((m) => {
       m.update(clock);
     });
   }
