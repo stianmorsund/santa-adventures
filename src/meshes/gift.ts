@@ -2,14 +2,13 @@ import * as THREE from 'three';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR } from './constants';
+import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR, TRACK_SPEED } from './constants';
 
 export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
   isCollected: boolean = false;
-  private readonly SPEED = 0.08;
   private readonly ROTATION_SPEED = 0.05;
   private readonly SIZE = 0.3;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
@@ -24,9 +23,8 @@ export class Gift extends MeshBase {
     texture.format = THREE.RGBFormat;
     const material = new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
-      map: texture,
-      // combine: THREE.MixOperation,
-      flatShading: true
+      flatShading: true,
+      map: texture
     });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
@@ -40,7 +38,7 @@ export class Gift extends MeshBase {
       this.animateCollected();
     } else {
       this.mesh.rotation.z += this.ROTATION_SPEED;
-      this.mesh.position.y -= this.SPEED;
+      this.mesh.position.y -= TRACK_SPEED;
     }
 
     // Reset state when behind camera or done collected animation

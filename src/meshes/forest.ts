@@ -5,7 +5,7 @@ import * as FBXLoader from 'wge-three-fbx-loader';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { GROUND_LEVEL } from './constants';
+import { GROUND_LEVEL, FOREST_SPEED } from './constants';
 import { LoadingManager } from '../controls/loading-manager';
 
 export class Forest extends MeshBase {
@@ -25,7 +25,7 @@ export class Forest extends MeshBase {
   }
   update(clock: THREE.Clock) {
     // this.leftside.position.z += 0.5;
-    this.mesh.position.z += 0.05;
+    this.mesh.position.z += FOREST_SPEED;
 
     if (this.mesh.position.z > -40) {
       this.mesh.position.z = -65;
