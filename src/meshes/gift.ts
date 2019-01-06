@@ -29,7 +29,7 @@ export class Gift extends MeshBase {
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
-    const { x, y, z } = position || this.getRandomGiftPosition();
+    const { x, y, z } = position || this.getRandomPosition();
     this.mesh.position.set(x, y, z);
   }
 
@@ -47,12 +47,12 @@ export class Gift extends MeshBase {
     if (this.isDoneWithCollectedAnimation() || this.isBehindCamera()) {
       this.mesh.worldToLocal(new THREE.Vector3());
       this.isCollected = false;
-      const { x, y, z } = this.getRandomGiftPosition();
+      const { x, y, z } = this.getRandomPosition();
       this.mesh.position.set(x, y, z);
     }
   }
 
-  getRandomGiftPosition(): { x: number; y: number; z: number } {
+  getRandomPosition(): { x: number; y: number; z: number } {
     const posX = getRandomInteger(-1, 1);
     const posY = getRandomInteger(5, TRACK_LENGTH / 2);
     const posZ = GIFT_HEIGHT_FROM_FLOOR;

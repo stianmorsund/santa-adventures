@@ -14,6 +14,7 @@ import { Gift } from './meshes/gift';
 import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
+import { Enemy } from './meshes/enemy';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -57,6 +58,9 @@ scene.addModel(forest);
 const snow = new Snow();
 scene.addModel(snow);
 
+const enemy = new Enemy();
+// scene.addModel(enemy);
+
 let previouslyCollected: Gift;
 
 /**
@@ -70,11 +74,11 @@ function getCollectedGift(): Gift {
 
 // Orbit
 
-// let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
-// orbitControl.addEventListener('change', render);
-// orbitControl.enableDamping = true;
-// orbitControl.dampingFactor = 0.8;
-// orbitControl.enableZoom = true;
+let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+orbitControl.addEventListener('change', render);
+orbitControl.enableDamping = true;
+orbitControl.dampingFactor = 0.8;
+orbitControl.enableZoom = true;
 
 window.addEventListener('resize', onWindowResize, false);
 
@@ -93,10 +97,12 @@ function render(): void {
   if (!controls.isPlaying) return;
 
   if (scene.models) {
+    enemy.update(clock);
     scene.models.forEach((m) => {
       m.update(clock);
     });
   }
+
   const collected: Gift = getCollectedGift();
   if (collected) {
     if (collected !== previouslyCollected) {

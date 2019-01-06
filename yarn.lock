@@ -2176,6 +2176,11 @@ globby@^7.1.1:
     pify "^3.0.0"
     slash "^1.0.0"
 
+gltf-loader-ts@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gltf-loader-ts/-/gltf-loader-ts-0.3.1.tgz#917395bfc77dc98df148c57a2585170241be6318"
+  integrity sha512-GypLFqIDAEtl211fPyGA596Wz75R9eHEAMl+RQfQ8XQZb6Wks/1Aas6YuF/e/Xw57rULkefcBW/hsqLISkBBww==
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
@@ -4974,6 +4979,16 @@ tfunk@^3.0.1:
   dependencies:
     chalk "^1.1.1"
     object-path "^0.9.0"
+
+three-gltf-loader@^1.100.0:
+  version "1.100.0"
+  resolved "https://registry.yarnpkg.com/three-gltf-loader/-/three-gltf-loader-1.100.0.tgz#9d44d244771affd82bf0655bc4a0c237a907230d"
+  integrity sha512-z4cLG6TMDR0XE85b731IYmm1lFvRoSWDq0NBg0gE0vNRufiB6R728xbzhVMQQondjjoOk+LXEugp5twj0T8V1Q==
+
+three-obj-mtl-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/three-obj-mtl-loader/-/three-obj-mtl-loader-1.0.3.tgz#2901efd5b77cce29b61733c63f196432ee653667"
+  integrity sha512-0z7BfyG6vYPY9RvxJvL4rq8PbNrF42Kn4zxeqTfeDzJN++2oKbtCQhxHs5vLULnDuCRTEyDFf5TYvO+1vnJ7KQ==
 
 three-orbit-controls@^82.1.0:
   version "82.1.0"
