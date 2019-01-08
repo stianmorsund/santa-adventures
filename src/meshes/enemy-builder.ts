@@ -1,6 +1,5 @@
 import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
 import { Scene } from '../scene';
-import { getRandomInteger } from '../utils/utils';
 import { Enemy } from './enemy';
 import { LoadingManager } from '../controls/loading-manager';
 
