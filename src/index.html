@@ -8,8 +8,7 @@
   </head>
 
   <body>
-    <div id="overlay">
-      <!-- <button class="btn btn__esc">Esc</button> -->
+    <div class="overlay" id="welcome-overlay">
       <div class="content">
         <img src="src/assets/logo.png" class="logo" alt="Santa Adventures" />
         <div id="progressbar-wrap" class="progress">
@@ -17,13 +16,23 @@
         </div>
         <p class="intro-text">
           Hjelp nissen med å samle alle presangene, men pass deg for de slemme snømennene! Bruk piltastene eller swipe
-          for å styre.
+          for å styre. Trykk Esc for å pause spillet.
         </p>
 
         <p id="error-message" class="intro-text hidden intro-text__error">
           Det skjedde en feil under lasting av spillet. Prøv å laste siden på nytt.
         </p>
         <button class="btn animated pulse hidden" id="btn-play">Spill</button>
+      </div>
+    </div>
+    <div class="overlay overlay--hidden" id="gameover-overlay">
+      <div class="content">
+        <img src="src/assets/logo.png" class="logo" alt="Santa Adventures" />
+        <div class="gameover-text">
+          <h2>Game over!</h2>
+          <p>Du fikk <span id="final-score"></span> presanger</p>
+        </div>
+        <button class="btn" id="btn-restart">Spill igjen</button>
       </div>
     </div>
     <div class="score-wrapper">

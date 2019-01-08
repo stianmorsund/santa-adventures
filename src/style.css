@@ -34,7 +34,7 @@ body {
   background-size: cover;
 }
 
-#overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -46,6 +46,10 @@ body {
   justify-content: center;
   flex-direction: column;
   animation: overlay 200ms linear;
+}
+
+.overlay--hidden {
+  display: none;
 }
 
 .content {
@@ -73,6 +77,14 @@ body {
   background: var(--color-red);
   border-radius: 10px;
   padding: 0.7em;
+}
+
+.gameover-text {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  text-align: center; 
+  font-size: 3.3em;
+  text-shadow: 0 2px 0 var(--color-dark-blue);
+  line-height: .3em;
 }
 
 .logo {
@@ -164,20 +176,13 @@ Buttons
   top: 6px;
 }
 
-.btn__esc {
-  position: fixed;
-  top: 15px;
-  left: 15px;
+.btn-key {
   width: auto;
   font-size: 2em;
   border: 2px solid #fff;
   background: transparent;
   color: #fff;
   box-shadow: 0px 5px 0px var(--color-light-blue), 0px 9px 25px rgba(0, 0, 0, 0.7);
-}
-
-.btn__esc:active {
-  position: inherit;
 }
 
 /**************

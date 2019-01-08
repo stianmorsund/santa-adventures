@@ -77,11 +77,11 @@ function isEnemyCollision(): boolean {
 
 // Orbit
 
-let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
-orbitControl.addEventListener('change', render);
-orbitControl.enableDamping = true;
-orbitControl.dampingFactor = 0.8;
-orbitControl.enableZoom = true;
+// let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+// orbitControl.addEventListener('change', render);
+// orbitControl.enableDamping = true;
+// orbitControl.dampingFactor = 0.8;
+// orbitControl.enableZoom = true;
 
 window.addEventListener('resize', onWindowResize, false);
 

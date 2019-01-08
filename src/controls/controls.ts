@@ -3,8 +3,11 @@ import { Hero } from '../meshes/hero';
 import * as Hammer from 'hammerjs';
 import { LoadingManager } from './loading-manager';
 
-const overlay: HTMLElement = document.getElementById('overlay');
+const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
+const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
+const finalScoreElement: HTMLElement = document.getElementById('final-score');
 const playButton: HTMLElement = document.getElementById('btn-play');
+const restartButton: HTMLElement = document.getElementById('btn-restart');
 const scoreElement: HTMLElement = document.getElementById('score');
 
 export class Controls {
@@ -20,7 +23,7 @@ export class Controls {
     this.hero = hero;
     document.onkeydown = (e) => this.handleKeyDown(e);
     playButton.addEventListener('click', () => this.handlePlayBtnClick());
-
+    restartButton.addEventListener('click', () => this.restartGame());
     // Setup touch controls
     const mc = new Hammer.Manager(this.canvas);
     const swipe = new Hammer.Swipe();
@@ -29,7 +32,7 @@ export class Controls {
   }
 
   handlePlayBtnClick() {
-    this.toggleOverlay();
+    this.togglewelcomeOverlay();
   }
 
   handleTouch(event: HammerInput) {
@@ -50,7 +53,7 @@ export class Controls {
   handleKeyDown(event: KeyboardEvent) {
     const { key } = event;
     if (key === 'Escape') {
-      this.toggleOverlay();
+      this.togglewelcomeOverlay();
     }
     // Handle keyboard hero movement
     if (this.hero.isJumbing) return;
@@ -70,11 +73,11 @@ export class Controls {
     }
   }
 
-  toggleOverlay() {
-    if (!this.loadingManager.isAllLoaded) return;
+  togglewelcomeOverlay() {
+    if (!this.loadingManager.isAllLoaded || !this.isAlive) return;
     this.isPlaying = !this.isPlaying;
-    const { display } = overlay.style;
-    overlay.style.display = display === 'none' ? 'flex' : 'none';
+    const { display } = welcomeOverlay.style;
+    welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
   }
 
   increaseScore() {
@@ -88,6 +91,11 @@ export class Controls {
   }
 
   displayGameover() {
-    alert('game over.');
+    finalScoreElement.textContent = this.score.toString();
+    gameoverOverlay.style.display = 'flex';
+  }
+
+  restartGame() {
+    window.location.reload();
   }
 }
