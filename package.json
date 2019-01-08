@@ -4,8 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --inline",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "start": "webpack-dev-server --inline --config webpack.dev.js",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "Stian Morsund",
