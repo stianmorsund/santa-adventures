@@ -1,1 +1,3 @@
-# Three.js experiment
+# 🎅 Santa adventures
+
+Christmassy three.js experiment
