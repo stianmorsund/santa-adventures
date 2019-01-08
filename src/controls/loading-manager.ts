@@ -50,6 +50,6 @@ export class LoadingManager {
       if (this.isAllLoaded) {
         btnPlay.style.display = 'block';
       }
-    }, 1000);
+    }, 0);
   }
 }

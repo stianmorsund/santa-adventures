@@ -69,6 +69,7 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x -= 0.2;
       this.mesh.position.y += this.bounceValue;
       this.bounceValue -= this.GRAVITY;
+      
     } else {
       this.mesh.rotation.x = -(Math.PI / 2);
     }

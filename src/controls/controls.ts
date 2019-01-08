@@ -12,6 +12,7 @@ export class Controls {
   scene: Scene = Scene.getInstance();
   hero: Hero;
   isPlaying: boolean = false;
+  isAlive: boolean = true;
   score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
@@ -84,5 +85,9 @@ export class Controls {
     setTimeout(() => {
       scoreElement.classList.remove('pulse');
     }, 1000);
+  }
+
+  displayGameover() {
+    alert('game over.');
   }
 }

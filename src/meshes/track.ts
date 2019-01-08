@@ -3,13 +3,18 @@ import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { Gift } from './gift';
 import { TRACK_LENGTH } from './constants';
+import { Enemy } from './enemy';
+import { getRandomInteger } from '../utils/utils';
+import { EnemyBuilder } from './enemy-builder';
 
 export class Track extends MeshBase {
   geometry: THREE.PlaneGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
   gifts: Gift[] = [];
+  enemies: Enemy[] = [];
   readonly NUMBER_OF_GIFTS = 5;
+  readonly NUMBER_OF_ENEMIES = 3;
 
   constructor() {
     super();
@@ -30,9 +35,15 @@ export class Track extends MeshBase {
 
     this.gifts = Array.from({ length: this.NUMBER_OF_GIFTS }, () => new Gift());
     this.mesh.add(...this.gifts.map((g) => g.mesh));
+
+    const eb = new EnemyBuilder(this.NUMBER_OF_ENEMIES).build().then((enemies) => {
+      this.enemies = enemies;
+      this.mesh.add(...this.enemies.map((e) => e.mesh));
+    });
   }
 
   update(clock: THREE.Clock) {
     this.gifts.forEach((g) => g.update());
+    this.enemies.forEach((e) => e.update());
   }
 }

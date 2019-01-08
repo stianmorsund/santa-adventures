@@ -1,86 +1,62 @@
 import * as THREE from 'three';
-import * as FBXLoader from 'wge-three-fbx-loader';
-// import * as GLTFLoader from 'three-gltf-loader';
-// import GLTFLoader from 'three-gltf-loader';
-
-const GLTFLoader = require('three-gltf-loader');
-
-// import { GltfLoader } from 'gltf-loader-ts';
-
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR, TRACK_SPEED } from './constants';
-import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
-import { MeshLambertMaterial } from 'three';
-import { LoadingManager } from '../controls/loading-manager';
+import { TRACK_LENGTH, TRACK_SPEED } from './constants';
 
 export class Enemy extends MeshBase {
   geometry: THREE.SphereGeometry;
-  mesh: any;
   scene: Scene = Scene.getInstance();
   isHit: boolean = false;
-  private readonly ROTATION_SPEED = 0.05;
-  private readonly SIZE = 0.009;
-  private loadingManager: LoadingManager = LoadingManager.getInstance();
-  private mtlLoader = new MTLLoader(this.loadingManager.manager);
-  private objLoader = new OBJLoader(this.loadingManager.manager);
+  position: { x: number; y: number; z: number };
+  material: any;
+  mesh: any;
+  private readonly SIZE = 0.008;
 
-  constructor(position?: { x: number; y: number; z: number }) {
+  constructor(mesh: any, position?: { x: number; y: number; z: number }) {
     super();
+    this.position = position;
 
-    this.mtlLoader.load('src/assets/models/snowman/SnowmanOBJ.mtl', (materials) => {
-      materials.preload();
-      this.objLoader.setMaterials(materials);
-      this.objLoader.load('src/assets/models/snowman/SnowmanOBJ.obj', (snowman) => {
-        snowman.scale.set(this.SIZE, this.SIZE, this.SIZE);
-        console.log('snowman is', snowman);
-        const mesh = snowman.children[0];
-        const hat = mesh.material.find((m) => m.name === 'hatmat');
-        const hands = mesh.material.find((m) => m.name === 'handsmat');
-        hat.color.setHex(0x222222);
-        hands.color.setHex(0x222222);
-        snowman.position.x = -1;
-        mesh.receiveShadow = true;
-        mesh.castShadow = true;
-        // snowman.position.z = -10;
-        this.mesh = snowman;
-        this.scene.scene.add(snowman);
-      });
-    });
+    this.mesh = mesh;
+    this.buildEnemy();
   }
 
-  update(clock: THREE.Clock) {
+  buildEnemy() {
+    this.mesh.rotation.x = Math.PI / 2;
+    this.mesh.scale.set(this.SIZE, this.SIZE, this.SIZE);
+    const mesh = this.mesh.children[0];
+    const hat = mesh.material.find((m) => m.name === 'hatmat');
+    const hands = mesh.material.find((m) => m.name === 'handsmat');
+    hat.color.setHex(0x222222);
+    hands.color.setHex(0x222222);
+    mesh.receiveShadow = true;
+    mesh.castShadow = true;
+
+    const { x, y, z } = this.position;
+    this.mesh.position.set(x, y, z);
+  }
+
+  update() {
     if (!this.mesh) {
       return;
     }
     if (this.isHit) {
       this.enemyHit();
     } else {
-      // this.mesh.position.y = THREE.Math.lerp(this.mesh.position.y, 1,  clock.getDelta());
-      this.mesh.position.z += TRACK_SPEED;
+      this.mesh.position.y -= TRACK_SPEED / 1.5;
     }
 
-    // Reset state when behind camera or done collected animation
-    // Set new position if behind camera, we dont want to create more gifts,
-    // Only reposition to increase performance
+    // Reset position when behind camera
     if (this.isBehindCamera()) {
-      // this.mesh.worldToLocal(new THREE.Vector3());
       this.isHit = false;
-      const { x, y, z } = this.getRandomPosition();
-      this.mesh.position.z = -10;
+      const { x, y, z } = this.position;
+      this.mesh.position.set(x, y, z);
     }
-  }
-
-  getRandomPosition(): { x: number; y: number; z: number } {
-    const posX = getRandomInteger(-1, 1);
-    const posY = getRandomInteger(5, TRACK_LENGTH / 2);
-    const posZ = GIFT_HEIGHT_FROM_FLOOR;
-    return { x: posX, y: posY, z: posZ };
   }
 
   isBehindCamera(): boolean {
-    return this.mesh.position.z > 9;
+    // return this.mesh.position.z > 9;
+    return this.mesh.position.y <= -1;
   }
 
   enemyHit(): void {

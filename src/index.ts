@@ -58,9 +58,6 @@ scene.addModel(forest);
 const snow = new Snow();
 scene.addModel(snow);
 
-const enemy = new Enemy();
-// scene.addModel(enemy);
-
 let previouslyCollected: Gift;
 
 /**
@@ -69,6 +66,12 @@ let previouslyCollected: Gift;
 function getCollectedGift(): Gift {
   return track.gifts.find(
     (g) => Math.floor(g.mesh.position.y) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
+  );
+}
+
+function isEnemyCollision(): boolean {
+  return track.enemies.some(
+    (e) => Math.floor(e.mesh.position.y) === 0 && e.mesh.position.x === hero.currentPosition && !hero.isJumbing
   );
 }
 
@@ -94,10 +97,13 @@ function animate(): void {
 }
 
 function render(): void {
-  if (!controls.isPlaying) return;
+  if (!controls.isPlaying || !controls.isAlive) return;
+  controls.isAlive = !isEnemyCollision();
+  if (!controls.isAlive) {
+    controls.displayGameover();
+  }
 
   if (scene.models) {
-    enemy.update(clock);
     scene.models.forEach((m) => {
       m.update(clock);
     });
