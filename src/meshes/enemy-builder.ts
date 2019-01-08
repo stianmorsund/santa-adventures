@@ -25,9 +25,8 @@ export class EnemyBuilder {
           const enemies: Enemy[] = [];
           for (let i = 0; i < this.count; i++) {
             const posX = (i % 2) * (i % 2 ? -1 : 1);
-            const posY = i * 20 + 20;
-            // enemies.push(new Enemy(snowman, { x: 0, y: 0, z: 0 }));
-            enemies.push(new Enemy(snowman, { x: posX, y: posY, z: 0 }));
+            const posY = i * 50 + 20;
+            enemies.push(new Enemy(snowman.clone(), { x: posX, y: posY, z: 0 }));
           }
           resolve(enemies);
         });

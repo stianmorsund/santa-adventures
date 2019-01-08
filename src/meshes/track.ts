@@ -38,6 +38,7 @@ export class Track extends MeshBase {
 
     const eb = new EnemyBuilder(this.NUMBER_OF_ENEMIES).build().then((enemies) => {
       this.enemies = enemies;
+      console.log('enemies builded', enemies);
       this.mesh.add(...this.enemies.map((e) => e.mesh));
     });
   }

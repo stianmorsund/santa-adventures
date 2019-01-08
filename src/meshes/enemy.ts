@@ -40,11 +40,8 @@ export class Enemy extends MeshBase {
     if (!this.mesh) {
       return;
     }
-    if (this.isHit) {
-      this.enemyHit();
-    } else {
-      this.mesh.position.y -= TRACK_SPEED / 1.5;
-    }
+
+    this.mesh.position.y -= TRACK_SPEED * 2;
 
     // Reset position when behind camera
     if (this.isBehindCamera()) {
@@ -55,19 +52,6 @@ export class Enemy extends MeshBase {
   }
 
   isBehindCamera(): boolean {
-    // return this.mesh.position.z > 9;
     return this.mesh.position.y <= -1;
-  }
-
-  enemyHit(): void {
-    // const direction = new THREE.Vector3(4, 2, 2);
-    // // const direction = new THREE.Vector3(1,1,0);
-    // const worldPosition = new THREE.Vector3();
-    // const speed = 0.04;
-    // this.mesh.localToWorld(worldPosition);
-    // const vector = direction.multiplyScalar(speed);
-    // this.mesh.position.x += vector.x;
-    // this.mesh.position.y += vector.y;
-    // this.mesh.position.z += vector.z;
   }
 }
