@@ -4,8 +4,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
+  output: {
+    publicPath: '/dev/santa-adventures/'
+  },
   plugins: [new CopyWebpackPlugin([
     { from: 'src/assets', to: 'src/assets' },
-    { from: 'src/style.css', to: 'src/style.css' }
+    { from: 'src/styles', to: 'src/styles' }
   ])]
 });
