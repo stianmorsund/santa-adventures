@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /* Configure BrowserSync */
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -21,57 +22,9 @@ const ProgressBarPluginConfig = new ProgressBarPlugin();
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: 'awesome-typescript-loader'
-      },
-      {
-        test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {}
-          }
-        ]
-      },
-
-      {
-        test: /\.css$/,
-        exclude: /[\/\\]src[\/\\]/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          { loader: 'css-loader' }
-        ]
-      },
-      {
-        test: /\.css$/,
-        exclude: /[\/\\](node_modules|bower_components|public)[\/\\]/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[path]___[name]__[local]___[hash:base64:5]'
-            }
-          }
-        ]
-      }
-    ]
-  },
-  resolve: { extensions: ['.web.ts', '.web.js', '.ts', '.js'] },
-  plugins: [BrowserSyncPluginConfig, ProgressBarPluginConfig]
+  plugins: [
+    BrowserSyncPluginConfig,
+    ProgressBarPluginConfig,
+    new CopyWebpackPlugin([{ from: 'src/assets', to: 'assets' }])
+  ]
 });
