@@ -21,7 +21,7 @@ export class Hero extends MeshBase {
   private loader = new FBXLoader(this.loadingManager.manager);
   private readonly RADIUS = 0.3;
   private readonly MOVE_SPEED_FACTOR = 1500;
-  private readonly GRAVITY = 99 / 10000;
+  private readonly GRAVITY = 120 / 10000;
 
   constructor() {
     super();
@@ -32,6 +32,7 @@ export class Hero extends MeshBase {
     this.loader.load(this.SANTA_MODEL_PATH, (object) => {
       this.mesh = object;
       const clips = object.animations;
+      console.log(clips)
       this.mixer = new THREE.AnimationMixer(this.mesh);
       const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
       const action = this.mixer.clipAction(clip);
@@ -46,7 +47,9 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x = -(Math.PI / 2);
 
       this.scene.scene.add(this.mesh);
-
+      action.timeScale = 1.2
+      console.log('timescale', action.timeScale)
+      
       action.play();
     });
   }
