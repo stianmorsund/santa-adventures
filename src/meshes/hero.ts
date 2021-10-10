@@ -42,11 +42,9 @@ export class Hero extends MeshBase {
       skinnedMesh.castShadow = true;
 
       this.mesh.position.y = 0.6;
-      this.mesh.position.z = 4.4;
+      this.mesh.position.z = 6;
       this.mesh.rotation.x = -(Math.PI / 2);
-      this.mesh.rotation.z = Math.PI;
 
-      // this.mesh.scale.set(0.001, 0.001, 0.001);
       this.scene.scene.add(this.mesh);
 
       action.play();
@@ -57,6 +55,15 @@ export class Hero extends MeshBase {
     if (this.mixer) {
       this.mixer.update(clock.getDelta() * 2);
     }
+
+    // Initial animation rotation
+    if (this.mesh.position.z > 4.4) {
+      this.mesh.position.z -= 0.2;
+    }
+    if (this.mesh.rotation.z < Math.PI) {
+      this.mesh.rotation.z += 0.2;
+    }
+    // End initial animation rotation
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
@@ -69,7 +76,6 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x -= 0.2;
       this.mesh.position.y += this.bounceValue;
       this.bounceValue -= this.GRAVITY;
-      
     } else {
       this.mesh.rotation.x = -(Math.PI / 2);
     }
