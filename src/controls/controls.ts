@@ -4,11 +4,14 @@ import * as Hammer from 'hammerjs';
 import { LoadingManager } from './loading-manager';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
+const creditsModal: HTMLElement = document.getElementById('credits-modal');
 const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
 const finalScoreElement: HTMLElement = document.getElementById('final-score');
 const playButton: HTMLElement = document.getElementById('btn-play');
+const creditsButton: HTMLElement = document.getElementById('btn-credits');
 const restartButton: HTMLElement = document.getElementById('btn-restart');
 const scoreElement: HTMLElement = document.getElementById('score');
+const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close');
 
 export class Controls {
   canvas: HTMLCanvasElement;
@@ -22,17 +25,15 @@ export class Controls {
     this.canvas = canvas;
     this.hero = hero;
     document.onkeydown = (e) => this.handleKeyDown(e);
-    playButton.addEventListener('click', () => this.handlePlayBtnClick());
+    playButton.addEventListener('click', () => this.togglewelcomeOverlay());
+    creditsButton.addEventListener('click', () => this.toggleCredits());
     restartButton.addEventListener('click', () => this.restartGame());
+    creditsCloseBtn.addEventListener('click', () => this.toggleCredits());
     // Setup touch controls
     const mc = new Hammer.Manager(this.canvas);
     const swipe = new Hammer.Swipe();
     mc.add(swipe);
     mc.on('swipe', (e) => this.handleTouch(e));
-  }
-
-  handlePlayBtnClick() {
-    this.togglewelcomeOverlay();
   }
 
   handleTouch(event: HammerInput) {
@@ -53,6 +54,10 @@ export class Controls {
   handleKeyDown(event: KeyboardEvent) {
     const { key } = event;
     if (key === 'Escape') {
+      if (this.isCreditsOpened()) {
+        this.toggleCredits('hide');
+        return;
+      }
       this.togglewelcomeOverlay();
     }
     // Handle keyboard hero movement
@@ -78,6 +83,21 @@ export class Controls {
     this.isPlaying = !this.isPlaying;
     const { display } = welcomeOverlay.style;
     welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
+  }
+
+  isCreditsOpened = () => creditsModal.style.display === 'flex';
+
+  toggleCredits(newState?: 'show' | 'hide') {
+    const { display } = creditsModal.style;
+    if (newState === 'show') {
+      creditsModal.style.display = 'flex';
+      return;
+    }
+    if (newState == 'hide') {
+      creditsModal.style.display = 'none';
+      return;
+    }
+    creditsModal.style.display = display === 'none' || display === '' ? 'flex' : 'none';
   }
 
   increaseScore() {
