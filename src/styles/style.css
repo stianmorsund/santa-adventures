@@ -153,6 +153,7 @@ Progress bar
 Buttons
 **************/
 
+
 .btn {
   color: var(--color-dark-blue);
   text-decoration: none;
@@ -163,7 +164,9 @@ Buttons
   font-size: 3em;
   padding: 4px;
   border-radius: 8px;
-  box-shadow: 0px 9px 0px var(--color-light-blue), 0px 9px 25px rgba(0, 0, 0, 0.7);
+  border: 0;
+  /* box-shadow: 0px 9px 0px var(--color-light-blue), 0px 9px 25px rgba(0, 0, 0, 0.7); */
+  box-shadow: 0px 9px 0px var(--color-light-blue), 0px 2px 3px rgba(0, 0, 0, 0.7);
   width: 230px;
   text-align: center;
   transition: all 0.1s ease;
@@ -235,11 +238,16 @@ Buttons
   color: #000;
   padding: 2em;
   box-shadow: 0 0 50px 0px rgba(0, 0, 0, 20%);
-  font-size: 1.2em;
 }
 
 .modal h2 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 3.6em;
+  margin-bottom: .5em;
+}
+
+.credits-list {
+  font-size: 1.6em;
 }
 
 /**************
