@@ -85,8 +85,8 @@ export class Hero extends MeshBase {
     if (this.isCrawling) {
       this.isJumpAllowed = false;
       this.mesh.rotation.x = -0.5;
-      this.mesh.position.y = 0.5;
-    } 
+      this.mesh.position.y = 0.6;
+    }
 
     // Allow jumping slightly above ground level for better experience
     this.isJumpAllowed = this.mesh.position.y <= 0.8;
@@ -112,7 +112,7 @@ export class Hero extends MeshBase {
     }
   }
 
-  handleCrawl() {;
+  handleCrawl() {
     this.isCrawling = true;
   }
 }
