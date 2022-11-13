@@ -75,6 +75,10 @@ export class Controls {
       case 'ArrowUp':
         this.hero.handleJump();
         break;
+      case 's':
+      case 'ArrowDown':
+        this.hero.handleCrawl();
+        break;
     }
   }
 

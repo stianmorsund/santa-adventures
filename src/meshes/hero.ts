@@ -13,6 +13,7 @@ export class Hero extends MeshBase {
   // Game logic
   isJumbing = false;
   isJumpAllowed = true;
+  isCrawling = false;
   currentPosition: -1 | 0 | 1 = 0; // from left to right
   bounceValue = 0;
 
@@ -32,7 +33,6 @@ export class Hero extends MeshBase {
     this.loader.load(this.SANTA_MODEL_PATH, (object) => {
       this.mesh = object;
       const clips = object.animations;
-      console.log(clips)
       this.mixer = new THREE.AnimationMixer(this.mesh);
       const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
       const action = this.mixer.clipAction(clip);
@@ -47,9 +47,8 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x = -(Math.PI / 2);
 
       this.scene.scene.add(this.mesh);
-      action.timeScale = 1.2
-      console.log('timescale', action.timeScale)
-      
+      action.timeScale = 1.2;
+
       action.play();
     });
   }
@@ -83,6 +82,12 @@ export class Hero extends MeshBase {
       this.mesh.rotation.x = -(Math.PI / 2);
     }
 
+    if (this.isCrawling) {
+      this.isJumpAllowed = false;
+      this.mesh.rotation.x = -0.5;
+      this.mesh.position.y = 0.5;
+    } 
+
     // Allow jumping slightly above ground level for better experience
     this.isJumpAllowed = this.mesh.position.y <= 0.8;
 
@@ -102,7 +107,12 @@ export class Hero extends MeshBase {
   handleJump() {
     if (this.isJumpAllowed) {
       this.bounceValue = 0.16;
+      this.isCrawling = false;
       this.isJumbing = true;
     }
+  }
+
+  handleCrawl() {;
+    this.isCrawling = true;
   }
 }
