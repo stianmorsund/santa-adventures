@@ -4,6 +4,7 @@ import { Enemy } from './enemy';
 import { LoadingManager } from '../controls/loading-manager';
 
 export class EnemyBuilder {
+  
   scene: Scene = Scene.getInstance();
   readonly count: number;
   readonly MODEL_PATH = 'src/assets/models/snowman/SnowmanOBJ.obj';

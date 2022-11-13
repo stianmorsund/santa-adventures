@@ -10,13 +10,15 @@ export class Gift extends MeshBase {
   scene: Scene = Scene.getInstance();
   isCollected: boolean = false;
   private readonly ROTATION_SPEED = 0.05;
-  private readonly SIZE = 0.3;
+  private readonly SIZE = 0.4;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
-  constructor(position?: { x: number; y: number; z: number }) {
+  constructor({ position,  }: { position?: { x: number; y: number; z: number }; } = {}) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
-    const texture = new THREE.TextureLoader().load(require('../assets/textures/gift.jpg'));
+    const texture = new THREE.TextureLoader().load(
+      require(`../assets/textures/gift.jpg`)
+    );
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
@@ -24,11 +26,11 @@ export class Gift extends MeshBase {
     const material = new THREE.MeshLambertMaterial({
       color: Math.random() * 0xffffff,
       flatShading: true,
-      map: texture
+      map: texture,
     });
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
-    this.mesh.receiveShadow = true;
+    this.mesh.receiveShadow = false;
     const { x, y, z } = position || this.getRandomPosition();
     this.mesh.position.set(x, y, z);
   }
