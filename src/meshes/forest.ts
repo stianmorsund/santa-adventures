@@ -42,8 +42,8 @@ export class Forest extends MeshBase {
       this.rightside = new THREE.Group();
       let i = 0;
       for (; i < this.NUMBER_OF_TREES; i++) {
-        this.leftside.add(this.buildTree2(tree.clone(), i, 'left'));
-        this.rightside.add(this.buildTree2(tree.clone(), i, 'right'));
+        this.leftside.add(this.buildTree(tree.clone(), i, 'left'));
+        this.rightside.add(this.buildTree(tree.clone(), i, 'right'));
       }
       this.mesh.add(this.leftside);
       this.mesh.add(this.rightside);
@@ -52,7 +52,7 @@ export class Forest extends MeshBase {
     });
   }
 
-  buildTree2(tree: any, index: number, side: 'left' | 'right'): THREE.Group {
+  buildTree(tree: any, index: number, side: 'left' | 'right'): THREE.Group {
     tree.traverse((child) => {
       // console.log('child', child)
       child.castShadow = true;
@@ -70,25 +70,6 @@ export class Forest extends MeshBase {
     tree.position.y = 0.5;
     tree.position.x = side === 'left' ? -3.1 : 3.1;
     tree.position.z = index * 1.5;
-    return tree;
-  }
-
-  buildTree(tree: THREE.Group, index: number, side: 'left' | 'right'): THREE.Group {
-    tree.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        const top: THREE.MeshPhongMaterial = child.material[0];
-        top.color.setHex(0x232323);
-        const trunk = child.material[1];
-        trunk.color.setHex(0x000000);
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-      tree.position.y = GROUND_LEVEL;
-      const size = getRandomInteger(0.9, 1);
-      tree.scale.set(size, size, size);
-      tree.position.x = side === 'left' ? -3.1 : 3.1;
-      tree.position.z = index * 1.5;
-    });
     return tree;
   }
 }
