@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR, TRACK_SPEED } from './constants';
+import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 
 export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
@@ -13,12 +13,10 @@ export class Gift extends MeshBase {
   private readonly SIZE = 0.4;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
-  constructor({ position,  }: { position?: { x: number; y: number; z: number }; } = {}) {
+  constructor({ position }: { position?: { x: number; y: number; z: number } } = {}) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
-    const texture = new THREE.TextureLoader().load(
-      require(`../assets/textures/gift.jpg`)
-    );
+    const texture = new THREE.TextureLoader().load(require(`../assets/textures/gift.jpg`));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
@@ -57,7 +55,7 @@ export class Gift extends MeshBase {
   getRandomPosition(): { x: number; y: number; z: number } {
     const posX = getRandomInteger(-1, 1);
     const posY = getRandomInteger(5, TRACK_LENGTH / 2);
-    const posZ = GIFT_HEIGHT_FROM_FLOOR;
+    const posZ = TRACKBASE_Z;
     return { x: posX, y: posY, z: posZ };
   }
 

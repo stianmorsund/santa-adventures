@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR, TRACK_SPEED } from './constants';
+import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 
 export class LightHinder extends MeshBase {
   geometry: THREE.CylinderGeometry;

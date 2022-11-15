@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, GIFT_HEIGHT_FROM_FLOOR, TRACK_SPEED } from './constants';
+import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 
 export class Hinder extends MeshBase {
   geometry: THREE.BoxGeometry;
@@ -16,7 +16,7 @@ export class Hinder extends MeshBase {
   constructor({ position }: { position?: { x: number; y: number; z: number } } = {}) {
     super();
 
-    this.geometry = new THREE.BoxGeometry(7, .2, 1.5);
+    this.geometry = new THREE.BoxGeometry(7, .2, 1);
     const texture = new THREE.TextureLoader().load(require(`../assets/textures/snow.jpg`));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
