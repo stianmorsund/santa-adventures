@@ -1,3 +1,7 @@
+/**
+ * Builders for stuff on the track
+ */
+
 import { NUMBER_OF_GIFTS } from '../meshes/constants';
 import { Gift } from '../meshes/gift';
 import { Hinder } from '../meshes/hinder';

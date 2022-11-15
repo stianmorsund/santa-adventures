@@ -43,15 +43,15 @@ export class Gift extends MeshBase {
       this.mesh.position.y -= TRACK_SPEED;
     }
 
-    // Reset state when behind camera or done collected animation
-    // Set new position if behind camera, we dont want to create more gifts,
-    // Only reposition to increase performance
-    if (this.isDoneWithCollectedAnimation() || this.isBehindCamera()) {
-      this.mesh.worldToLocal(new THREE.Vector3());
-      this.isCollected = false;
-      const { x, y, z } = this.getRandomPosition();
-      this.mesh.position.set(x, y, z);
-    }
+    // // Reset state when behind camera or done collected animation
+    // // Set new position if behind camera, we dont want to create more gifts,
+    // // Only reposition to increase performance
+    // if (this.isDoneWithCollectedAnimation() || this.isBehindCamera()) {
+    //   this.mesh.worldToLocal(new THREE.Vector3());
+    //   this.isCollected = false;
+    //   const { x, y, z } = this.getRandomPosition();
+    //   this.mesh.position.set(x, y, z);
+    // }
   }
 
   getRandomPosition(): { x: number; y: number; z: number } {
@@ -61,13 +61,13 @@ export class Gift extends MeshBase {
     return { x: posX, y: posY, z: posZ };
   }
 
-  isBehindCamera(): boolean {
-    return this.mesh.position.y <= -1;
-  }
+  // isBehindCamera(): boolean {
+  //   return this.mesh.position.y <= -1;
+  // }
 
-  isDoneWithCollectedAnimation(): boolean {
-    return this.mesh.position.z > this.Z_POSITION_TO_RESET_POSITION;
-  }
+  // isDoneWithCollectedAnimation(): boolean {
+  //   return this.mesh.position.z > this.Z_POSITION_TO_RESET_POSITION;
+  // }
 
   animateCollected(): void {
     const direction = new THREE.Vector3(4, 2, 2);

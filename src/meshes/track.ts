@@ -24,10 +24,8 @@ export class Track extends MeshBase {
     this.mesh.rotation.x = 4.75;
   }
 
-  update(clock: THREE.Clock) {
-    
-    
-  }
+  update(clock: THREE.Clock) {}
+
   addModel(...models: THREE.Mesh[]) {
     models.forEach((m) => {
       this.mesh.add(m);
