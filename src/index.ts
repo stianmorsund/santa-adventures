@@ -42,7 +42,6 @@ const canvas = renderer.domElement;
 // add canvas to dom
 document.body.appendChild(canvas);
 
-
 const loadingmanager = new LoadingManager();
 
 const track = new Track();
@@ -59,13 +58,13 @@ scene.addModel(forest);
 const snow = new Snow();
 scene.addModel(snow);
 
-let gifts: Gift[] = buildGifts();
-let hinders: Hinder[] = buildHinders();
-let Poles: Pole[] = buildPoles();
+const gifts: Gift[] = buildGifts();
+const hinders: Hinder[] = buildHinders();
+const poles: Pole[] = buildPoles();
 
 track.addModel(...hinders.map((h) => h.mesh));
 track.addModel(...gifts.map((g) => g.mesh));
-track.addModel(...Poles.map((l) => l.mesh));
+track.addModel(...poles.map((l) => l.mesh));
 
 let previouslyCollected: Gift;
 
@@ -79,11 +78,12 @@ function getCollectedGift(): Gift {
 }
 
 function isHinderCollision(): boolean {
-  return hinders.some(
-    (hinder) =>
-      // Math.floor(hinder.mesh.position.y) === 0 && hinder.mesh.position.x === hero.currentPosition && !hero.isJumbing
-      Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing
-  );
+  return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing);
+  // return false;
+}
+
+function isPoleCollision(): boolean {
+  return poles.some((pole) => Math.floor(pole.mesh.position.y * 2) === 0 && !hero.isCrawling);
   // return false;
 }
 
@@ -110,7 +110,7 @@ function animate(): void {
 
 function render(): void {
   if (!controls.isPlaying || !controls.isAlive) return;
-  controls.isAlive = !isHinderCollision();
+  controls.isAlive = !isHinderCollision() && !isPoleCollision();
   if (!controls.isAlive) {
     controls.displayGameover();
   }
@@ -123,7 +123,7 @@ function render(): void {
 
   hinders.forEach((g) => g.update());
   gifts.forEach((g) => g.update());
-  Poles.forEach((l) => l.update());
+  poles.forEach((l) => l.update());
 
   const collected: Gift = getCollectedGift();
   if (collected) {
