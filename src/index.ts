@@ -18,6 +18,7 @@ import { Hinder } from './meshes/hinder';
 import { LightHinder } from './meshes/light-hinder';
 import { getRandomInteger } from './utils/utils';
 import { NUMBER_OF_GIFTS } from './meshes/constants';
+import { buildGifts, buildHinders, buildLightHinders } from './builders/builder';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -41,9 +42,6 @@ const canvas = renderer.domElement;
 // add canvas to dom
 document.body.appendChild(canvas);
 
-/***
- * Add models
- * */
 
 const loadingmanager = new LoadingManager();
 
@@ -61,25 +59,9 @@ scene.addModel(forest);
 const snow = new Snow();
 scene.addModel(snow);
 
-let gifts: Gift[] = Array.from({ length: NUMBER_OF_GIFTS }, () => new Gift());
-let hinders: Hinder[] = [];
-let lightHinders: LightHinder[] = [];
-
-for (let i = 1; i < 10; i++) {
-  const position = {
-    x: 0,
-    y: i * 30,
-    z: 1,
-  };
-  lightHinders = [...(lightHinders || []), new LightHinder({ position })];
-}
-
-for (let i = 1; i < 10; i++) {
-  const x = getRandomInteger(-1, 1);
-  const y = i * 20;
-  const z = 0;
-  hinders = [...(hinders || []), new Hinder({ position: { x, y, z } })];
-}
+let gifts: Gift[] = buildGifts();
+let hinders: Hinder[] = buildHinders();
+let lightHinders: LightHinder[] = buildLightHinders();
 
 track.addModel(...hinders.map((h) => h.mesh));
 track.addModel(...gifts.map((g) => g.mesh));
