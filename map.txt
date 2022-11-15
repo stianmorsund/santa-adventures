@@ -1,0 +1,26 @@
+--            stang (må krype under)
+xx            blokk (må hoppe over)
+o             gave (kan plukke opp)
+
+
+o o o
+
+
+
+x x x
+
+
+
+o o o
+
+
+    o
+
+----
+
+o
+o
+o
+o 
+  o
+    o
