@@ -66,7 +66,16 @@ track.addModel(...hinders.map((h) => h.mesh));
 track.addModel(...gifts.map((g) => g.mesh));
 track.addModel(...poles.map((l) => l.mesh));
 
-let previouslyCollected: Gift;
+interface GameState {
+  currentLevel: 0; // Track1
+  score: number;
+  isAlive: number;
+  isGameFinished: boolean;
+  diedReason: 'hinder' | 'pole';
+  heroPosition: -1 | 0 | 1;
+  isHeroJumping: boolean;
+  isHeroCrawling: boolean;
+}
 
 /**
  * @returns the gift our hero collided with
@@ -127,11 +136,8 @@ function render(): void {
 
   const collected: Gift = getCollectedGift();
   if (collected) {
-    if (collected !== previouslyCollected) {
-      previouslyCollected = collected;
-      collected.isCollected = true;
-      controls.increaseScore();
-    }
+    collected.isCollected = true;
+    controls.increaseScore();
   }
 
   renderer.render(threeScene, camera);
