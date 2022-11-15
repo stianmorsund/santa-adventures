@@ -5,14 +5,14 @@
 import { TRACKBASE_Z, NUMBER_OF_GIFTS, POLE_Z } from '../meshes/constants';
 import { Gift } from '../meshes/gift';
 import { Hinder } from '../meshes/hinder';
-import { LightHinder } from '../meshes/light-hinder';
+import { Pole } from '../meshes/pole';
 import { getRandomInteger } from '../utils/utils';
 
 // Todo; encapsulate into Track1
-export function buildLightHinders(): LightHinder[] {
+export function buildPoles(): Pole[] {
   
   return [
-    new LightHinder({ position: {x: 0, y: 100, z: POLE_Z}})
+    new Pole({ position: {x: 0, y: 100, z: POLE_Z}})
   ];
 }
 

@@ -4,7 +4,7 @@ import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 
-export class LightHinder extends MeshBase {
+export class Pole extends MeshBase {
   geometry: THREE.CylinderGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();

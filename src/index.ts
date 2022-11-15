@@ -15,10 +15,10 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Hinder } from './meshes/hinder';
-import { LightHinder } from './meshes/light-hinder';
+import { Pole } from './meshes/pole';
 import { getRandomInteger } from './utils/utils';
 import { NUMBER_OF_GIFTS } from './meshes/constants';
-import { buildGifts, buildHinders, buildLightHinders } from './builders/builder';
+import { buildGifts, buildHinders, buildPoles } from './builders/builder';
 
 // create the scene
 const scene: Scene = Scene.getInstance();
@@ -61,11 +61,11 @@ scene.addModel(snow);
 
 let gifts: Gift[] = buildGifts();
 let hinders: Hinder[] = buildHinders();
-let lightHinders: LightHinder[] = buildLightHinders();
+let Poles: Pole[] = buildPoles();
 
 track.addModel(...hinders.map((h) => h.mesh));
 track.addModel(...gifts.map((g) => g.mesh));
-track.addModel(...lightHinders.map((l) => l.mesh));
+track.addModel(...Poles.map((l) => l.mesh));
 
 let previouslyCollected: Gift;
 
@@ -79,12 +79,12 @@ function getCollectedGift(): Gift {
 }
 
 function isHinderCollision(): boolean {
-  // return hinders.some(
-  //   (hinder) =>
-  //     // Math.floor(hinder.mesh.position.y) === 0 && hinder.mesh.position.x === hero.currentPosition && !hero.isJumbing
-  //     Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing
-  // );
-  return false;
+  return hinders.some(
+    (hinder) =>
+      // Math.floor(hinder.mesh.position.y) === 0 && hinder.mesh.position.x === hero.currentPosition && !hero.isJumbing
+      Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing
+  );
+  // return false;
 }
 
 // Orbit
@@ -123,7 +123,7 @@ function render(): void {
 
   hinders.forEach((g) => g.update());
   gifts.forEach((g) => g.update());
-  lightHinders.forEach((l) => l.update());
+  Poles.forEach((l) => l.update());
 
   const collected: Gift = getCollectedGift();
   if (collected) {
