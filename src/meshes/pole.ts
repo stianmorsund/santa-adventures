@@ -1,10 +1,12 @@
 import * as THREE from 'three';
-import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
-import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED, POLE_Z } from './constants';
+import { TRACK_SPEED } from './constants';
+import { MeshBase } from './meshbase.abstract';
+
 import { POSSIBLE_X_POSITIONS } from '../models/models';
 
+
+ const POLE_Z = 1;
 export class Pole extends MeshBase {
   geometry: THREE.CylinderGeometry;
   mesh: THREE.Mesh;

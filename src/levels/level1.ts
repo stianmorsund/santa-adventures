@@ -1,4 +1,3 @@
-import { TRACKBASE_Z, POLE_Z } from '../meshes/constants';
 import { Gift } from '../meshes/gift';
 import { Hinder } from '../meshes/hinder';
 import { Pole } from '../meshes/pole';
