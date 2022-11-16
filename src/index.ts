@@ -1,6 +1,4 @@
-// add styles
 import './styles/style.css';
-// three.js
 import * as THREE from 'three';
 
 const OrbitControls = require('three-orbit-controls')(THREE);
@@ -14,13 +12,8 @@ import { Gift } from './meshes/gift';
 import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
-import { Hinder } from './meshes/hinder';
-import { Pole } from './meshes/pole';
-import { getRandomInteger } from './utils/utils';
-import { NUMBER_OF_GIFTS } from './meshes/constants';
-import { buildGifts, buildHinders, buildPoles } from './builders/builder';
+import { Level1 } from './levels/level1';
 
-// create the scene
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
 clock.start();
@@ -58,16 +51,15 @@ scene.addModel(forest);
 const snow = new Snow();
 scene.addModel(snow);
 
-const gifts: Gift[] = buildGifts();
-const hinders: Hinder[] = buildHinders();
-const poles: Pole[] = buildPoles();
+// Use level1
+const { gifts, hinders, poles } = new Level1();
 
-track.addModel(...hinders.map((h) => h.mesh));
-track.addModel(...gifts.map((g) => g.mesh));
-track.addModel(...poles.map((l) => l.mesh));
+// Hinders, gifts and poles are tied to tracks matrix,
+// so it needs to be added
+track.addModel(...hinders, ...gifts, ...poles);
 
 interface GameState {
-  currentLevel: 0; // Track1
+  currentLevel: 0;
   score: number;
   isAlive: number;
   isGameFinished: boolean;
@@ -124,15 +116,12 @@ function render(): void {
     controls.displayGameover();
   }
 
+  // Should live in scene
   if (scene.models) {
     scene.models.forEach((m) => {
       m.update(clock);
     });
   }
-
-  hinders.forEach((g) => g.update());
-  gifts.forEach((g) => g.update());
-  poles.forEach((l) => l.update());
 
   const collected: Gift = getCollectedGift();
   if (collected) {

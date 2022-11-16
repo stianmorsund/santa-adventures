@@ -5,6 +5,7 @@ import { MeshBase } from './meshbase.abstract';
 export class Track extends MeshBase {
   geometry: THREE.PlaneGeometry;
   mesh: THREE.Mesh;
+  children: MeshBase[]; // Children of track should follow the track
 
   constructor() {
     super();
@@ -24,11 +25,14 @@ export class Track extends MeshBase {
     this.mesh.rotation.x = 4.75;
   }
 
-  update(clock: THREE.Clock) {}
+  update(_clock: THREE.Clock) {
+    this.children.forEach((m) => m.update());
+  }
 
-  addModel(...models: THREE.Mesh[]) {
+  addModel(...models: MeshBase[]) {
+    this.children = models;
     models.forEach((m) => {
-      this.mesh.add(m);
+      this.mesh.add(m.mesh);
     });
   }
 }
