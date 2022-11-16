@@ -13,6 +13,7 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
+import { POSSIBLE_X_POSITIONS } from './models/models';
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -64,7 +65,7 @@ interface GameState {
   isAlive: number;
   isGameFinished: boolean;
   diedReason: 'hinder' | 'pole';
-  heroPosition: -1 | 0 | 1;
+  heroPosition: POSSIBLE_X_POSITIONS;
   isHeroJumping: boolean;
   isHeroCrawling: boolean;
 }

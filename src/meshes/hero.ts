@@ -4,6 +4,7 @@ import * as FBXLoader from 'wge-three-fbx-loader';
 import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { LoadingManager } from '../controls/loading-manager';
+import { POSSIBLE_X_POSITIONS } from '../models/models';
 
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
@@ -14,7 +15,7 @@ export class Hero extends MeshBase {
   isJumbing = false;
   isJumpAllowed = true;
   isCrawling = false;
-  currentPosition: -1 | 0 | 1 = 0; // from left to right
+  currentPosition: POSSIBLE_X_POSITIONS = 0;
   bounceValue = 0;
 
   private readonly SANTA_MODEL_PATH = 'src/assets/models/santa/santa_blender.fbx';

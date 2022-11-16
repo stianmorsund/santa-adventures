@@ -1,0 +1,1 @@
+export type POSSIBLE_X_POSITIONS = -1 | 0 | 1;

@@ -11,25 +11,25 @@ export class Level1 {
 
   private build() {
     this.level = [
-      new Gift({ position: { x: -1, y: 30, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 0, y: 30, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 30, z: TRACKBASE_Z } }),
+      new Gift({ position: { x: -1, y: 30 } }),
+      new Gift({ position: { x: 0, y: 30 } }),
+      new Gift({ position: { x: 1, y: 30 } }),
 
-      new Hinder({ position: { x: 0, y: 60, z: TRACKBASE_Z } }),
+      new Hinder({ position: { x: 0, y: 60 } }),
 
-      new Gift({ position: { x: -1, y: 70, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 0, y: 70, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 70, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 80, z: TRACKBASE_Z } }),
+      new Gift({ position: { x: -1, y: 70 } }),
+      new Gift({ position: { x: 0, y: 70 } }),
+      new Gift({ position: { x: 1, y: 70 } }),
+      new Gift({ position: { x: 1, y: 80 } }),
 
-      new Pole({ position: { x: 0, y: 100, z: POLE_Z } }),
+      new Pole({ position: { x: 0, y: 100 } }),
 
-      new Gift({ position: { x: 1, y: 105, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 107, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 109, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 1, y: 111, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: 0, y: 113, z: TRACKBASE_Z } }),
-      new Gift({ position: { x: -1, y: 115, z: TRACKBASE_Z } }),
+      new Gift({ position: { x: 1, y: 105 } }),
+      new Gift({ position: { x: 1, y: 107 } }),
+      new Gift({ position: { x: 1, y: 109 } }),
+      new Gift({ position: { x: 1, y: 111 } }),
+      new Gift({ position: { x: 0, y: 113 } }),
+      new Gift({ position: { x: -1, y: 115 } }),
     ];
   }
 

@@ -3,6 +3,7 @@ import { MeshBase } from './meshbase.abstract';
 import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
+import { POSSIBLE_X_POSITIONS } from '../models/models';
 
 export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
@@ -13,7 +14,7 @@ export class Gift extends MeshBase {
   private readonly SIZE = 0.4;
   private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
-  constructor({ position }: { position?: { x: number; y: number; z: number } } = {}) {
+  constructor({ position }: { position?: { x: POSSIBLE_X_POSITIONS; y: number } } = {}) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
     const texture = new THREE.TextureLoader().load(require(`../assets/textures/gift.jpg`));
@@ -29,8 +30,8 @@ export class Gift extends MeshBase {
     this.mesh = new THREE.Mesh(this.geometry, material);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = false;
-    const { x, y, z } = position || this.getRandomPosition();
-    this.mesh.position.set(x, y, z);
+    const { x, y } = position;
+    this.mesh.position.set(x, y, TRACKBASE_Z);
   }
 
   update() {
