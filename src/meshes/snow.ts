@@ -19,7 +19,7 @@ export class Snow extends MeshBase {
       depthTest: true,
       transparent: true,
       flatShading: true,
-      fog: false
+      fog: false,
     });
 
     // this.material.flatShading = true;
@@ -38,7 +38,6 @@ export class Snow extends MeshBase {
       if (particle.y < -200) {
         particle.y = 200;
       }
-      // Give random y-value
       const velocity = 0 - Math.random() * this.SPEED;
       particle.y += velocity;
     }
@@ -53,11 +52,7 @@ export class Snow extends MeshBase {
   getMesh() {
     return this.mesh;
   }
-
-  /**
-   * Make N snowflakes with random position
-   * @private
-   */
+  
   private makeSnow() {
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
       const particle = new THREE.Vector3(
