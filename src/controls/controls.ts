@@ -2,6 +2,7 @@ import { Scene } from '../scene';
 import { Hero } from '../meshes/hero';
 import * as Hammer from 'hammerjs';
 import { LoadingManager } from './loading-manager';
+import { addCloseOverlayListener } from '../utils/utils';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const creditsModal: HTMLElement = document.getElementById('credits-modal');
@@ -29,6 +30,7 @@ export class Controls {
     creditsButton.addEventListener('click', () => this.toggleCredits());
     restartButton.addEventListener('click', () => this.restartGame());
     creditsCloseBtn.addEventListener('click', () => this.toggleCredits());
+    addCloseOverlayListener(creditsModal, this.toggleCredits);
     // Setup touch controls
     const mc = new Hammer.Manager(this.canvas);
     const swipe = new Hammer.Swipe();
@@ -83,6 +85,7 @@ export class Controls {
   }
 
   togglewelcomeOverlay() {
+    document.body.classList.add('game-started');
     if (!this.loadingManager.isAllLoaded || !this.isAlive) return;
     this.isPlaying = !this.isPlaying;
     const { display } = welcomeOverlay.style;

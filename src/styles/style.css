@@ -39,6 +39,10 @@ body {
   height: 100%;
 }
 
+body.game-started {
+  background-image: url('../assets/sky2.jpg');
+}
+
 .overlay {
   position: fixed;
   top: 0;
