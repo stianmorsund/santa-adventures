@@ -1,7 +1,9 @@
 import * as THREE from 'three';
+import { LoadingManager } from '../controls/loading-manager';
 import { MeshBase } from './meshbase.abstract';
 
 export class Snow extends MeshBase {
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   public readonly NUMBER_OF_SNOWFLAKES = 2000;
   public readonly SPEED = 2;
   public material: THREE.PointsMaterial;
@@ -14,7 +16,7 @@ export class Snow extends MeshBase {
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 2,
-      map: new THREE.TextureLoader().load(snowFlake),
+      map: new THREE.TextureLoader(this.loadingManager.manager).load(snowFlake),
       blending: THREE.AdditiveBlending,
       depthTest: true,
       transparent: true,
@@ -52,7 +54,7 @@ export class Snow extends MeshBase {
   getMesh() {
     return this.mesh;
   }
-  
+
   private makeSnow() {
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
       const particle = new THREE.Vector3(

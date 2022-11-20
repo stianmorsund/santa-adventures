@@ -4,10 +4,11 @@ import { TRACK_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
 
 import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { LoadingManager } from '../controls/loading-manager';
 
-
- const POLE_Z = 1.2;
+const POLE_Z = 1.2;
 export class Pole extends MeshBase {
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   geometry: THREE.CylinderGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
@@ -16,7 +17,7 @@ export class Pole extends MeshBase {
     super();
 
     this.geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32);
-    const texture = new THREE.TextureLoader().load(require(`../assets/candycane.jpg`));
+    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(require(`../assets/candycane.jpg`));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;

@@ -1,8 +1,10 @@
 import * as THREE from 'three';
-import { FOREST_SPEED, TRACK_LENGTH } from './constants';
+import { LoadingManager } from '../controls/loading-manager';
+import { TRACK_LENGTH } from './constants';
 import { MeshBase } from './meshbase.abstract';
 
 export class Track extends MeshBase {
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   geometry: THREE.PlaneGeometry;
   mesh: THREE.Mesh;
   children: MeshBase[]; // Children of track should follow the track
@@ -11,7 +13,9 @@ export class Track extends MeshBase {
     super();
     this.geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32);
 
-    const texture = new THREE.TextureLoader().load(require('../assets/textures/snow_down.jpg'));
+    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(
+      require('../assets/textures/snow_down.jpg')
+    );
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;

@@ -38,7 +38,9 @@ export class Hero extends MeshBase {
       const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer');
       const action = this.mixer.clipAction(clip);
       const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned');
-      const uvmap = new THREE.TextureLoader().load(require('../assets/models/santa/Santa_UV.png'));
+      const uvmap = new THREE.TextureLoader(this.loadingManager.manager).load(
+        require('../assets/models/santa/Santa_UV.png')
+      );
       skinnedMesh.material.map = uvmap;
       skinnedMesh.receiveShadow = true;
       skinnedMesh.castShadow = true;

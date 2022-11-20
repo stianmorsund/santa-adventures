@@ -4,8 +4,10 @@ import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { LoadingManager } from '../controls/loading-manager';
 
 export class Hinder extends MeshBase {
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
@@ -14,7 +16,7 @@ export class Hinder extends MeshBase {
     super();
 
     this.geometry = new THREE.BoxGeometry(7, 0.2, 1);
-    const texture = new THREE.TextureLoader().load(require(`../assets/textures/snow.jpg`));
+    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(require(`../assets/textures/snow.jpg`));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
