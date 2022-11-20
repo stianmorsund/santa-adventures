@@ -1,11 +1,12 @@
 {
   "name": "santa-adventures",
   "version": "1.0.0",
-  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/stianmorsund/santa-adventures"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --inline --config webpack.dev.js",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
