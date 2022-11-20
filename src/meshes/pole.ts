@@ -6,7 +6,7 @@ import { MeshBase } from './meshbase.abstract';
 import { POSSIBLE_X_POSITIONS } from '../models/models';
 
 
- const POLE_Z = 1;
+ const POLE_Z = 1.2;
 export class Pole extends MeshBase {
   geometry: THREE.CylinderGeometry;
   mesh: THREE.Mesh;
@@ -15,7 +15,7 @@ export class Pole extends MeshBase {
   constructor({ position }: { position?: { x: POSSIBLE_X_POSITIONS; y: number } } = {}) {
     super();
 
-    this.geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 32);
+    this.geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32);
     const texture = new THREE.TextureLoader().load(require(`../assets/candycane.jpg`));
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
