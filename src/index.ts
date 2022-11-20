@@ -70,7 +70,7 @@ interface GameState {
   isHeroCrawling: boolean;
 }
 
-function getCollectedGift(): Gift {
+function getCollectedGift(): Gift | undefined {
   return gifts.find(
     (g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
   );
@@ -129,7 +129,7 @@ function render(): void {
     });
   }
 
-  const collected: Gift = getCollectedGift();
+  const collected = getCollectedGift();
   if (collected) {
     collected.isCollected = true;
     controls.increaseScore();
