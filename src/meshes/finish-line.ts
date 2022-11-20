@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { LoadingManager } from '../controls/loading-manager';
 import { TRACK_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
 
@@ -8,6 +9,7 @@ export class FinishLine extends MeshBase {
   private widthSegments = 6;
   private heightSegments = 3;
   private flagFabric: THREE.Mesh;
+  private loadingManager: LoadingManager = LoadingManager.getInstance();
   mesh: THREE.Group = new THREE.Group();
 
   constructor({ position }: { position?: { y: number } } = {}) {
@@ -15,10 +17,12 @@ export class FinishLine extends MeshBase {
 
     const poleLeft = this.buildFlagpole();
     const poleRight = this.buildFlagpole();
-    this.flagFabric = this.buildFlag();
+    this.flagFabric = this.buildFlagfabric();
+    this.loadTexture();
 
     poleLeft.position.set(-2, 0, 0);
     poleRight.position.set(2, 0, 0);
+
     this.flagFabric.position.y = 1;
 
     this.mesh.add(poleLeft, poleRight, this.flagFabric);
@@ -28,6 +32,23 @@ export class FinishLine extends MeshBase {
     this.mesh.receiveShadow = true;
     const { y } = position;
     this.mesh.position.set(0, y, 1.2);
+  }
+
+  loadTexture() {
+    const loader = new THREE.TextureLoader(this.loadingManager.manager);
+    loader.load('src/assets/textures/checkered.jpg', (texture) => {
+      texture.magFilter = THREE.LinearFilter;
+      texture.minFilter = THREE.LinearFilter; 
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(this.sizeW , this.sizeH);
+      const flagTexture = texture;
+      this.flagFabric.material = new THREE.MeshLambertMaterial({
+        color: '#ffffff',
+        map: flagTexture,
+        side: THREE.DoubleSide,
+      });
+    });
   }
 
   buildFlagpole(): THREE.Mesh {
@@ -40,7 +61,7 @@ export class FinishLine extends MeshBase {
     return new THREE.Mesh(poleGeometry, poleMaterial);
   }
 
-  buildFlag() {
+  buildFlagfabric() {
     const flagGeometry = new THREE.PlaneGeometry(this.sizeW, this.sizeH, this.widthSegments, this.heightSegments);
     const flagMaterial = new THREE.MeshLambertMaterial({
       color: '#ffffff',
