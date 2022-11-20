@@ -53,11 +53,11 @@ const snow = new Snow();
 scene.addModel(snow);
 
 // Use level1
-const { gifts, hinders, poles } = new Level1();
+const { gifts, hinders, poles, finishLine } = new Level1();
 
 // Hinders, gifts and poles are tied to tracks matrix,
 // so it needs to be added
-track.addModel(...hinders, ...gifts, ...poles);
+track.addModel(...hinders, ...gifts, ...poles, finishLine);
 
 interface GameState {
   currentLevel: 0;
@@ -112,7 +112,7 @@ function animate(): void {
 
 function render(): void {
   if (!controls.isPlaying || !controls.isAlive) return;
-  controls.isAlive = !isHinderCollision() && !isPoleCollision();
+  // controls.isAlive = !isHinderCollision() && !isPoleCollision();
   if (!controls.isAlive) {
     controls.displayGameover();
   }
