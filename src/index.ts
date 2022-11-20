@@ -70,9 +70,6 @@ interface GameState {
   isHeroCrawling: boolean;
 }
 
-/**
- * @returns the gift our hero collided with
- */
 function getCollectedGift(): Gift {
   return gifts.find(
     (g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
@@ -81,21 +78,23 @@ function getCollectedGift(): Gift {
 
 function isHinderCollision(): boolean {
   return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing);
-  // return false;
 }
 
 function isPoleCollision(): boolean {
   return poles.some((pole) => Math.floor(pole.mesh.position.y * 2) === 0 && !hero.isCrawling);
-  // return false;
+}
+
+function isPastFinishLine(): boolean {
+  return Math.floor(finishLine.mesh.position.y * 2) === 0;
 }
 
 // Orbit
 
-let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
-orbitControl.addEventListener('change', render);
-orbitControl.enableDamping = true;
-orbitControl.dampingFactor = 0.8;
-orbitControl.enableZoom = true;
+// let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+// orbitControl.addEventListener('change', render);
+// orbitControl.enableDamping = true;
+// orbitControl.dampingFactor = 0.8;
+// orbitControl.enableZoom = true;
 
 window.addEventListener('resize', onWindowResize, false);
 
@@ -111,10 +110,16 @@ function animate(): void {
 }
 
 function render(): void {
-  if (!controls.isPlaying || !controls.isAlive) return;
-  // controls.isAlive = !isHinderCollision() && !isPoleCollision();
+  if (controls.isPaused || !controls.isAlive || controls.isFinished) return;
+  controls.isAlive = !isHinderCollision() && !isPoleCollision();
   if (!controls.isAlive) {
     controls.displayGameover();
+  }
+
+  controls.isFinished = isPastFinishLine();
+
+  if (controls.isFinished) {
+    controls.displayGameFinished();
   }
 
   // Should live in scene

@@ -1,9 +1,11 @@
+import { FinishLine } from '../meshes/finish-line';
 import { Gift } from '../meshes/gift';
+
 import { Hinder } from '../meshes/hinder';
 import { Pole } from '../meshes/pole';
 
 export class Level1 {
-  level: Array<Pole | Hinder | Gift>;
+  level: Array<Pole | Hinder | Gift | FinishLine>;
   constructor() {
     this.build();
   }
@@ -35,7 +37,6 @@ export class Level1 {
       new Pole({ position: { x: 0, y: 150 } }),
       new Gift({ position: { x: -1, y: 150 } }),
       new Gift({ position: { x: 0, y: 150 } }),
-    
 
       new Gift({ position: { x: -1, y: 160 } }),
       new Gift({ position: { x: 0, y: 165 } }),
@@ -62,9 +63,8 @@ export class Level1 {
       new Gift({ position: { x: 1, y: 212 } }),
       new Gift({ position: { x: 0, y: 215 } }),
       new Gift({ position: { x: -1, y: 219 } }),
-      
 
-
+      new FinishLine({ position: { y: 220 } }),
     ];
   }
 
@@ -78,5 +78,9 @@ export class Level1 {
 
   get poles(): Pole[] {
     return this.level.filter((entity) => entity instanceof Pole) as Pole[];
+  }
+
+  get finishLine(): FinishLine {
+    return this.level.find((entity) => entity instanceof FinishLine) as FinishLine;
   }
 }
