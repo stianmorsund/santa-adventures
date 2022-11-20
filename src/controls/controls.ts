@@ -18,8 +18,9 @@ export class Controls {
   canvas: HTMLCanvasElement;
   scene: Scene = Scene.getInstance();
   hero: Hero;
-  isPlaying: boolean = false;
+  isPaused: boolean = true;
   isAlive: boolean = true;
+  isFinished: boolean = false;
   score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(canvas: HTMLCanvasElement, hero: Hero) {
@@ -87,7 +88,7 @@ export class Controls {
   togglewelcomeOverlay() {
     document.body.classList.add('game-started');
     if (!this.loadingManager.isAllLoaded || !this.isAlive) return;
-    this.isPlaying = !this.isPlaying;
+    this.isPaused = !this.isPaused;
     const { display } = welcomeOverlay.style;
     welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
   }
@@ -120,6 +121,10 @@ export class Controls {
   displayGameover() {
     finalScoreElement.textContent = this.score.toString();
     gameoverOverlay.style.display = 'flex';
+  }
+
+  displayGameFinished() {
+    
   }
 
   restartGame() {
