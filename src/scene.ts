@@ -4,7 +4,6 @@ import { MeshBase } from './meshes/meshbase.abstract';
 let instance = null;
 
 export class Scene {
-
   get models() {
     return this._models;
   }
@@ -46,9 +45,7 @@ export class Scene {
   }
 
   addModel(...models: MeshBase[]) {
-    models.forEach((m) => {
-      this._models.push(m);
-      this._scene.add(m.mesh);
-    });
+    this._models.push(...models);
+    this._scene.add(...models.map((m) => m.mesh));
   }
 }
