@@ -100,9 +100,7 @@ export class Controls {
     gameoverOverlay.style.display = 'flex';
   }
 
-  displayGameFinished() {
-    
-  }
+  displayGameFinished() {}
 
   restartGame() {
     window.location.reload();

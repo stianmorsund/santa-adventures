@@ -13,10 +13,6 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
-import { store } from './+state/store';
-
-
-console.log({store})
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -61,8 +57,6 @@ const { gifts, hinders, poles, finishLine } = new Level1();
 // Hinders, gifts and poles are tied to tracks matrix,
 // so it needs to be added
 track.addModel(...hinders, ...gifts, ...poles, finishLine);
-
-
 
 function getCollectedGift(): Gift | undefined {
   return gifts.find(
