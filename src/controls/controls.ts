@@ -1,7 +1,8 @@
-import { Scene } from '../scene';
+import { santaMovedLeft, store } from '../+state/store';
 import { Hero } from '../meshes/hero';
-import { LoadingManager } from './loading-manager';
+import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
+import { LoadingManager } from './loading-manager';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const creditsModal: HTMLElement = document.getElementById('credits-modal');
@@ -45,7 +46,9 @@ export class Controls {
     switch (key) {
       case 'a':
       case 'ArrowLeft':
+        store.dispatch(santaMovedLeft());
         this.hero.handleMoveLeft();
+
         break;
       case 'd':
       case 'ArrowRight':
