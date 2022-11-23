@@ -1,6 +1,5 @@
 import { Scene } from '../scene';
 import { Hero } from '../meshes/hero';
-import * as Hammer from 'hammerjs';
 import { LoadingManager } from './loading-manager';
 import { addCloseOverlayListener } from '../utils/utils';
 
@@ -15,7 +14,6 @@ const scoreElement: HTMLElement = document.getElementById('score');
 const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close');
 
 export class Controls {
-  canvas: HTMLCanvasElement;
   scene: Scene = Scene.getInstance();
   hero: Hero;
   isPaused: boolean = true;
@@ -23,8 +21,7 @@ export class Controls {
   isFinished: boolean = false;
   score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
-  constructor(canvas: HTMLCanvasElement, hero: Hero) {
-    this.canvas = canvas;
+  constructor(hero: Hero) {
     this.hero = hero;
     document.onkeydown = (e) => this.handleKeyDown(e);
     playButton.addEventListener('click', () => this.togglewelcomeOverlay());
@@ -32,26 +29,6 @@ export class Controls {
     restartButton.addEventListener('click', () => this.restartGame());
     creditsCloseBtn.addEventListener('click', () => this.toggleCredits());
     addCloseOverlayListener(creditsModal, this.toggleCredits);
-    // Setup touch controls
-    const mc = new Hammer.Manager(this.canvas);
-    const swipe = new Hammer.Swipe();
-    mc.add(swipe);
-    mc.on('swipe', (e) => this.handleTouch(e));
-  }
-
-  handleTouch(event: HammerInput) {
-    const { direction } = event;
-    switch (direction) {
-      case Hammer.DIRECTION_LEFT:
-        this.hero.handleMoveLeft();
-        break;
-      case Hammer.DIRECTION_RIGHT:
-        this.hero.handleMoveRight();
-        break;
-      case Hammer.DIRECTION_UP:
-        this.hero.handleJump();
-        break;
-    }
   }
 
   handleKeyDown(event: KeyboardEvent) {

@@ -13,10 +13,10 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
-// import { store } from './+state/store';
+import { store } from './+state/store';
 
 
-// console.log({store})
+console.log({store})
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -47,7 +47,7 @@ scene.addModel(track);
 const hero = new Hero();
 scene.addModel(hero);
 
-const controls = new Controls(canvas, hero);
+const controls = new Controls(hero);
 
 const forest = new Forest();
 scene.addModel(forest);
