@@ -5,10 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = merge(common, {
   mode: 'production',
   output: {
-    publicPath: '/dev/santa-adventures/'
+    publicPath: '/dev/santa-adventures/',
   },
-  plugins: [new CopyWebpackPlugin([
-    { from: 'src/assets', to: 'src/assets' },
-    { from: 'src/styles', to: 'src/styles' }
-  ])]
 });
