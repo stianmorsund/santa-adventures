@@ -13,7 +13,10 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
-import { POSSIBLE_X_POSITIONS } from './models/models';
+// import { store } from './+state/store';
+
+
+// console.log({store})
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -59,16 +62,7 @@ const { gifts, hinders, poles, finishLine } = new Level1();
 // so it needs to be added
 track.addModel(...hinders, ...gifts, ...poles, finishLine);
 
-interface GameState {
-  currentLevel: 0;
-  score: number;
-  isAlive: number;
-  isGameFinished: boolean;
-  diedReason: 'hinder' | 'pole';
-  heroPosition: POSSIBLE_X_POSITIONS;
-  isHeroJumping: boolean;
-  isHeroCrawling: boolean;
-}
+
 
 function getCollectedGift(): Gift | undefined {
   return gifts.find(
@@ -90,11 +84,11 @@ function isPastFinishLine(): boolean {
 
 // Orbit
 
-// let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
-// orbitControl.addEventListener('change', render);
-// orbitControl.enableDamping = true;
-// orbitControl.dampingFactor = 0.8;
-// orbitControl.enableZoom = true;
+let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+orbitControl.addEventListener('change', render);
+orbitControl.enableDamping = true;
+orbitControl.dampingFactor = 0.8;
+orbitControl.enableZoom = true;
 
 window.addEventListener('resize', onWindowResize, false);
 
