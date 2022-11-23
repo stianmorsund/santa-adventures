@@ -7,8 +7,8 @@ export class EnemyBuilder {
   
   scene: Scene = Scene.getInstance();
   readonly count: number;
-  readonly MODEL_PATH = 'src/assets/models/snowman/SnowmanOBJ.obj';
-  readonly MATERIAL_PATH = 'src/assets/models/snowman/SnowmanOBJ.mtl';
+  readonly MODEL_PATH = 'assets/models/snowman/SnowmanOBJ.obj';
+  readonly MATERIAL_PATH = 'assets/models/snowman/SnowmanOBJ.mtl';
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private mtlLoader = new MTLLoader(this.loadingManager.manager);
   private objLoader = new OBJLoader(this.loadingManager.manager);
@@ -18,10 +18,10 @@ export class EnemyBuilder {
 
   build(): Promise<Enemy[]> {
     return new Promise((resolve, reject) => {
-      this.mtlLoader.load('src/assets/models/snowman/SnowmanOBJ.mtl', (materials) => {
+      this.mtlLoader.load('assets/models/snowman/SnowmanOBJ.mtl', (materials) => {
         materials.preload();
         this.objLoader.setMaterials(materials);
-        this.objLoader.load('src/assets/models/snowman/SnowmanOBJ.obj', (snowman) => {
+        this.objLoader.load('assets/models/snowman/SnowmanOBJ.obj', (snowman) => {
           const enemies: Enemy[] = [];
           for (let i = 0; i < this.count; i++) {
             const posX = (i % 2) * (i % 2 ? -1 : 1);

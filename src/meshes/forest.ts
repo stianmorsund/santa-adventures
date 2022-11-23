@@ -11,7 +11,7 @@ import { LoadingManager } from '../controls/loading-manager';
 export class Forest extends MeshBase {
   public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
-  private readonly TREE_MODEL_PATH = 'src/assets/models/tree2.fbx';
+  private readonly TREE_MODEL_PATH = 'assets/models/tree2.fbx';
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private loader = new FBXLoader(this.loadingManager.manager);
   private readonly NUMBER_OF_TREES = 70;

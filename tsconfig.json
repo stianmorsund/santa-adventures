@@ -7,23 +7,12 @@
     "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": true,
     "outDir": "./lib/",
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  },
-  "awesomeTypescriptLoaderOptions": {
-    "useWebpackText": true,
-    "forkChecker": true,
-    "useCache": true
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["node_modules", "lib"],
   "compileOnSave": true,
-  "buildOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "buildOnSave": false
 }

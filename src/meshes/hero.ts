@@ -18,7 +18,7 @@ export class Hero extends MeshBase {
   currentPosition: POSSIBLE_X_POSITIONS = 0;
   bounceValue = 0;
 
-  private readonly SANTA_MODEL_PATH = 'src/assets/models/santa/santa_blender.fbx';
+  private readonly SANTA_MODEL_PATH = 'assets/models/santa/santa_blender.fbx';
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private loader = new FBXLoader(this.loadingManager.manager);
   private readonly RADIUS = 0.3;

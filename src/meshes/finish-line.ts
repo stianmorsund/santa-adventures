@@ -36,7 +36,7 @@ export class FinishLine extends MeshBase {
 
   loadTexture() {
     const loader = new THREE.TextureLoader(this.loadingManager.manager);
-    loader.load('src/assets/textures/checkered.jpg', (texture) => {
+    loader.load('assets/textures/checkered.jpg', (texture) => {
       texture.magFilter = THREE.LinearFilter;
       texture.minFilter = THREE.LinearFilter; 
       texture.wrapS = THREE.RepeatWrapping;
