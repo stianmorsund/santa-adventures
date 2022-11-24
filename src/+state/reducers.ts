@@ -16,6 +16,7 @@ export const santaReachedFinishline = createAction('Santa - Reached finish line'
 
 export const pressedPlaybutton = createAction('Pressed Play');
 export const pressedEscape = createAction('Pressed Escape');
+export const pressedRestartGame = createAction('Pressed Restart Game');
 
 interface GameState {
   // level: number;
