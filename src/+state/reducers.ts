@@ -2,11 +2,16 @@ import { createAction, createReducer, isAnyOf } from '@reduxjs/toolkit';
 import { POSSIBLE_X_POSITIONS } from '../models/models';
 import { withPayloadType } from './utils';
 
+export type CrashReason = 'pole' | 'wall';
+
 export const santaMovedLeft = createAction('Santa - Moved Left');
 export const santaMovedRight = createAction('Santa - Moved Right');
 export const santaJumped = createAction('Santa - Jumped');
 export const santaCrawled = createAction('Santa - Crawled');
 export const santaCollectedPackage = createAction('Santa - Collected package', withPayloadType<string>());
+export const santaCrashedOnPole = createAction('Santa - Crashed on pole');
+export const santaCrashedOnWall = createAction('Santa - Crashed on wall');
+
 export const santaReachedFinishline = createAction('Santa - Reached finish line');
 
 export const pressedPlaybutton = createAction('Pressed Play');
@@ -22,7 +27,7 @@ interface GameState {
   isGamePaused: boolean;
   score: number;
   collectedPackages: string[];
-  diedReason: 'hinder' | 'pole' | undefined;
+  diedReason: CrashReason | undefined;
 }
 
 const initialState: GameState = {
@@ -59,6 +64,14 @@ export const santaReducer = createReducer(initialState, (builder) => {
     })
     .addCase(santaReachedFinishline, (state, action) => {
       state.isGameFinished = true;
+    })
+    .addCase(santaCrashedOnPole, (state, action) => {
+      state.isAlive = false;
+      state.diedReason = 'pole'
+    })
+    .addCase(santaCrashedOnWall, (state, action) => {
+      state.isAlive = false;
+      state.diedReason = 'wall'
     })
     .addMatcher(isAnyOf(pressedEscape, pressedPlaybutton), (state, action) => {
       state.isGamePaused = !state.isGamePaused;

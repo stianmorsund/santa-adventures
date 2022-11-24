@@ -12,10 +12,7 @@ import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
 import { LoadingManager } from './loading-manager';
 
-const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const creditsModal: HTMLElement = document.getElementById('credits-modal');
-const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
-const finalScoreElement: HTMLElement = document.getElementById('final-score');
 const playButton: HTMLElement = document.getElementById('btn-play');
 const creditsButton: HTMLElement = document.getElementById('btn-credits');
 const restartButton: HTMLElement = document.getElementById('btn-restart');
@@ -25,9 +22,6 @@ export class Controls {
   scene: Scene = Scene.getInstance();
   hero: Hero;
 
-  isAlive: boolean = true;
-
-  score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(hero: Hero) {
     this.hero = hero;
@@ -51,7 +45,6 @@ export class Controls {
       }
 
       store.dispatch(pressedEscape());
-      // this.togglewelcomeOverlay();
     }
     // Handle keyboard hero movement
     if (this.hero.isJumping) return;
@@ -82,7 +75,6 @@ export class Controls {
 
   render() {}
 
-
   isCreditsOpened = () => creditsModal.style.display === 'flex';
 
   toggleCredits(newState?: 'show' | 'hide') {
@@ -96,11 +88,6 @@ export class Controls {
       return;
     }
     creditsModal.style.display = display === 'none' || display === '' ? 'flex' : 'none';
-  }
-
-  displayGameover() {
-    finalScoreElement.textContent = this.score.toString();
-    gameoverOverlay.style.display = 'flex';
   }
 
   restartGame() {

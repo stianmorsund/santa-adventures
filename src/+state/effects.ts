@@ -1,5 +1,13 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
-import { pressedEscape, pressedPlaybutton, santaCollectedPackage, santaReducer } from './reducers';
+import {
+  CrashReason,
+  pressedEscape,
+  pressedPlaybutton,
+  santaCollectedPackage,
+  santaCrashedOnPole,
+  santaCrashedOnWall,
+  santaReducer,
+} from './reducers';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 
@@ -11,6 +19,14 @@ const updateScore = () => {
   setTimeout(() => {
     scoreElement.classList.remove('pulse');
   }, 1000);
+};
+
+const showGameOverModal = (reason: CrashReason) => {
+  const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
+  const finalScoreElement: HTMLElement = document.getElementById('final-score');
+
+  finalScoreElement.textContent = store.getState().score.toString();
+  gameoverOverlay.style.display = 'flex';
 };
 
 // Create the middleware instance and methods
@@ -38,6 +54,20 @@ listenerMiddleware.startListening({
   effect: async (_action) => {
     const { display } = welcomeOverlay.style;
     welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: santaCrashedOnPole,
+  effect: async (_action) => {
+    showGameOverModal('pole');
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: santaCrashedOnWall,
+  effect: async (_action) => {
+    showGameOverModal('wall');
   },
 });
 

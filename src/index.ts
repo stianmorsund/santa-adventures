@@ -13,7 +13,12 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
-import { santaCollectedPackage, santaReachedFinishline } from './+state/reducers';
+import {
+  santaCollectedPackage,
+  santaCrashedOnPole,
+  santaCrashedOnWall,
+  santaReachedFinishline,
+} from './+state/reducers';
 import { store } from './+state/effects';
 
 const scene: Scene = Scene.getInstance();
@@ -100,11 +105,15 @@ function animate(): void {
 }
 
 function render(): void {
-  const { isGameFinished, isGamePaused } = store.getState();
-  if (isGamePaused || !controls.isAlive || isGameFinished) return;
-  controls.isAlive = !isHinderCollision() && !isPoleCollision();
-  if (!controls.isAlive) {
-    controls.displayGameover();
+  const { isGameFinished, isGamePaused, isAlive } = store.getState();
+  if (isGamePaused || !isAlive || isGameFinished) return;
+
+  if (isHinderCollision()) {
+    store.dispatch(santaCrashedOnWall());
+  }
+
+  if (isPoleCollision()) {
+    store.dispatch(santaCrashedOnPole());
   }
 
   if (isPastFinishLine()) {
