@@ -1,6 +1,16 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import { santaCollectedPackage, santaReducer } from './reducers';
 
+const updateScore = () => {
+  const scoreElement: HTMLElement = document.getElementById('score');
+  scoreElement.classList.add('pulse');
+  scoreElement.textContent = store.getState().score.toString();
+
+  setTimeout(() => {
+    scoreElement.classList.remove('pulse');
+  }, 1000);
+};
+
 // Create the middleware instance and methods
 export const listenerMiddleware = createListenerMiddleware();
 
@@ -8,8 +18,8 @@ export const listenerMiddleware = createListenerMiddleware();
 // They may contain any sync or async logic, similar to thunks.
 listenerMiddleware.startListening({
   actionCreator: santaCollectedPackage,
-  effect: async (action) => {
-    console.log('EFFECT santaCollectedPackage');
+  effect: async (_action) => {
+    updateScore();
   },
 });
 

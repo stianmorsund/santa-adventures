@@ -12,7 +12,6 @@ const finalScoreElement: HTMLElement = document.getElementById('final-score');
 const playButton: HTMLElement = document.getElementById('btn-play');
 const creditsButton: HTMLElement = document.getElementById('btn-credits');
 const restartButton: HTMLElement = document.getElementById('btn-restart');
-const scoreElement: HTMLElement = document.getElementById('score');
 const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close');
 
 export class Controls {
@@ -90,16 +89,6 @@ export class Controls {
       return;
     }
     creditsModal.style.display = display === 'none' || display === '' ? 'flex' : 'none';
-  }
-
-  increaseScore() {
-    this.score++;
-    scoreElement.classList.add('pulse');
-    scoreElement.textContent = this.score.toString();
-
-    setTimeout(() => {
-      scoreElement.classList.remove('pulse');
-    }, 1000);
   }
 
   displayGameover() {

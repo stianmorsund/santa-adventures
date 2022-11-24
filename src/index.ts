@@ -123,7 +123,6 @@ function render(): void {
   if (collected) {
     store.dispatch(santaCollectedPackage());
     collected.isCollected = true;
-    controls.increaseScore();
   }
 
   renderer.render(threeScene, camera);
