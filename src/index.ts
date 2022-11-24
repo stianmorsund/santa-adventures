@@ -13,7 +13,7 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
-import { santaCollectedPackage } from './+state/reducers';
+import { santaCollectedPackage, santaReachedFinishline } from './+state/reducers';
 import { store } from './+state/effects';
 
 const scene: Scene = Scene.getInstance();
@@ -100,17 +100,17 @@ function animate(): void {
 }
 
 function render(): void {
-  if (controls.isPaused || !controls.isAlive || controls.isFinished) return;
+  const { isGameFinished } = store.getState();
+  if (controls.isPaused || !controls.isAlive || isGameFinished) return;
   controls.isAlive = !isHinderCollision() && !isPoleCollision();
   if (!controls.isAlive) {
     controls.displayGameover();
   }
 
-  controls.isFinished = isPastFinishLine();
-
-  if (controls.isFinished) {
-    controls.displayGameFinished();
+  if (isPastFinishLine()) {
+    store.dispatch(santaReachedFinishline());
   }
+
 
   // Should live in scene
   if (scene.models) {

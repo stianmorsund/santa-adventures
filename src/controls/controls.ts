@@ -19,7 +19,7 @@ export class Controls {
   hero: Hero;
   isPaused: boolean = true;
   isAlive: boolean = true;
-  isFinished: boolean = false;
+  
   score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(hero: Hero) {
@@ -95,8 +95,6 @@ export class Controls {
     finalScoreElement.textContent = this.score.toString();
     gameoverOverlay.style.display = 'flex';
   }
-
-  displayGameFinished() {}
 
   restartGame() {
     window.location.reload();

@@ -51,6 +51,9 @@ export const santaReducer = createReducer(
       .addCase(santaCollectedPackage, (state, action) => {
         state.score++;
         state.collectedPackages.push(action.payload);
+      })
+      .addCase(santaReachedFinishline, (state, action) => {
+        state.isGameFinished = true;
       });
   }
 );
