@@ -17,7 +17,9 @@ export class Pole extends MeshBase {
     super();
 
     this.geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32);
-    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(require(`../assets/candycane.jpg`));
+    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(
+      require(`../assets/textures/candycane.jpg`)
+    );
     texture.anisotropy = 4;
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
