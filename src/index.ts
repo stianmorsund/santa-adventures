@@ -121,8 +121,7 @@ function render(): void {
 
   const collected = getCollectedGift();
   if (collected) {
-    store.dispatch(santaCollectedPackage());
-    collected.isCollected = true;
+    store.dispatch(santaCollectedPackage(collected.id));
   }
 
   renderer.render(threeScene, camera);

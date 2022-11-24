@@ -4,15 +4,15 @@ import { Scene } from '../scene';
 import { getRandomInteger } from '../utils/utils';
 import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
 import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { store } from '../+state/effects';
 
 export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
   scene: Scene = Scene.getInstance();
-  isCollected: boolean = false;
+  
   private readonly ROTATION_SPEED = 0.05;
   private readonly SIZE = 0.4;
-  private readonly Z_POSITION_TO_RESET_POSITION = 5;
 
   constructor({ position }: { position?: { x: POSSIBLE_X_POSITIONS; y: number } } = {}) {
     super();
@@ -35,22 +35,12 @@ export class Gift extends MeshBase {
   }
 
   update() {
-    if (this.isCollected) {
+    if (store.getState().collectedPackages.includes(this.id)) {
       this.animateCollected();
     } else {
       this.mesh.rotation.z += this.ROTATION_SPEED;
       this.mesh.position.y -= TRACK_SPEED;
     }
-
-    // // Reset state when behind camera or done collected animation
-    // // Set new position if behind camera, we dont want to create more gifts,
-    // // Only reposition to increase performance
-    // if (this.isDoneWithCollectedAnimation() || this.isBehindCamera()) {
-    //   this.mesh.worldToLocal(new THREE.Vector3());
-    //   this.isCollected = false;
-    //   const { x, y, z } = this.getRandomPosition();
-    //   this.mesh.position.set(x, y, z);
-    // }
   }
 
   getRandomPosition(): { x: number; y: number; z: number } {
@@ -60,19 +50,10 @@ export class Gift extends MeshBase {
     return { x: posX, y: posY, z: posZ };
   }
 
-  // isBehindCamera(): boolean {
-  //   return this.mesh.position.y <= -1;
-  // }
-
-  // isDoneWithCollectedAnimation(): boolean {
-  //   return this.mesh.position.z > this.Z_POSITION_TO_RESET_POSITION;
-  // }
-
   animateCollected(): void {
     const direction = new THREE.Vector3(4, 2, 2);
     // const direction = new THREE.Vector3(1,1,0);
     const worldPosition = new THREE.Vector3();
-
     const speed = 0.04;
 
     this.mesh.localToWorld(worldPosition);
