@@ -1,19 +1,6 @@
-import { configureStore, createAction, createListenerMiddleware, createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { Level1 } from '../levels/level1';
+import { createAction, createReducer } from '@reduxjs/toolkit';
 import { POSSIBLE_X_POSITIONS } from '../models/models';
-import { listenerMiddleware } from './effects';
 import { withPayloadType } from './utils';
-
-interface GameState {
-  level: number;
-  score: number;
-  isAlive: boolean;
-  isGameFinished: boolean;
-  diedReason: 'hinder' | 'pole' | undefined;
-  heroPosition: POSSIBLE_X_POSITIONS;
-  isJumping: boolean;
-  isCrawling: boolean;
-}
 
 export const santaMovedLeft = createAction('Santa - Moved Left');
 export const santaMovedRight = createAction('Santa - Moved Right');
@@ -22,8 +9,20 @@ export const santaCrawled = createAction('Santa - Crawled');
 export const santaCollectedPackage = createAction('Santa - Collected package', withPayloadType<string>());
 export const santaReachedFinishline = createAction('Santa - Reached finish line');
 
+interface GameState {
+  // level: number;
+  santaPosition: POSSIBLE_X_POSITIONS;
+  isJumping: boolean;
+  isCrawling: boolean;
+  isAlive: boolean;
+  isGameFinished: boolean;
+  score: number;
+  collectedPackages: string[];
+  diedReason: 'hinder' | 'pole' | undefined;
+}
+
 export const santaReducer = createReducer(
-  {
+  <GameState>{
     santaPosition: 0,
     isJumping: false,
     isCrawling: false,
@@ -31,6 +30,7 @@ export const santaReducer = createReducer(
     isGameFinished: false,
     score: 0,
     collectedPackages: [],
+    diedReason: undefined,
   },
   (builder) => {
     builder
