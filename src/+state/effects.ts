@@ -1,5 +1,7 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
-import { santaCollectedPackage, santaReducer } from './reducers';
+import { pressedEscape, pressedPlaybutton, santaCollectedPackage, santaReducer } from './reducers';
+
+const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 
 const updateScore = () => {
   const scoreElement: HTMLElement = document.getElementById('score');
@@ -20,6 +22,22 @@ listenerMiddleware.startListening({
   actionCreator: santaCollectedPackage,
   effect: async (_action) => {
     updateScore();
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: pressedPlaybutton,
+  effect: async (_action) => {
+    document.body.classList.add('game-started');
+    welcomeOverlay.style.display = 'none';
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: pressedEscape,
+  effect: async (_action) => {
+    const { display } = welcomeOverlay.style;
+    welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
   },
 });
 

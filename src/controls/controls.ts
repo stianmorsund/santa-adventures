@@ -1,5 +1,12 @@
 import { store } from '../+state/effects';
-import { santaCrawled, santaJumped, santaMovedLeft, santaMovedRight } from '../+state/reducers';
+import {
+  pressedEscape,
+  pressedPlaybutton,
+  santaCrawled,
+  santaJumped,
+  santaMovedLeft,
+  santaMovedRight,
+} from '../+state/reducers';
 import { Hero } from '../meshes/hero';
 import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
@@ -17,19 +24,22 @@ const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close'
 export class Controls {
   scene: Scene = Scene.getInstance();
   hero: Hero;
-  isPaused: boolean = true;
+
   isAlive: boolean = true;
-  
+
   score: number = 0;
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   constructor(hero: Hero) {
     this.hero = hero;
     document.onkeydown = (e) => this.handleKeyDown(e);
-    playButton.addEventListener('click', () => this.togglewelcomeOverlay());
+    playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()));
     creditsButton.addEventListener('click', () => this.toggleCredits());
     restartButton.addEventListener('click', () => this.restartGame());
     creditsCloseBtn.addEventListener('click', () => this.toggleCredits());
     addCloseOverlayListener(creditsModal, this.toggleCredits);
+
+    // const unsubscribe = store.subscribe(this.render);
+    // unsubscribe();
   }
 
   handleKeyDown(event: KeyboardEvent) {
@@ -39,7 +49,9 @@ export class Controls {
         this.toggleCredits('hide');
         return;
       }
-      this.togglewelcomeOverlay();
+
+      store.dispatch(pressedEscape());
+      // this.togglewelcomeOverlay();
     }
     // Handle keyboard hero movement
     if (this.hero.isJumping) return;
@@ -68,13 +80,8 @@ export class Controls {
     }
   }
 
-  togglewelcomeOverlay() {
-    document.body.classList.add('game-started');
-    if (!this.loadingManager.isAllLoaded || !this.isAlive) return;
-    this.isPaused = !this.isPaused;
-    const { display } = welcomeOverlay.style;
-    welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
-  }
+  render() {}
+
 
   isCreditsOpened = () => creditsModal.style.display === 'flex';
 

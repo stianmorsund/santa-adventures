@@ -100,8 +100,8 @@ function animate(): void {
 }
 
 function render(): void {
-  const { isGameFinished } = store.getState();
-  if (controls.isPaused || !controls.isAlive || isGameFinished) return;
+  const { isGameFinished, isGamePaused } = store.getState();
+  if (isGamePaused || !controls.isAlive || isGameFinished) return;
   controls.isAlive = !isHinderCollision() && !isPoleCollision();
   if (!controls.isAlive) {
     controls.displayGameover();
@@ -110,7 +110,6 @@ function render(): void {
   if (isPastFinishLine()) {
     store.dispatch(santaReachedFinishline());
   }
-
 
   // Should live in scene
   if (scene.models) {
