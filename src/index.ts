@@ -13,6 +13,8 @@ import { Forest } from './meshes/forest';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';
+import { santaCollectedPackage } from './+state/reducers';
+import { store } from './+state/effects';
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -119,6 +121,7 @@ function render(): void {
 
   const collected = getCollectedGift();
   if (collected) {
+    store.dispatch(santaCollectedPackage());
     collected.isCollected = true;
     controls.increaseScore();
   }

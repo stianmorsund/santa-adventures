@@ -1,4 +1,5 @@
-import { santaCrawled, santaJumped, santaMovedLeft, santaMovedRight, store } from '../+state/store';
+import { store } from '../+state/effects';
+import { santaCrawled, santaJumped, santaMovedLeft, santaMovedRight } from '../+state/reducers';
 import { Hero } from '../meshes/hero';
 import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
