@@ -21,7 +21,7 @@ export class Hero extends MeshBase {
   private readonly SANTA_MODEL_PATH = 'assets/models/santa/santa_blender.fbx';
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private loader = new FBXLoader(this.loadingManager.manager);
-  private readonly RADIUS = 0.3;
+  
   private readonly MOVE_SPEED_FACTOR = 1500;
   private readonly GRAVITY = 120 / 10000;
 
@@ -31,7 +31,7 @@ export class Hero extends MeshBase {
   }
 
   buildHero() {
-    this.loader.load(this.SANTA_MODEL_PATH, (object) => {
+    this.loader.load(this.SANTA_MODEL_PATH, (object: any) => {
       this.mesh = object;
       const clips = object.animations;
       this.mixer = new THREE.AnimationMixer(this.mesh);

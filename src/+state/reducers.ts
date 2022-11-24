@@ -32,29 +32,25 @@ export const santaReducer = createReducer(
     score: 0,
     collectedPackages: [],
   },
-  {
-    [santaMovedLeft.type]: (state) => ({
-      ...state,
-      santaPosition: state.santaPosition === 1 ? 0 : -1,
-    }),
-    [santaMovedRight.type]: (state) => ({
-      ...state,
-      santaPosition: state.santaPosition === -1 ? 0 : 1,
-    }),
-    [santaJumped.type]: (state) => ({
-      ...state,
-      isJumping: true,
-      isCrawling: false,
-    }),
-    [santaCrawled.type]: (state) => ({
-      ...state,
-      isCrawling: true,
-      isJumping: false,
-    }),
-    [santaCollectedPackage.type]: (state, action) => ({
-      ...state,
-      score: state.score + 1,
-      collectedPackages: [...state.collectedPackages, action.payload],
-    }),
+  (builder) => {
+    builder
+      .addCase(santaMovedLeft, (state) => {
+        state.santaPosition = state.santaPosition === 1 ? 0 : -1;
+      })
+      .addCase(santaMovedRight, (state) => {
+        state.santaPosition = state.santaPosition === -1 ? 0 : 1;
+      })
+      .addCase(santaJumped, (state) => {
+        state.isJumping = true;
+        state.isCrawling = false;
+      })
+      .addCase(santaCrawled, (state) => {
+        state.isJumping = false;
+        state.isCrawling = true;
+      })
+      .addCase(santaCollectedPackage, (state, action) => {
+        state.score++;
+        state.collectedPackages.push(action.payload);
+      });
   }
 );
