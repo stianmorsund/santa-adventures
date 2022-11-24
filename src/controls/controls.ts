@@ -1,4 +1,4 @@
-import { santaMovedLeft, store } from '../+state/store';
+import { santaCrawled, santaJumped, santaMovedLeft, santaMovedRight, store } from '../+state/store';
 import { Hero } from '../meshes/hero';
 import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
@@ -42,7 +42,7 @@ export class Controls {
       this.togglewelcomeOverlay();
     }
     // Handle keyboard hero movement
-    if (this.hero.isJumbing) return;
+    if (this.hero.isJumping) return;
     switch (key) {
       case 'a':
       case 'ArrowLeft':
@@ -52,14 +52,17 @@ export class Controls {
         break;
       case 'd':
       case 'ArrowRight':
+        store.dispatch(santaMovedRight());
         this.hero.handleMoveRight();
         break;
       case ' ':
       case 'ArrowUp':
+        store.dispatch(santaJumped());
         this.hero.handleJump();
         break;
       case 's':
       case 'ArrowDown':
+        store.dispatch(santaCrawled());
         this.hero.handleCrawl();
         break;
     }

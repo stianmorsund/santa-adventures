@@ -60,12 +60,12 @@ track.addModel(...hinders, ...gifts, ...poles, finishLine);
 
 function getCollectedGift(): Gift | undefined {
   return gifts.find(
-    (g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumbing
+    (g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumping
   );
 }
 
 function isHinderCollision(): boolean {
-  return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumbing);
+  return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumping);
 }
 
 function isPoleCollision(): boolean {

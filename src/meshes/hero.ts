@@ -12,7 +12,7 @@ export class Hero extends MeshBase {
   mixer: THREE.AnimationMixer;
 
   // Game logic
-  isJumbing = false;
+  isJumping = false;
   isJumpAllowed = true;
   isCrawling = false;
   currentPosition: POSSIBLE_X_POSITIONS = 0;
@@ -76,7 +76,7 @@ export class Hero extends MeshBase {
       this.MOVE_SPEED_FACTOR * clock.getDelta()
     );
 
-    if (this.isJumbing) {
+    if (this.isJumping) {
       this.isJumpAllowed = false;
       this.mesh.rotation.x -= 0.2;
       this.mesh.position.y += this.bounceValue;
@@ -95,7 +95,7 @@ export class Hero extends MeshBase {
     this.isJumpAllowed = this.mesh.position.y <= 0.8;
 
     if (this.mesh.position.y <= 0.62) {
-      this.isJumbing = false;
+      this.isJumping = false;
     }
   }
 
@@ -111,7 +111,7 @@ export class Hero extends MeshBase {
     if (this.isJumpAllowed) {
       this.bounceValue = 0.16;
       this.isCrawling = false;
-      this.isJumbing = true;
+      this.isJumping = true;
     }
   }
 
