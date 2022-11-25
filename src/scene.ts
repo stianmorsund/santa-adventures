@@ -4,9 +4,7 @@ import { MeshBase } from './meshes/meshbase.abstract';
 let instance = null;
 
 export class Scene {
-  get models() {
-    return this._models;
-  }
+  get models() { return this._models; }
 
   get scene() {
     return this._scene;

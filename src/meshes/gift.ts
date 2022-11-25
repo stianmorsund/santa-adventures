@@ -1,15 +1,13 @@
 import * as THREE from 'three';
-import { MeshBase } from './meshbase.abstract';
-import { Scene } from '../scene';
-import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, TRACKBASE_Z, TRACK_SPEED } from './constants';
-import { POSSIBLE_X_POSITIONS } from '../models/models';
 import { store } from '../+state/effects';
+import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { getRandomInteger } from '../utils/utils';
+import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants';
+import { MeshBase } from './meshbase.abstract';
 
 export class Gift extends MeshBase {
   geometry: THREE.BoxGeometry;
   mesh: THREE.Mesh;
-  scene: Scene = Scene.getInstance();
   
   private readonly ROTATION_SPEED = 0.05;
   private readonly SIZE = 0.4;

@@ -46,10 +46,13 @@ const loadingmanager = new LoadingManager();
 const track = new Track();
 scene.addModel(track);
 
+
 const hero = new Hero();
+
+
 scene.addModel(hero);
 
-const controls = new Controls(hero);
+const controls = new Controls();
 
 const forest = new Forest();
 scene.addModel(forest);
@@ -108,7 +111,7 @@ function render(): void {
     });
   }
 
-const collected = getCollectedGift({ gifts, isJumping, santaPosition });
+  const collected = getCollectedGift({ gifts, isJumping, santaPosition });
   if (collected) {
     store.dispatch(santaCollectedPackage(collected.id));
   }

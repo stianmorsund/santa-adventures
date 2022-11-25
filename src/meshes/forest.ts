@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import * as FBXLoader from 'wge-three-fbx-loader';
 
 import { LoadingManager } from '../controls/loading-manager';
-import { Scene } from '../scene';
 import { FOREST_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
 
@@ -12,7 +11,6 @@ export class Forest extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private loader = new FBXLoader(this.loadingManager.manager);
   private readonly NUMBER_OF_TREES = 70;
-  private scene: Scene = Scene.getInstance();
   private leftside: THREE.Group;
   private rightside: THREE.Group;
 
@@ -45,7 +43,6 @@ export class Forest extends MeshBase {
       this.mesh.add(this.leftside);
       this.mesh.add(this.rightside);
       this.mesh.position.z = -65;
-      this.scene.scene.add(this.mesh);
     });
   }
 

@@ -1,17 +1,15 @@
 import * as THREE from 'three';
-import { Scene } from '../scene';
 import { TRACK_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
 
-import { POSSIBLE_X_POSITIONS } from '../models/models';
 import { LoadingManager } from '../controls/loading-manager';
+import { POSSIBLE_X_POSITIONS } from '../models/models';
 
 const POLE_Z = 1.2;
 export class Pole extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   geometry: THREE.CylinderGeometry;
   mesh: THREE.Mesh;
-  scene: Scene = Scene.getInstance();
 
   constructor({ position }: { position?: { x: POSSIBLE_X_POSITIONS; y: number } } = {}) {
     super();

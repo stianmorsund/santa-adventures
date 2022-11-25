@@ -7,10 +7,7 @@ import {
   santaMovedLeft,
   santaMovedRight,
 } from '../+state/reducers';
-import { Hero } from '../meshes/hero';
-import { Scene } from '../scene';
 import { addCloseOverlayListener } from '../utils/utils';
-import { LoadingManager } from './loading-manager';
 
 const creditsModal: HTMLElement = document.getElementById('credits-modal');
 const playButton: HTMLElement = document.getElementById('btn-play');
@@ -19,12 +16,7 @@ const restartButton: HTMLElement = document.getElementById('btn-restart');
 const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close');
 
 export class Controls {
-  scene: Scene = Scene.getInstance();
-  hero: Hero;
-
-  private loadingManager: LoadingManager = LoadingManager.getInstance();
-  constructor(hero: Hero) {
-    this.hero = hero;
+  constructor() {
     document.onkeydown = (e) => this.handleKeyDown(e);
     playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()));
     creditsButton.addEventListener('click', () => this.toggleCredits());
@@ -46,13 +38,12 @@ export class Controls {
 
       store.dispatch(pressedEscape());
     }
-    // Handle keyboard hero movement
+
     if (store.getState().isJumping) return;
     switch (key) {
       case 'a':
       case 'ArrowLeft':
         store.dispatch(santaMovedLeft());
-
         break;
       case 'd':
       case 'ArrowRight':

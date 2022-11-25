@@ -1,12 +1,9 @@
 import * as THREE from 'three';
+import { TRACK_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
-import { Scene } from '../scene';
-import { getRandomInteger } from '../utils/utils';
-import { TRACK_LENGTH, TRACK_SPEED } from './constants';
 
 export class Enemy extends MeshBase {
   geometry: THREE.SphereGeometry;
-  scene: Scene = Scene.getInstance();
   isHit: boolean = false;
   position: { x: number; y: number; z: number };
   material: any;
