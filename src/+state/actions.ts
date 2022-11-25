@@ -9,7 +9,6 @@ export const santaCrawled = createAction('Santa - Crawled');
 export const santaCollectedPackage = createAction('Santa - Collected package', withPayloadType<string>());
 export const santaCrashedOnPole = createAction('Santa - Crashed on pole');
 export const santaCrashedOnWall = createAction('Santa - Crashed on wall');
-
 export const santaReachedFinishline = createAction('Santa - Reached finish line');
 
 export const pressedPlaybutton = createAction('Pressed Play');
