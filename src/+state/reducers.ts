@@ -4,9 +4,11 @@ import { withPayloadType } from './utils';
 
 export type CrashReason = 'pole' | 'wall';
 
+// Refactor actions to own file
 export const santaMovedLeft = createAction('Santa - Moved Left');
 export const santaMovedRight = createAction('Santa - Moved Right');
 export const santaJumped = createAction('Santa - Jumped');
+export const santaLanded = createAction('Santa - Landed');
 export const santaCrawled = createAction('Santa - Crawled');
 export const santaCollectedPackage = createAction('Santa - Collected package', withPayloadType<string>());
 export const santaCrashedOnPole = createAction('Santa - Crashed on pole');
@@ -55,6 +57,9 @@ export const santaReducer = createReducer(initialState, (builder) => {
       state.isJumping = true;
       state.isCrawling = false;
     })
+    .addCase(santaLanded, (state) => {
+      state.isJumping = false;
+    })
     .addCase(santaCrawled, (state) => {
       state.isJumping = false;
       state.isCrawling = true;
@@ -68,11 +73,11 @@ export const santaReducer = createReducer(initialState, (builder) => {
     })
     .addCase(santaCrashedOnPole, (state, action) => {
       state.isAlive = false;
-      state.diedReason = 'pole'
+      state.diedReason = 'pole';
     })
     .addCase(santaCrashedOnWall, (state, action) => {
       state.isAlive = false;
-      state.diedReason = 'wall'
+      state.diedReason = 'wall';
     })
     .addMatcher(isAnyOf(pressedEscape, pressedPlaybutton), (state, action) => {
       state.isGamePaused = !state.isGamePaused;

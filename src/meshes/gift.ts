@@ -50,7 +50,12 @@ export class Gift extends MeshBase {
     return { x: posX, y: posY, z: posZ };
   }
 
+
+  /**
+   * TODO; Optimize. Dont need to continue animate when out of view
+   */
   animateCollected(): void {
+    // console.log('animateCollected')
     const direction = new THREE.Vector3(4, 2, 2);
     // const direction = new THREE.Vector3(1,1,0);
     const worldPosition = new THREE.Vector3();

@@ -8,7 +8,7 @@ import {
   santaCollectedPackage,
   santaCrashedOnPole,
   santaCrashedOnWall,
-  santaReachedFinishline
+  santaReachedFinishline,
 } from './+state/reducers';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
@@ -86,14 +86,14 @@ function animate(): void {
 }
 
 function render(): void {
-  const { isGameFinished, isGamePaused, isAlive } = store.getState();
+  const { isGameFinished, isGamePaused, isAlive, isJumping, isCrawling, santaPosition } = store.getState();
   if (isGamePaused || !isAlive || isGameFinished) return;
 
-  if (isHinderCollision(hinders, hero)) {
+  if (isHinderCollision({ hinders, isJumping })) {
     store.dispatch(santaCrashedOnWall());
   }
 
-  if (isPoleCollision(poles, hero)) {
+  if (isPoleCollision({ poles, isCrawling })) {
     store.dispatch(santaCrashedOnPole());
   }
 
@@ -108,7 +108,7 @@ function render(): void {
     });
   }
 
-  const collected = getCollectedGift(gifts, hero);
+const collected = getCollectedGift({ gifts, isJumping, santaPosition });
   if (collected) {
     store.dispatch(santaCollectedPackage(collected.id));
   }

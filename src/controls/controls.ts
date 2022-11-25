@@ -47,28 +47,24 @@ export class Controls {
       store.dispatch(pressedEscape());
     }
     // Handle keyboard hero movement
-    if (this.hero.isJumping) return;
+    if (store.getState().isJumping) return;
     switch (key) {
       case 'a':
       case 'ArrowLeft':
         store.dispatch(santaMovedLeft());
-        this.hero.handleMoveLeft();
 
         break;
       case 'd':
       case 'ArrowRight':
         store.dispatch(santaMovedRight());
-        this.hero.handleMoveRight();
         break;
       case ' ':
       case 'ArrowUp':
         store.dispatch(santaJumped());
-        this.hero.handleJump();
         break;
       case 's':
       case 'ArrowDown':
         store.dispatch(santaCrawled());
-        this.hero.handleCrawl();
         break;
     }
   }

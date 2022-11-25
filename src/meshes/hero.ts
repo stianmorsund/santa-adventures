@@ -1,29 +1,28 @@
 import * as THREE from 'three';
 import * as FBXLoader from 'wge-three-fbx-loader';
 
-import { MeshBase } from './meshbase.abstract';
-import { Scene } from '../scene';
+import { store } from '../+state/effects';
+import { santaLanded } from '../+state/reducers';
 import { LoadingManager } from '../controls/loading-manager';
-import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { Scene } from '../scene';
+import { MeshBase } from './meshbase.abstract';
 
 export class Hero extends MeshBase {
   mesh: THREE.Group = new THREE.Group();
   scene: Scene = Scene.getInstance();
   mixer: THREE.AnimationMixer;
 
-  // Game logic
-  isJumping = false;
   isJumpAllowed = true;
-  isCrawling = false;
-  currentPosition: POSSIBLE_X_POSITIONS = 0;
-  bounceValue = 0;
 
   private readonly SANTA_MODEL_PATH = 'assets/models/santa/santa_blender.fbx';
+  private readonly BASE_BOUNCEVALUE = 0.16;
+  private bounceValue = this.BASE_BOUNCEVALUE;
+  private readonly GROUND_POSITION = 0.6;
+  private readonly LERP_FACTOR = 1500;
+  private readonly GRAVITY = 120 / 10000;
+
   private loadingManager: LoadingManager = LoadingManager.getInstance();
   private loader = new FBXLoader(this.loadingManager.manager);
-  
-  private readonly MOVE_SPEED_FACTOR = 1500;
-  private readonly GRAVITY = 120 / 10000;
 
   constructor() {
     super();
@@ -45,7 +44,7 @@ export class Hero extends MeshBase {
       skinnedMesh.receiveShadow = true;
       skinnedMesh.castShadow = true;
 
-      this.mesh.position.y = 0.6;
+      this.mesh.position.y = this.GROUND_POSITION;
       this.mesh.position.z = 6;
       this.mesh.rotation.x = -(Math.PI / 2);
 
@@ -72,50 +71,32 @@ export class Hero extends MeshBase {
 
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
-      this.currentPosition,
-      this.MOVE_SPEED_FACTOR * clock.getDelta()
+      store.getState().santaPosition,
+      this.LERP_FACTOR * clock.getDelta()
     );
 
-    if (this.isJumping) {
+    if (store.getState().isJumping) {
       this.isJumpAllowed = false;
       this.mesh.rotation.x -= 0.2;
       this.mesh.position.y += this.bounceValue;
       this.bounceValue -= this.GRAVITY;
     } else {
       this.mesh.rotation.x = -(Math.PI / 2);
+      this.bounceValue = this.BASE_BOUNCEVALUE;
     }
 
-    if (this.isCrawling) {
+    if (store.getState().isCrawling) {
       this.isJumpAllowed = false;
       this.mesh.rotation.x = -0.5;
-      this.mesh.position.y = 0.6;
+      this.mesh.position.y = this.GROUND_POSITION;
     }
 
     // Allow jumping slightly above ground level for better experience
     this.isJumpAllowed = this.mesh.position.y <= 0.8;
 
-    if (this.mesh.position.y <= 0.62) {
-      this.isJumping = false;
+    if (store.getState().isJumping && this.mesh.position.y < this.GROUND_POSITION) {
+      store.dispatch(santaLanded());
+      this.mesh.position.y = this.GROUND_POSITION;
     }
-  }
-
-  handleMoveLeft() {
-    this.currentPosition = this.currentPosition === 1 ? 0 : -1;
-  }
-
-  handleMoveRight() {
-    this.currentPosition = this.currentPosition === -1 ? 0 : 1;
-  }
-
-  handleJump() {
-    if (this.isJumpAllowed) {
-      this.bounceValue = 0.16;
-      this.isCrawling = false;
-      this.isJumping = true;
-    }
-  }
-
-  handleCrawl() {
-    this.isCrawling = true;
   }
 }
