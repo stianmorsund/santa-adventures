@@ -6,7 +6,7 @@ import {
   santaJumped,
   santaMovedLeft,
   santaMovedRight,
-} from '../+state/reducers';
+} from '../+state/actions';
 import { addCloseOverlayListener } from '../utils/utils';
 
 const creditsModal: HTMLElement = document.getElementById('credits-modal');

@@ -5,7 +5,7 @@ import {
   santaCrashedOnPole,
   santaCrashedOnWall,
   santaReachedFinishline,
-} from './+state/reducers';
+} from './+state/actions';
 import { Controls } from './controls/controls';
 import { LoadingManager } from './controls/loading-manager';
 import { Level1 } from './levels/level1';

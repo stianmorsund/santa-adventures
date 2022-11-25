@@ -1,27 +1,20 @@
-import { createAction, createReducer, isAnyOf } from '@reduxjs/toolkit';
-import { POSSIBLE_X_POSITIONS } from '../models/models';
-import { withPayloadType } from './utils';
-
-export type CrashReason = 'pole' | 'wall';
-
-// Refactor actions to own file
-export const santaMovedLeft = createAction('Santa - Moved Left');
-export const santaMovedRight = createAction('Santa - Moved Right');
-export const santaJumped = createAction('Santa - Jumped');
-export const santaLanded = createAction('Santa - Landed');
-export const santaCrawled = createAction('Santa - Crawled');
-export const santaCollectedPackage = createAction('Santa - Collected package', withPayloadType<string>());
-export const santaCrashedOnPole = createAction('Santa - Crashed on pole');
-export const santaCrashedOnWall = createAction('Santa - Crashed on wall');
-
-export const santaReachedFinishline = createAction('Santa - Reached finish line');
-
-export const pressedPlaybutton = createAction('Pressed Play');
-export const pressedEscape = createAction('Pressed Escape');
-export const pressedRestartGame = createAction('Pressed Restart Game');
+import { createReducer, isAnyOf } from '@reduxjs/toolkit';
+import { CrashReason, POSSIBLE_X_POSITIONS } from '../models/models';
+import {
+  pressedEscape,
+  pressedPlaybutton,
+  santaCollectedPackage,
+  santaCrashedOnPole,
+  santaCrashedOnWall,
+  santaCrawled,
+  santaJumped,
+  santaLanded,
+  santaMovedLeft,
+  santaMovedRight,
+  santaReachedFinishline,
+} from './actions';
 
 interface GameState {
-  // level: number;
   santaPosition: POSSIBLE_X_POSITIONS;
   isJumping: boolean;
   isCrawling: boolean;

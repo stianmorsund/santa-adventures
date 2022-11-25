@@ -1,13 +1,13 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
+import { CrashReason } from '../models/models';
 import {
-  CrashReason,
   pressedEscape,
   pressedPlaybutton,
   santaCollectedPackage,
   santaCrashedOnPole,
   santaCrashedOnWall,
-  santaReducer,
-} from './reducers';
+} from './actions';
+import { santaReducer } from './reducers';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');

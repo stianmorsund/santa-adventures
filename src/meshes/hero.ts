@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import * as FBXLoader from 'wge-three-fbx-loader';
 
 import { store } from '../+state/effects';
-import { santaLanded } from '../+state/reducers';
+import { santaLanded } from '../+state/actions';
 import { LoadingManager } from '../controls/loading-manager';
 import { Scene } from '../scene';
 import { MeshBase } from './meshbase.abstract';
