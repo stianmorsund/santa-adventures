@@ -24,13 +24,7 @@ export class Snow extends MeshBase {
       fog: false,
     });
 
-    // this.material.flatShading = true;
-
-    this.particles = new THREE.Geometry();
     this.makeSnow();
-    this.mesh = new THREE.Points(this.particles, this.material);
-    // this.mesh.position.y = 5;
-    // this.mesh.position.z = 1;
   }
 
   simulateSnow() {
@@ -56,6 +50,7 @@ export class Snow extends MeshBase {
   }
 
   private makeSnow() {
+    this.particles = new THREE.Geometry();
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
       const particle = new THREE.Vector3(
         Math.random() * 500 - 250,
@@ -64,5 +59,6 @@ export class Snow extends MeshBase {
       );
       this.particles.vertices.push(particle);
     }
+    this.mesh = new THREE.Points(this.particles, this.material);
   }
 }
