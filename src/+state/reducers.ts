@@ -1,6 +1,7 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
 import { CrashReason, PossibleXPositions } from '../models/models';
 import {
+  pressedCredits,
   pressedEscape,
   pressedPlaybutton,
   santaCollectedPackage,
@@ -20,6 +21,7 @@ interface GameState {
   isCrawling: boolean;
   isAlive: boolean;
   isGameFinished: boolean;
+  isCreditsOpened: boolean;
   isGamePaused: boolean;
   score: number;
   collectedPackages: string[];
@@ -33,6 +35,7 @@ const initialState: GameState = {
   isAlive: true,
   isGamePaused: true,
   isGameFinished: false,
+  isCreditsOpened: false,
   score: 0,
   collectedPackages: [],
   diedReason: undefined,
@@ -71,6 +74,9 @@ export const santaReducer = createReducer(initialState, (builder) => {
     .addCase(santaCrashedOnWall, (state, action) => {
       state.isAlive = false;
       state.diedReason = 'wall';
+    })
+    .addCase(pressedCredits, (state, action) => {
+      state.isCreditsOpened = !state.isCreditsOpened;
     })
     .addMatcher(isAnyOf(pressedEscape, pressedPlaybutton), (state, action) => {
       state.isGamePaused = !state.isGamePaused;

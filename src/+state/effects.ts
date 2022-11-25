@@ -1,8 +1,11 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import { CrashReason } from '../models/models';
+import { addCloseOverlayListener } from '../utils/utils';
 import {
+  pressedCredits,
   pressedEscape,
   pressedPlaybutton,
+  pressedRestartGame,
   santaCollectedPackage,
   santaCrashedOnPole,
   santaCrashedOnWall,
@@ -11,6 +14,7 @@ import { santaReducer } from './reducers';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
+const creditsOverlay: HTMLElement = document.getElementById('credits-modal');
 
 const updateScore = () => {
   const scoreElement: HTMLElement = document.getElementById('score');
@@ -28,6 +32,13 @@ const showGameOverModal = (reason: CrashReason) => {
   finalScoreElement.textContent = store.getState().score.toString();
   gameoverOverlay.style.display = 'flex';
 };
+
+const toggleCredits = () => {
+  const newState = store.getState().isCreditsOpened ? 'flex' : 'none';
+  creditsOverlay.style.display = newState;
+};
+
+addCloseOverlayListener(creditsOverlay, toggleCredits);
 
 // Create the middleware instance and methods
 export const listenerMiddleware = createListenerMiddleware();
@@ -69,6 +80,20 @@ listenerMiddleware.startListening({
   actionCreator: santaCrashedOnWall,
   effect: async (_action) => {
     showGameOverModal('wall');
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: pressedRestartGame,
+  effect: async (_action) => {
+    window.location.reload();
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: pressedCredits,
+  effect: async (_action) => {
+    toggleCredits();
   },
 });
 

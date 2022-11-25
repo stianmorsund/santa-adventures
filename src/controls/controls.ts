@@ -1,7 +1,9 @@
 import { store } from '../+state/effects';
 import {
+  pressedCredits,
   pressedEscape,
   pressedPlaybutton,
+  pressedRestartGame,
   santaCrawled,
   santaJumped,
   santaMovedLeft,
@@ -19,23 +21,18 @@ export class Controls {
   constructor() {
     document.onkeydown = (e) => this.handleKeyDown(e);
     playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()));
-    creditsButton.addEventListener('click', () => this.toggleCredits());
-    restartButton.addEventListener('click', () => this.restartGame());
-    creditsCloseBtn.addEventListener('click', () => this.toggleCredits());
-    addCloseOverlayListener(creditsModal, this.toggleCredits);
-
-    // const unsubscribe = store.subscribe(this.render);
-    // unsubscribe();
+    creditsButton.addEventListener('click', () => store.dispatch(pressedCredits()));
+    restartButton.addEventListener('click', () => store.dispatch(pressedRestartGame()));
+    creditsCloseBtn.addEventListener('click', () => store.dispatch(pressedCredits()));
   }
 
   handleKeyDown(event: KeyboardEvent) {
     const { key } = event;
     if (key === 'Escape') {
-      if (this.isCreditsOpened()) {
-        this.toggleCredits('hide');
+      if (store.getState().isCreditsOpened) {
+        store.dispatch(pressedCredits());
         return;
       }
-
       store.dispatch(pressedEscape());
     }
 
@@ -58,26 +55,5 @@ export class Controls {
         store.dispatch(santaCrawled());
         break;
     }
-  }
-
-  render() {}
-
-  isCreditsOpened = () => creditsModal.style.display === 'flex';
-
-  toggleCredits(newState?: 'show' | 'hide') {
-    const { display } = creditsModal.style;
-    if (newState === 'show') {
-      creditsModal.style.display = 'flex';
-      return;
-    }
-    if (newState == 'hide') {
-      creditsModal.style.display = 'none';
-      return;
-    }
-    creditsModal.style.display = display === 'none' || display === '' ? 'flex' : 'none';
-  }
-
-  restartGame() {
-    window.location.reload();
   }
 }
