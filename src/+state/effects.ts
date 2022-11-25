@@ -10,6 +10,7 @@ import {
 } from './reducers';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
+const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
 
 const updateScore = () => {
   const scoreElement: HTMLElement = document.getElementById('score');
@@ -22,7 +23,6 @@ const updateScore = () => {
 };
 
 const showGameOverModal = (reason: CrashReason) => {
-  const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
   const finalScoreElement: HTMLElement = document.getElementById('final-score');
 
   finalScoreElement.textContent = store.getState().score.toString();
@@ -52,6 +52,7 @@ listenerMiddleware.startListening({
 listenerMiddleware.startListening({
   actionCreator: pressedEscape,
   effect: async (_action) => {
+    if (!store.getState().isAlive) return;
     const { display } = welcomeOverlay.style;
     welcomeOverlay.style.display = display === 'none' ? 'flex' : 'none';
   },
