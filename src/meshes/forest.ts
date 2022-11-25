@@ -1,15 +1,12 @@
 import * as THREE from 'three';
-// const FBXLoader = require('wge-three-fbx-loader');
 import * as FBXLoader from 'wge-three-fbx-loader';
 
-import { MeshBase } from './meshbase.abstract';
-import { Scene } from '../scene';
-import { getRandomInteger } from '../utils/utils';
-import { GROUND_LEVEL, FOREST_SPEED } from './constants';
 import { LoadingManager } from '../controls/loading-manager';
+import { Scene } from '../scene';
+import { FOREST_SPEED } from './constants';
+import { MeshBase } from './meshbase.abstract';
 
 export class Forest extends MeshBase {
-  public material: THREE.PointsMaterial;
   public mesh: THREE.Group = new THREE.Group();
   private readonly TREE_MODEL_PATH = 'assets/models/tree2.fbx';
   private loadingManager: LoadingManager = LoadingManager.getInstance();
@@ -23,8 +20,8 @@ export class Forest extends MeshBase {
     super();
     this.buildForest();
   }
-  update(clock: THREE.Clock) {
-    // this.leftside.position.z += 0.5;
+
+  update(_clock: THREE.Clock) {
     this.mesh.position.z += FOREST_SPEED;
 
     if (this.mesh.position.z > -40) {
@@ -37,7 +34,7 @@ export class Forest extends MeshBase {
   }
 
   buildForest() {
-    this.loader.load(this.TREE_MODEL_PATH, (tree) => {
+    this.loader.load(this.TREE_MODEL_PATH, (tree: THREE.Mesh) => {
       this.leftside = new THREE.Group();
       this.rightside = new THREE.Group();
       let i = 0;
@@ -54,7 +51,6 @@ export class Forest extends MeshBase {
 
   buildTree(tree: any, index: number, side: 'left' | 'right'): THREE.Group {
     tree.traverse((child) => {
-      // console.log('child', child)
       child.castShadow = true;
       child.receiveShadow = true;
       if (child.name === 'Cone001') {
