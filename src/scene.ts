@@ -113,16 +113,7 @@ export class Scene {
       store.dispatch(santaReachedFinishline());
     }
 
-    // // Should live in scene
-    // if (scene.models) {
-    //   scene.models.forEach((m) => {
-    //     m.update(clock);
-    //   });
-    // }
-
-    this.models.forEach((m) => {
-      m.update(this.clock);
-    });
+    this.models.forEach(m => m.update(this.clock))
 
     const collected = getCollectedGift({ gifts, isJumping, santaPosition });
     if (collected) {
