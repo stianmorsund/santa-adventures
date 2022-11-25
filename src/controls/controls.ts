@@ -27,23 +27,26 @@ export class Controls {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    const { isCreditsOpened, isJumping, santaPosition } = store.getState();
     const { key } = event;
     if (key === 'Escape') {
-      if (store.getState().isCreditsOpened) {
+      if (isCreditsOpened) {
         store.dispatch(pressedCredits());
         return;
       }
       store.dispatch(pressedEscape());
     }
 
-    if (store.getState().isJumping) return;
+    if (isJumping) return;
     switch (key) {
       case 'a':
       case 'ArrowLeft':
+        if (santaPosition == -1) return;
         store.dispatch(santaMovedLeft());
         break;
       case 'd':
       case 'ArrowRight':
+        if (santaPosition == 1) return;
         store.dispatch(santaMovedRight());
         break;
       case ' ':
