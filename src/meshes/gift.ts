@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { store } from '../+state/effects';
-import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { PossibleXPositions } from '../models/models';
 import { getRandomInteger } from '../utils/utils';
 import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants';
 import { MeshBase } from './meshbase.abstract';
@@ -12,7 +12,7 @@ export class Gift extends MeshBase {
   private readonly ROTATION_SPEED = 0.05;
   private readonly SIZE = 0.4;
 
-  constructor({ position }: { position?: { x: POSSIBLE_X_POSITIONS; y: number } } = {}) {
+  constructor({ position }: { position?: { x: PossibleXPositions; y: number } } = {}) {
     super();
     this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE);
     const texture = new THREE.TextureLoader().load(require(`../assets/textures/gift.jpg`));

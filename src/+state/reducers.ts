@@ -1,5 +1,5 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit';
-import { CrashReason, POSSIBLE_X_POSITIONS } from '../models/models';
+import { CrashReason, PossibleXPositions } from '../models/models';
 import {
   pressedEscape,
   pressedPlaybutton,
@@ -15,7 +15,7 @@ import {
 } from './actions';
 
 interface GameState {
-  santaPosition: POSSIBLE_X_POSITIONS;
+  santaPosition: PossibleXPositions;
   isJumping: boolean;
   isCrawling: boolean;
   isAlive: boolean;

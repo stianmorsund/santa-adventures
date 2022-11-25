@@ -2,7 +2,7 @@ import { FinishLine } from '../meshes/finish-line';
 import { Gift } from '../meshes/gift';
 import { Hinder } from '../meshes/hinder';
 import { Pole } from '../meshes/pole';
-import { POSSIBLE_X_POSITIONS } from '../models/models';
+import { PossibleXPositions } from '../models/models';
 
 export function getCollectedGift({
   gifts,
@@ -10,7 +10,7 @@ export function getCollectedGift({
   isJumping,
 }: {
   gifts: Gift[];
-  santaPosition: POSSIBLE_X_POSITIONS;
+  santaPosition: PossibleXPositions;
   isJumping: boolean;
 }): Gift | undefined {
   return gifts.find(
