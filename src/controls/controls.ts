@@ -11,7 +11,6 @@ import {
 } from '../+state/actions';
 import { addCloseOverlayListener } from '../utils/utils';
 
-const creditsModal: HTMLElement = document.getElementById('credits-modal');
 const playButton: HTMLElement = document.getElementById('btn-play');
 const creditsButton: HTMLElement = document.getElementById('btn-credits');
 const restartButton: HTMLElement = document.getElementById('btn-restart');
