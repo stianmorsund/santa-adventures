@@ -1,25 +1,24 @@
-import './styles/style.css';
 import * as THREE from 'three';
+import './styles/style.css';
 
 const OrbitControls = require('three-orbit-controls')(THREE);
 
-import { Camera } from './controls/camera';
-import { Snow } from './meshes/snow';
-import { Scene } from './scene';
-import { Track } from './meshes/track';
-import { Hero } from './meshes/hero';
-import { Gift } from './meshes/gift';
-import { Forest } from './meshes/forest';
-import { Controls } from './controls/controls';
-import { LoadingManager } from './controls/loading-manager';
-import { Level1 } from './levels/level1';
+import { store } from './+state/effects';
 import {
   santaCollectedPackage,
   santaCrashedOnPole,
   santaCrashedOnWall,
-  santaReachedFinishline,
+  santaReachedFinishline
 } from './+state/reducers';
-import { store } from './+state/effects';
+import { Controls } from './controls/controls';
+import { LoadingManager } from './controls/loading-manager';
+import { Level1 } from './levels/level1';
+import { Forest } from './meshes/forest';
+import { Hero } from './meshes/hero';
+import { Snow } from './meshes/snow';
+import { Track } from './meshes/track';
+import { Scene } from './scene';
+import { getCollectedGift, isHinderCollision, isPastFinishLine, isPoleCollision } from './utils/collisions';
 
 const scene: Scene = Scene.getInstance();
 const clock = new THREE.Clock();
@@ -65,24 +64,6 @@ const { gifts, hinders, poles, finishLine } = new Level1();
 // so it needs to be added
 track.addModel(...hinders, ...gifts, ...poles, finishLine);
 
-function getCollectedGift(): Gift | undefined {
-  return gifts.find(
-    (g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === hero.currentPosition && !hero.isJumping
-  );
-}
-
-function isHinderCollision(): boolean {
-  return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !hero.isJumping);
-}
-
-function isPoleCollision(): boolean {
-  return poles.some((pole) => Math.floor(pole.mesh.position.y * 2) === 0 && !hero.isCrawling);
-}
-
-function isPastFinishLine(): boolean {
-  return Math.floor(finishLine.mesh.position.y * 2) === 0;
-}
-
 // Orbit
 
 let orbitControl = new OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
@@ -108,15 +89,15 @@ function render(): void {
   const { isGameFinished, isGamePaused, isAlive } = store.getState();
   if (isGamePaused || !isAlive || isGameFinished) return;
 
-  if (isHinderCollision()) {
+  if (isHinderCollision(hinders, hero)) {
     store.dispatch(santaCrashedOnWall());
   }
 
-  if (isPoleCollision()) {
+  if (isPoleCollision(poles, hero)) {
     store.dispatch(santaCrashedOnPole());
   }
 
-  if (isPastFinishLine()) {
+  if (isPastFinishLine(finishLine)) {
     store.dispatch(santaReachedFinishline());
   }
 
@@ -127,7 +108,7 @@ function render(): void {
     });
   }
 
-  const collected = getCollectedGift();
+  const collected = getCollectedGift(gifts, hero);
   if (collected) {
     store.dispatch(santaCollectedPackage(collected.id));
   }
