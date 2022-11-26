@@ -6,7 +6,6 @@ import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 export class Gift extends MeshBase {
-  geometry: THREE.BoxGeometry
   mesh: THREE.Mesh
 
   private readonly ROTATION_SPEED = 0.05
@@ -14,7 +13,7 @@ export class Gift extends MeshBase {
 
   constructor({ position }: { position?: { x: PossibleXPositions; y: number } } = {}) {
     super()
-    this.geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE)
+    const geometry = new THREE.BoxGeometry(this.SIZE, this.SIZE, this.SIZE)
     const texture = new THREE.TextureLoader().load(require(`../assets/textures/gift.jpg`))
     texture.anisotropy = 4
     texture.wrapS = THREE.RepeatWrapping
@@ -25,7 +24,7 @@ export class Gift extends MeshBase {
       flatShading: true,
       map: texture,
     })
-    this.mesh = new THREE.Mesh(this.geometry, material)
+    this.mesh = new THREE.Mesh(geometry, material)
     this.mesh.castShadow = true
     this.mesh.receiveShadow = false
     const { x, y } = position
@@ -61,7 +60,6 @@ export class Gift extends MeshBase {
 
   animateCollected(): void {
     const direction = new THREE.Vector3(4, 2, 2)
-    // const direction = new THREE.Vector3(1,1,0);
     const worldPosition = new THREE.Vector3()
     const speed = 0.04
 
