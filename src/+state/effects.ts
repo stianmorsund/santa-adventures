@@ -14,7 +14,7 @@ import { santaReducer } from './reducers';
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay');
 const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay');
-const creditsOverlay: HTMLElement = document.getElementById('credits-modal');
+const creditsOverlay: HTMLElement = document.getElementById('credits-overlay');
 
 const updateScore = () => {
   const scoreElement: HTMLElement = document.getElementById('score');
