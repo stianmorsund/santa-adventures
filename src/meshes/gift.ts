@@ -32,8 +32,19 @@ export class Gift extends MeshBase {
     this.mesh.position.set(x, y, TRACKBASE_Z)
   }
 
+  isBehindCamera(): boolean {
+    return this.mesh.position.y <= -5
+  }
+
+  isCollected(): boolean {
+    return store.getState().collectedPackages.includes(this.id)
+  }
+
   update() {
-    if (store.getState().collectedPackages.includes(this.id)) {
+    if (this.isBehindCamera()) {
+      return
+    }
+    if (this.isCollected()) {
       this.animateCollected()
     } else {
       this.mesh.rotation.z += this.ROTATION_SPEED
@@ -48,11 +59,7 @@ export class Gift extends MeshBase {
     return { x: posX, y: posY, z: posZ }
   }
 
-  /**
-   * TODO; Optimize. Dont need to continue animate when out of view
-   */
   animateCollected(): void {
-    // console.log('animateCollected')
     const direction = new THREE.Vector3(4, 2, 2)
     // const direction = new THREE.Vector3(1,1,0);
     const worldPosition = new THREE.Vector3()

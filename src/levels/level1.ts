@@ -1,6 +1,5 @@
 import { FinishLine } from '../meshes/finish-line'
 import { Gift } from '../meshes/gift'
-
 import { Hinder } from '../meshes/hinder'
 import { Pole } from '../meshes/pole'
 
