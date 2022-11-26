@@ -7,11 +7,10 @@ export class Track extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   geometry: THREE.PlaneGeometry
   mesh: THREE.Mesh
-  children: MeshBase[] // Children of track should follow the track
+  children: MeshBase[] = [] // Children of track should follow the track
 
   constructor() {
     super()
-    this.geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32)
 
     const texture = new THREE.TextureLoader(this.loadingManager.manager).load(
       require('../assets/textures/snow_down.jpg')
@@ -20,8 +19,9 @@ export class Track extends MeshBase {
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
     texture.format = THREE.RGBFormat
+    const geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32)
     const material = new THREE.MeshLambertMaterial({ color: 0xffffff, map: texture })
-    this.mesh = new THREE.Mesh(this.geometry, material)
+    this.mesh = new THREE.Mesh(geometry, material)
     this.mesh.castShadow = true
     this.mesh.receiveShadow = true
     this.mesh.position.y = 0
@@ -34,9 +34,7 @@ export class Track extends MeshBase {
   }
 
   addModel(...models: MeshBase[]) {
-    this.children = models
-    models.forEach((m) => {
-      this.mesh.add(m.mesh)
-    })
+    this.children = [...this.children, ...models]
+    this.mesh.add(...models.map((m) => m.mesh))
   }
 }

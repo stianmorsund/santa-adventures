@@ -82,7 +82,6 @@ export class Scene {
     const { gifts, hinders, poles, finishLine } = this.level
 
     // Hinders, gifts and poles are tied to tracks matrix,
-    // so it needs to be added
     this.track.addModel(...hinders, ...gifts, ...poles, finishLine)
   }
 
