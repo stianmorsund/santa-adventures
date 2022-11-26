@@ -1,13 +1,14 @@
 import * as THREE from 'three'
 import * as FBXLoader from 'wge-three-fbx-loader'
 
-import { store } from '../+state/effects'
 import { santaLanded } from '../+state/actions'
+import { store } from '../+state/effects'
 import { LoadingManager } from '../controls/loading-manager'
+import { PossibleXPositions } from '../models/models'
 import { Scene } from '../scene'
 import { MeshBase } from './meshbase.abstract'
 
-export class Hero extends MeshBase {
+export class Santa extends MeshBase {
   mesh: THREE.Group = new THREE.Group()
   scene: Scene = Scene.getInstance()
   mixer: THREE.AnimationMixer
@@ -26,17 +27,22 @@ export class Hero extends MeshBase {
 
   constructor() {
     super()
-    this.buildHero()
+    this.build()
   }
 
-  buildHero() {
+  build() {
     this.loader.load(this.SANTA_MODEL_PATH, (object: any) => {
       this.mesh = object
       const clips = object.animations
       this.mixer = new THREE.AnimationMixer(this.mesh)
-      const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer')
+      const clip = THREE.AnimationClip.findByName(
+        clips,
+        'Santa.001|Santa.001|Take 001|BaseLayer'
+      )
       const action = this.mixer.clipAction(clip)
-      const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned')
+      const skinnedMesh: any = this.mesh.children.find(
+        (c) => c.name === 'Santa_skinned'
+      )
       const uvmap = new THREE.TextureLoader(this.loadingManager.manager).load(
         require('../assets/models/santa/Santa_UV.png')
       )
@@ -46,7 +52,6 @@ export class Hero extends MeshBase {
 
       this.mesh.position.y = this.GROUND_POSITION
       this.mesh.position.z = 6
-      this.mesh.rotation.x = -(Math.PI / 2)
 
       this.scene.scene.add(this.mesh)
       action.timeScale = 1.2
@@ -55,48 +60,74 @@ export class Hero extends MeshBase {
     })
   }
 
-  update(clock: THREE.Clock) {
-    if (this.mixer) {
-      this.mixer.update(clock.getDelta() * 2)
-    }
-
-    // Initial animation rotation
+  animateInitialTurn() {
     if (this.mesh.position.z > 4.4) {
       this.mesh.position.z -= 0.2
     }
     if (this.mesh.rotation.z < Math.PI) {
       this.mesh.rotation.z += 0.2
     }
-    // End initial animation rotation
+  }
 
+  animateCrawl() {
+    this.isJumpAllowed = false
+    this.mesh.rotation.x = -0.5
+    this.mesh.position.y = this.GROUND_POSITION
+  }
+
+  animateJump() {
+    this.isJumpAllowed = false
+    this.mesh.rotation.x -= 0.2
+    this.mesh.position.y += this.bounceValue
+    this.bounceValue -= this.GRAVITY
+  }
+
+  resetToWalkingPosition() {
+    this.mesh.rotation.x = -(Math.PI / 2)
+    this.bounceValue = this.BASE_BOUNCEVALUE
+  }
+
+  interpolateXMovements({
+    clock,
+    santaPosition,
+  }: {
+    clock: THREE.Clock
+    santaPosition: PossibleXPositions
+  }) {
     this.mesh.position.x = THREE.Math.lerp(
       this.mesh.position.x,
-      store.getState().santaPosition,
+      santaPosition,
       this.LERP_FACTOR * clock.getDelta()
     )
+  }
 
-    if (store.getState().isJumping) {
-      this.isJumpAllowed = false
-      this.mesh.rotation.x -= 0.2
-      this.mesh.position.y += this.bounceValue
-      this.bounceValue -= this.GRAVITY
-    } else {
-      this.mesh.rotation.x = -(Math.PI / 2)
-      this.bounceValue = this.BASE_BOUNCEVALUE
-    }
-
-    if (store.getState().isCrawling) {
-      this.isJumpAllowed = false
-      this.mesh.rotation.x = -0.5
-      this.mesh.position.y = this.GROUND_POSITION
-    }
+  update(clock: THREE.Clock) {
+    const { isJumping, santaPosition, isCrawling } = store.getState()
 
     // Allow jumping slightly above ground level for better experience
-    this.isJumpAllowed = this.mesh.position.y <= 0.8
 
-    if (store.getState().isJumping && this.mesh.position.y < this.GROUND_POSITION) {
-      store.dispatch(santaLanded())
-      this.mesh.position.y = this.GROUND_POSITION
+    
+    this.isJumpAllowed = this.mesh.position.y <= 0.8
+    if (this.mixer) {
+      this.mixer.update(clock.getDelta() * 2)
+    }
+
+    this.animateInitialTurn()
+    this.interpolateXMovements({ clock, santaPosition })
+
+    if (isJumping) {
+      this.animateJump()
+      // Reset y-position when landing
+      if (this.mesh.position.y < this.GROUND_POSITION) {
+        store.dispatch(santaLanded())
+        this.mesh.position.y = this.GROUND_POSITION
+      }
+    } else {
+      this.resetToWalkingPosition()
+    }
+
+    if (isCrawling) {
+      this.animateCrawl()
     }
   }
 }

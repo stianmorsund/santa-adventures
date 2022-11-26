@@ -1,12 +1,12 @@
 import * as THREE from 'three'
-import { store } from './+state/effects'
 import { santaCollectedPackage, santaCrashedOnPole, santaCrashedOnWall, santaReachedFinishline } from './+state/actions'
+import { store } from './+state/effects'
 import { Controls } from './controls/controls'
 import { LoadingManager } from './controls/loading-manager'
 import { Level1 } from './levels/level1'
 import { Forest } from './meshes/forest'
-import { Hero } from './meshes/hero'
 import { MeshBase } from './meshes/meshbase.abstract'
+import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
 import { Track } from './meshes/track'
 import { getCollectedGift, isHinderCollision, isPastFinishLine, isPoleCollision } from './utils/collisions'
@@ -15,7 +15,7 @@ let instance = null
 
 export class Scene {
   track: Track
-  hero: Hero
+  santa: Santa
   controls: Controls
   forest: Forest
   clock = new THREE.Clock()
@@ -66,9 +66,9 @@ export class Scene {
     this.track = new Track()
     this.addModel(this.track)
 
-    const hero = new Hero()
+    const santa = new Santa()
 
-    this.addModel(hero)
+    this.addModel(santa)
 
     const controls = new Controls()
 
