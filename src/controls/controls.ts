@@ -1,4 +1,3 @@
-import { store } from '../+state/effects'
 import {
   pressedCredits,
   pressedEscape,
@@ -7,9 +6,9 @@ import {
   santaCrawled,
   santaJumped,
   santaMovedLeft,
-  santaMovedRight,
+  santaMovedRight
 } from '../+state/actions'
-import { addCloseOverlayListener } from '../utils/utils'
+import { store } from '../+state/effects'
 
 const playButton: HTMLElement = document.getElementById('btn-play')
 const creditsButton: HTMLElement = document.getElementById('btn-credits')
