@@ -49,7 +49,7 @@ export class Santa extends MeshBase {
       this.mesh.position.z = 6
 
       // Todo, mesh should be added by scene
-      this.scene.scene.add(this.mesh)
+      this.scene.threeScene.add(this.mesh)
       action.timeScale = 1.2
 
       action.play()

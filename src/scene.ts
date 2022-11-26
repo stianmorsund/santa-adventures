@@ -15,18 +15,17 @@ import { getCollectedGift, isHinderCollision, isPastFinishLine, isPoleCollision 
 let instance = null
 
 export class Scene {
+  private _threeScene: THREE.Scene
+  private _models: MeshBase[] = []
+
   loadingManager = new LoadingManager()
   track: Track
   controls = new Controls() // Todo: Controls should be refactored to views, only function should exist with eventlistener
   clock = new THREE.Clock()
   level: Level
 
-  get models() {
-    return this._models
-  }
-
-  get scene() {
-    return this._scene
+  get threeScene() {
+    return this._threeScene
   }
 
   static getInstance() {
@@ -36,8 +35,7 @@ export class Scene {
       return new Scene()
     }
   }
-  private _scene: THREE.Scene
-  private _models: MeshBase[] = []
+
   constructor() {
     // Singleton
     if (instance) {
@@ -45,19 +43,17 @@ export class Scene {
     } else {
       instance = this
     }
-    this._scene = new THREE.Scene()
-    this._scene.fog = new THREE.FogExp2(0x16122d, 0.06)
+    this._threeScene = new THREE.Scene()
+    this._threeScene.fog = new THREE.FogExp2(0x16122d, 0.06)
     this.clock.start()
 
     const hemisphereLight = new THREE.HemisphereLight(0x1f305e, 0xffffff, 1.2)
-
-    this._scene.add(hemisphereLight)
     const sun = new THREE.DirectionalLight(0xf3e87f, 0.7)
-    const sun2 = new THREE.DirectionalLight(0xf3e87f, 0.3)
     sun.position.set(10, 100, -70)
-    sun2.position.set(20, 10, 40)
     sun.castShadow = true
-    this._scene.add(sun)
+
+    this._threeScene.add(hemisphereLight)
+    this._threeScene.add(sun)
 
     this.track = new Track().setLevel(new Level1())
     this.addModel(this.track, new Santa(), new Forest(), new Snow())
@@ -65,7 +61,7 @@ export class Scene {
 
   addModel(...models: MeshBase[]) {
     this._models.push(...models)
-    this._scene.add(...models.map((m) => m.mesh))
+    this._threeScene.add(...models.map((m) => m.mesh))
   }
 
   render() {
@@ -85,7 +81,7 @@ export class Scene {
       store.dispatch(santaReachedFinishline())
     }
 
-    this.models.forEach((m) => m.update(this.clock))
+    this._models.forEach((m) => m.update(this.clock))
 
     const collected = getCollectedGift({ gifts, isJumping, santaPosition })
     if (collected) {
