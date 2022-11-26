@@ -2,7 +2,7 @@ import { FinishLine } from '../meshes/finish-line'
 import { Gift } from '../meshes/gift'
 import { Hinder } from '../meshes/hinder'
 import { Pole } from '../meshes/pole'
-import { PossibleXPositions } from '../models/models'
+import { SantaXPosition } from '../models/models'
 
 export function getCollectedGift({
   gifts,
@@ -10,7 +10,7 @@ export function getCollectedGift({
   isJumping,
 }: {
   gifts: Gift[]
-  santaPosition: PossibleXPositions
+  santaPosition: SantaXPosition
   isJumping: boolean
 }): Gift | undefined {
   return gifts.find((g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === santaPosition && !isJumping)

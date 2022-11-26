@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { LoadingManager } from '../controls/loading-manager'
-import { PossibleXPositions } from '../models/models'
+import { SantaXPosition } from '../models/models'
 import { getRandomInteger } from '../utils/utils'
 import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
@@ -10,7 +10,7 @@ export class Hinder extends MeshBase {
   geometry: THREE.BoxGeometry
   mesh: THREE.Mesh
 
-  constructor({ position }: { position?: { x: PossibleXPositions; y: number } } = {}) {
+  constructor({ position }: { position?: { x: SantaXPosition; y: number } } = {}) {
     super()
 
     this.geometry = new THREE.BoxGeometry(7, 0.2, 1)

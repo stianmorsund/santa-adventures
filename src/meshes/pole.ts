@@ -3,7 +3,7 @@ import { TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 import { LoadingManager } from '../controls/loading-manager'
-import { PossibleXPositions } from '../models/models'
+import { SantaXPosition } from '../models/models'
 
 const POLE_Z = 1.2
 export class Pole extends MeshBase {
@@ -11,7 +11,7 @@ export class Pole extends MeshBase {
   geometry: THREE.CylinderGeometry
   mesh: THREE.Mesh
 
-  constructor({ position }: { position?: { x: PossibleXPositions; y: number } } = {}) {
+  constructor({ position }: { position?: { x: SantaXPosition; y: number } } = {}) {
     super()
 
     this.geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32)

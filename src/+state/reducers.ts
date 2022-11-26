@@ -1,5 +1,5 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit'
-import { CrashReason, PossibleXPositions } from '../models/models'
+import { CrashReason, SantaXPosition } from '../models/models'
 import {
   pressedCredits,
   pressedEscape,
@@ -12,11 +12,11 @@ import {
   santaLanded,
   santaMovedLeft,
   santaMovedRight,
-  santaReachedFinishline,
+  santaReachedFinishline
 } from './actions'
 
 interface GameState {
-  santaPosition: PossibleXPositions
+  santaPosition: SantaXPosition
   isJumping: boolean
   isCrawling: boolean
   isAlive: boolean
@@ -25,7 +25,7 @@ interface GameState {
   isGamePaused: boolean
   score: number
   collectedPackages: string[]
-  diedReason: CrashReason | undefined
+  crashReason: CrashReason | undefined
 }
 
 const initialState: GameState = {
@@ -38,7 +38,7 @@ const initialState: GameState = {
   isCreditsOpened: false,
   score: 0,
   collectedPackages: [],
-  diedReason: undefined,
+  crashReason: undefined,
 }
 
 export const santaReducer = createReducer(initialState, (builder) => {
@@ -69,11 +69,11 @@ export const santaReducer = createReducer(initialState, (builder) => {
     })
     .addCase(santaCrashedOnPole, (state, action) => {
       state.isAlive = false
-      state.diedReason = 'pole'
+      state.crashReason = 'pole'
     })
     .addCase(santaCrashedOnWall, (state, action) => {
       state.isAlive = false
-      state.diedReason = 'wall'
+      state.crashReason = 'wall'
     })
     .addCase(pressedCredits, (state, action) => {
       state.isCreditsOpened = !state.isCreditsOpened

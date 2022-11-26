@@ -4,7 +4,7 @@ import * as FBXLoader from 'wge-three-fbx-loader'
 import { santaLanded } from '../+state/actions'
 import { store } from '../+state/effects'
 import { LoadingManager } from '../controls/loading-manager'
-import { PossibleXPositions } from '../models/models'
+import { SantaXPosition } from '../models/models'
 import { Scene } from '../scene'
 import { MeshBase } from './meshbase.abstract'
 
@@ -83,7 +83,7 @@ export class Santa extends MeshBase {
     this.bounceValue = this.BASE_BOUNCEVALUE
   }
 
-  interpolateXMovements({ clock, santaPosition }: { clock: THREE.Clock; santaPosition: PossibleXPositions }) {
+  interpolateXMovements({ clock, santaPosition }: { clock: THREE.Clock; santaPosition: SantaXPosition }) {
     this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition, this.LERP_FACTOR * clock.getDelta())
   }
 
