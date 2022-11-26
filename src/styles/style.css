@@ -157,7 +157,6 @@ Progress bar
 Buttons
 **************/
 
-
 .btn {
   color: var(--color-dark-blue);
   text-decoration: none;
@@ -247,7 +246,7 @@ Buttons
 .modal h2 {
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 3.6em;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
 .credits-list {

@@ -1,18 +1,18 @@
-import * as THREE from 'three';
-import { LoadingManager } from '../controls/loading-manager';
-import { MeshBase } from './meshbase.abstract';
+import * as THREE from 'three'
+import { LoadingManager } from '../controls/loading-manager'
+import { MeshBase } from './meshbase.abstract'
 
 export class Snow extends MeshBase {
-  private loadingManager: LoadingManager = LoadingManager.getInstance();
-  public readonly NUMBER_OF_SNOWFLAKES = 2000;
-  public readonly SPEED = 2;
-  public material: THREE.PointsMaterial;
-  public particles: THREE.Geometry;
-  public mesh: THREE.Points;
+  private loadingManager: LoadingManager = LoadingManager.getInstance()
+  public readonly NUMBER_OF_SNOWFLAKES = 2000
+  public readonly SPEED = 2
+  public material: THREE.PointsMaterial
+  public particles: THREE.Geometry
+  public mesh: THREE.Points
 
   constructor() {
-    super();
-    const snowFlake = require('../assets/textures/snowflake.png');
+    super()
+    const snowFlake = require('../assets/textures/snowflake.png')
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 2,
@@ -22,43 +22,43 @@ export class Snow extends MeshBase {
       transparent: true,
       flatShading: true,
       fog: false,
-    });
+    })
 
-    this.makeSnow();
+    this.makeSnow()
   }
 
   simulateSnow() {
-    let pCount = this.NUMBER_OF_SNOWFLAKES;
+    let pCount = this.NUMBER_OF_SNOWFLAKES
     while (pCount--) {
-      const particle = this.particles.vertices[pCount];
+      const particle = this.particles.vertices[pCount]
       if (particle.y < -200) {
-        particle.y = 200;
+        particle.y = 200
       }
-      const velocity = 0 - Math.random() * this.SPEED;
-      particle.y += velocity;
+      const velocity = 0 - Math.random() * this.SPEED
+      particle.y += velocity
     }
 
-    this.particles.verticesNeedUpdate = true;
+    this.particles.verticesNeedUpdate = true
   }
 
   update() {
-    this.simulateSnow();
+    this.simulateSnow()
   }
 
   getMesh() {
-    return this.mesh;
+    return this.mesh
   }
 
   private makeSnow() {
-    this.particles = new THREE.Geometry();
+    this.particles = new THREE.Geometry()
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
       const particle = new THREE.Vector3(
         Math.random() * 500 - 250,
         Math.random() * 500 - 250,
         Math.random() * 500 - 250
-      );
-      this.particles.vertices.push(particle);
+      )
+      this.particles.vertices.push(particle)
     }
-    this.mesh = new THREE.Points(this.particles, this.material);
+    this.mesh = new THREE.Points(this.particles, this.material)
   }
 }

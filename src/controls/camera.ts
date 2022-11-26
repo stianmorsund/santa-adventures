@@ -1,13 +1,13 @@
-import * as THREE from 'three';
+import * as THREE from 'three'
 
 export class Camera {
-  private camera: THREE.PerspectiveCamera;
-  private cameraHelper: THREE.CameraHelper;
-  private cameraEye: THREE.Mesh;
+  private camera: THREE.PerspectiveCamera
+  private cameraHelper: THREE.CameraHelper
+  private cameraEye: THREE.Mesh
 
   constructor() {
-    this.camera = new THREE.PerspectiveCamera(84, window.innerWidth / window.innerHeight, 0.01, 1000);
-    this.cameraHelper = new THREE.CameraHelper(this.camera);
+    this.camera = new THREE.PerspectiveCamera(84, window.innerWidth / window.innerHeight, 0.01, 1000)
+    this.cameraHelper = new THREE.CameraHelper(this.camera)
 
     // debug camera
     // this.cameraEye = new THREE.Mesh(
@@ -18,15 +18,15 @@ export class Camera {
   }
 
   getCamera() {
-    return this.camera;
+    return this.camera
   }
 
   getCameraHelper() {
-    return this.cameraHelper;
+    return this.cameraHelper
   }
 
   getCameraEye() {
-    return this.cameraEye;
+    return this.cameraEye
   }
 
   //   onWindowResize() {
