@@ -26,6 +26,7 @@ interface GameState {
   score: number
   collectedPackages: string[]
   crashReason: CrashReason | undefined
+  currentLevel: number
 }
 
 const initialState: GameState = {
@@ -39,6 +40,7 @@ const initialState: GameState = {
   score: 0,
   collectedPackages: [],
   crashReason: undefined,
+  currentLevel: 0,
 }
 
 export const santaReducer = createReducer(initialState, (builder) => {
@@ -66,6 +68,7 @@ export const santaReducer = createReducer(initialState, (builder) => {
     })
     .addCase(santaReachedFinishline, (state, action) => {
       state.isGameFinished = true
+      state.currentLevel++
     })
     .addCase(santaCrashedOnPole, (state, action) => {
       state.isAlive = false
