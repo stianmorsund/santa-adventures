@@ -26,7 +26,7 @@ export class Controls {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    const { isCreditsOpened, isJumping, santaPosition } = store.getState();
+    const { isCreditsOpened, isJumping, isCrawling, santaPosition } = store.getState();
     const { key } = event;
     if (key === 'Escape') {
       if (isCreditsOpened) {
@@ -40,12 +40,12 @@ export class Controls {
     switch (key) {
       case 'a':
       case 'ArrowLeft':
-        if (santaPosition == -1) return;
+        if (santaPosition === -1) return;
         store.dispatch(santaMovedLeft());
         break;
       case 'd':
       case 'ArrowRight':
-        if (santaPosition == 1) return;
+        if (santaPosition === 1) return;
         store.dispatch(santaMovedRight());
         break;
       case ' ':
@@ -54,6 +54,7 @@ export class Controls {
         break;
       case 's':
       case 'ArrowDown':
+        if (isCrawling) return;
         store.dispatch(santaCrawled());
         break;
     }
