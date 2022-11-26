@@ -35,14 +35,9 @@ export class Santa extends MeshBase {
       this.mesh = object
       const clips = object.animations
       this.mixer = new THREE.AnimationMixer(this.mesh)
-      const clip = THREE.AnimationClip.findByName(
-        clips,
-        'Santa.001|Santa.001|Take 001|BaseLayer'
-      )
+      const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer')
       const action = this.mixer.clipAction(clip)
-      const skinnedMesh: any = this.mesh.children.find(
-        (c) => c.name === 'Santa_skinned'
-      )
+      const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned')
       const uvmap = new THREE.TextureLoader(this.loadingManager.manager).load(
         require('../assets/models/santa/Santa_UV.png')
       )
@@ -53,6 +48,7 @@ export class Santa extends MeshBase {
       this.mesh.position.y = this.GROUND_POSITION
       this.mesh.position.z = 6
 
+      // Todo, mesh should be added by scene
       this.scene.scene.add(this.mesh)
       action.timeScale = 1.2
 
@@ -87,18 +83,8 @@ export class Santa extends MeshBase {
     this.bounceValue = this.BASE_BOUNCEVALUE
   }
 
-  interpolateXMovements({
-    clock,
-    santaPosition,
-  }: {
-    clock: THREE.Clock
-    santaPosition: PossibleXPositions
-  }) {
-    this.mesh.position.x = THREE.Math.lerp(
-      this.mesh.position.x,
-      santaPosition,
-      this.LERP_FACTOR * clock.getDelta()
-    )
+  interpolateXMovements({ clock, santaPosition }: { clock: THREE.Clock; santaPosition: PossibleXPositions }) {
+    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition, this.LERP_FACTOR * clock.getDelta())
   }
 
   update(clock: THREE.Clock) {
@@ -106,7 +92,6 @@ export class Santa extends MeshBase {
 
     // Allow jumping slightly above ground level for better experience
 
-    
     this.isJumpAllowed = this.mesh.position.y <= 0.8
     if (this.mixer) {
       this.mixer.update(clock.getDelta() * 2)

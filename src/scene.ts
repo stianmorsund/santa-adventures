@@ -3,6 +3,7 @@ import { santaCollectedPackage, santaCrashedOnPole, santaCrashedOnWall, santaRea
 import { store } from './+state/effects'
 import { Controls } from './controls/controls'
 import { LoadingManager } from './controls/loading-manager'
+import { Level } from './levels/level.abstract'
 import { Level1 } from './levels/level1'
 import { Forest } from './meshes/forest'
 import { MeshBase } from './meshes/meshbase.abstract'
@@ -14,12 +15,11 @@ import { getCollectedGift, isHinderCollision, isPastFinishLine, isPoleCollision 
 let instance = null
 
 export class Scene {
+  loadingManager = new LoadingManager()
   track: Track
-  santa: Santa
-  controls: Controls
-  forest: Forest
+  controls = new Controls() // Todo: Controls should be refactored to views, only function should exist with eventlistener
   clock = new THREE.Clock()
-  level = new Level1()
+  level: Level
 
   get models() {
     return this._models
@@ -46,11 +46,9 @@ export class Scene {
       instance = this
     }
     this._scene = new THREE.Scene()
-
+    this._scene.fog = new THREE.FogExp2(0x16122d, 0.06)
     this.clock.start()
 
-    // Add some fog
-    this._scene.fog = new THREE.FogExp2(0x16122d, 0.06)
     const hemisphereLight = new THREE.HemisphereLight(0x1f305e, 0xffffff, 1.2)
 
     this._scene.add(hemisphereLight)
@@ -61,28 +59,8 @@ export class Scene {
     sun.castShadow = true
     this._scene.add(sun)
 
-    const loadingmanager = new LoadingManager()
-
-    this.track = new Track()
-    this.addModel(this.track)
-
-    const santa = new Santa()
-
-    this.addModel(santa)
-
-    const controls = new Controls()
-
-    const forest = new Forest()
-    this.addModel(forest)
-
-    const snow = new Snow()
-    this.addModel(snow)
-
-    // Use level1
-    const { gifts, hinders, poles, finishLine } = this.level
-
-    // Hinders, gifts and poles are tied to tracks matrix,
-    this.track.addModel(...hinders, ...gifts, ...poles, finishLine)
+    this.track = new Track().setLevel(new Level1())
+    this.addModel(this.track, new Santa(), new Forest(), new Snow())
   }
 
   addModel(...models: MeshBase[]) {
@@ -91,7 +69,7 @@ export class Scene {
   }
 
   render() {
-    const { gifts, hinders, poles, finishLine } = this.level
+    const { gifts, hinders, poles, finishLine } = this.track.currentLevel
     const { isGameFinished, isGamePaused, isAlive, isJumping, isCrawling, santaPosition } = store.getState()
     if (isGamePaused || !isAlive || isGameFinished) return
 

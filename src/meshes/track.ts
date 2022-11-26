@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { LoadingManager } from '../controls/loading-manager'
+import { Level } from '../levels/level.abstract'
 import { TRACK_LENGTH } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
@@ -8,10 +9,23 @@ export class Track extends MeshBase {
   geometry: THREE.PlaneGeometry
   mesh: THREE.Mesh
   children: MeshBase[] = [] // Children of track should follow the track
+  currentLevel: Level
 
   constructor() {
     super()
+    this.buildPlane()
+  }
 
+  setLevel(level: Level) {
+    this.currentLevel = level
+
+    // Add everything that are tied to track-plane
+    const { gifts, hinders, poles, finishLine } = this.currentLevel
+    this.addModel(...hinders, ...gifts, ...poles, finishLine)
+    return this
+  }
+
+  private buildPlane() {
     const texture = new THREE.TextureLoader(this.loadingManager.manager).load(
       require('../assets/textures/snow_down.jpg')
     )
@@ -34,7 +48,7 @@ export class Track extends MeshBase {
   }
 
   addModel(...models: MeshBase[]) {
-    this.children = [...this.children, ...models]
+    this.children.push(...models)
     this.mesh.add(...models.map((m) => m.mesh))
   }
 }
