@@ -4,7 +4,7 @@ import { store } from '../+state/effects'
 import { animations } from './animations.css'
 
 @customElement('sa-score')
-export class SimpleGreeting extends LitElement {
+export class Score extends LitElement {
   @property() isAnimating = false
   @property() score = 0
 
