@@ -47,4 +47,8 @@ export const overlays = css`
     animation: slideUp 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: 300ms transform ease;
   }
+
+  .hidden {
+    display: none;
+  }
 `

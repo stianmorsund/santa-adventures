@@ -4,30 +4,11 @@
     <meta charset="utf-8" />
     <title>Santa Adventures</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
-    <div class="overlay" id="welcome-overlay">
-      <div class="content">
-        <img src="assets/logo.png" class="logo" alt="Santa Adventures" />
-        <div id="progressbar-wrap" class="progress">
-          <div role="progressbar" id="progressbar" class="progress__bar"></div>
-        </div>
-        <p class="intro-text">
-          Hjelp nissen med å samle alle presangene, men pass deg for hinderne! Bruk piltastene for å styre. Trykk
-          <kbd>Esc</kbd> for å pause spillet.
-        </p>
-
-        <p id="error-message" class="intro-text hidden intro-text__error">
-          Det skjedde en feil under lasting av spillet. Prøv å laste siden på nytt.
-        </p>
-        <button class="btn animated pulse hidden" id="btn-play">Spill</button>
-        <sa-credits></sa-credits>
-      </div>
-    </div>
+    <sa-welcome></sa-welcome>
     <sa-game-over></sa-game-over>
-
     <sa-score></sa-score>
 
     <img src="assets/sky2.jpg" style="display: none" />

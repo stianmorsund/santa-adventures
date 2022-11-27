@@ -4,6 +4,7 @@ import './styles/style.css'
 import './views/credits'
 import './views/game-over'
 import './views/score'
+import './views/welcome'
 
 const OrbitControls = require('three-orbit-controls')(THREE)
 

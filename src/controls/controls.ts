@@ -1,7 +1,6 @@
 import {
   pressedCredits,
   pressedEscape,
-  pressedPlaybutton,
   santaCrawled,
   santaJumped,
   santaMovedLeft,
@@ -9,12 +8,9 @@ import {
 } from '../+state/actions'
 import { store } from '../+state/effects'
 
-const playButton: HTMLElement = document.getElementById('btn-play')
-
 export class Controls {
   constructor() {
     document.onkeydown = (e) => this.handleKeyDown(e)
-    playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()))
   }
 
   handleKeyDown(event: KeyboardEvent) {

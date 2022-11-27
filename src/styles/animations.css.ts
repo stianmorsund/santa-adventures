@@ -16,6 +16,11 @@ export const animations = css`
     animation-name: glow;
   }
 
+  .fade-out {
+    -webkit-animation-name: fadeOut;
+    animation-name: fadeOut;
+  }
+
   @keyframes glow {
     from {
       box-shadow: 10px 10px -126px 6px #aef4af;
@@ -75,6 +80,16 @@ export const animations = css`
 
     100% {
       background: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
     }
   }
 `

@@ -17,10 +17,9 @@ let instance = null
 export class Scene {
   private _threeScene: THREE.Scene
   private _meshes: MeshBase[] = []
-
+  controls = new Controls()
   loadingManager = new LoadingManager()
   track: Track
-  controls = new Controls() // Todo: Controls should be refactored to views, only function should exist with eventlistener
   clock = new THREE.Clock()
   level: Level
 
