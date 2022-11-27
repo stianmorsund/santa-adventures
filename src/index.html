@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Santa Adventures</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <link href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:700" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
@@ -23,7 +23,7 @@
           Det skjedde en feil under lasting av spillet. Prøv å laste siden på nytt.
         </p>
         <button class="btn animated pulse hidden" id="btn-play">Spill</button>
-        <button class="btn-credits" id="btn-credits">Credits</button>
+        <sa-credits></sa-credits>
       </div>
     </div>
     <div class="overlay overlay--hidden" id="gameover-overlay">
@@ -34,32 +34,6 @@
           <p>Du fikk <span id="final-score"></span> presanger</p>
         </div>
         <button class="btn" id="btn-restart">Spill igjen</button>
-      </div>
-    </div>
-
-    <div class="overlay overlay--hidden" id="credits-overlay">
-      <div class="modal content">
-        <h2>Credits</h2>
-
-        <ul class="credits-list">
-          <li>Santa blender modell</li>
-          <li>Tre modell</li>
-          <li>
-            <a target="_blank" href="https://www.freepik.com/free-vector/mountain-landscape-night_2381971.htm"
-              >Bakgrunn</a
-            >
-          </li>
-
-          <li>
-            <a
-              target="_blank"
-              href="https://www.vecteezy.com/vector-art/346477-black-and-white-checkered-seamless-repeating-pattern-background-vector-illustration"
-              >Tekstur for mållinje</a
-            >
-          </li>
-        </ul>
-
-        <button class="btn" id="btn-credits-close">Lukk</button>
       </div>
     </div>
 
