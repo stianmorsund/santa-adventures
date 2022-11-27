@@ -101,25 +101,7 @@ body.game-started {
   height: auto;
 }
 
-.score-wrapper {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  top: 0;
-  right: 10px;
-  font-size: 3.7em;
-  font-weight: 700;
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  padding: 10px;
-  color: #fff;
-  text-shadow: 0 4px 0 var(--color-dark-blue);
-}
 
-.score-wrapper .gift {
-  width: 70px;
-  margin-right: 20px;
-}
 
 /**************
 Progress bar
