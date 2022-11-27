@@ -37,11 +37,18 @@ export class Santa extends MeshBase {
       this.mixer = new THREE.AnimationMixer(this.mesh)
       const clip = THREE.AnimationClip.findByName(clips, 'Santa.001|Santa.001|Take 001|BaseLayer')
       const action = this.mixer.clipAction(clip)
+      console.log(this.mesh.children)
       const skinnedMesh: any = this.mesh.children.find((c) => c.name === 'Santa_skinned')
       const uvmap = new THREE.TextureLoader(this.loadingManager.manager).load(
         require('../assets/models/santa/Santa_UV.png')
       )
+      const bumpMap = new THREE.TextureLoader(this.loadingManager.manager).load(
+        require('../assets/models/santa/Santa_bump.png')
+      )
+
       skinnedMesh.material.map = uvmap
+      skinnedMesh.material.bumpMap = bumpMap
+      skinnedMesh.material.bumpScale = 0.015
       skinnedMesh.receiveShadow = true
       skinnedMesh.castShadow = true
 
