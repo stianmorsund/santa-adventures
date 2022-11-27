@@ -2,7 +2,6 @@ import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit'
 import { pressedPlaybutton, pressedRestartGame } from './actions'
 import { santaReducer } from './reducers'
 
-// Create the middleware instance and methods
 export const listenerMiddleware = createListenerMiddleware()
 
 listenerMiddleware.startListening({

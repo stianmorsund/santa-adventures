@@ -1,20 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Crimson+Text:400|Yanone+Kaffeesatz:700');
 
-/**
- Reset
-**/
-button,
-div {
-  display: block;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-
 
 :root {
   --color-light-blue: #b8b9fc;
@@ -22,6 +7,10 @@ body {
   --color-red: #b44f43;
   --color-white: rgba(255, 255, 255, 0.7);
 }
+
+
+button, div { display: block; }
+html, body { margin: 0; padding: 0; }
 
 body {
   -webkit-font-smoothing: antialiased;
