@@ -11,17 +11,13 @@ import {
 import { store } from '../+state/effects'
 
 const playButton: HTMLElement = document.getElementById('btn-play')
-const creditsButton: HTMLElement = document.getElementById('btn-credits')
 const restartButton: HTMLElement = document.getElementById('btn-restart')
-const creditsCloseBtn: HTMLElement = document.getElementById('btn-credits-close')
 
 export class Controls {
   constructor() {
     document.onkeydown = (e) => this.handleKeyDown(e)
     playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()))
-    creditsButton.addEventListener('click', () => store.dispatch(pressedCredits()))
     restartButton.addEventListener('click', () => store.dispatch(pressedRestartGame()))
-    creditsCloseBtn.addEventListener('click', () => store.dispatch(pressedCredits()))
   }
 
   handleKeyDown(event: KeyboardEvent) {

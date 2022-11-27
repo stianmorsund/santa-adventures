@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { store } from '../+state/effects'
-import { animations } from './animations.css'
+import { animations } from '../styles/animations.css'
 
 @customElement('sa-score')
 export class Score extends LitElement {
