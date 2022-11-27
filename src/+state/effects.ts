@@ -5,26 +5,14 @@ import {
   pressedCredits,
   pressedEscape,
   pressedPlaybutton,
-  pressedRestartGame,
-  santaCollectedPackage,
-  santaCrashedOnPole,
-  santaCrashedOnWall,
+  pressedRestartGame, santaCrashedOnPole,
+  santaCrashedOnWall
 } from './actions'
 import { santaReducer } from './reducers'
 
 const welcomeOverlay: HTMLElement = document.getElementById('welcome-overlay')
 const gameoverOverlay: HTMLElement = document.getElementById('gameover-overlay')
 const creditsOverlay: HTMLElement = document.getElementById('credits-overlay')
-
-const updateScore = () => {
-  const scoreElement: HTMLElement = document.getElementById('score')
-  scoreElement.classList.add('pulse')
-  scoreElement.textContent = store.getState().score.toString()
-
-  setTimeout(() => {
-    scoreElement.classList.remove('pulse')
-  }, 1000)
-}
 
 const showGameOverModal = (reason: CrashReason) => {
   const finalScoreElement: HTMLElement = document.getElementById('final-score')
@@ -42,15 +30,6 @@ addCloseOverlayListener(creditsOverlay, toggleCredits)
 
 // Create the middleware instance and methods
 export const listenerMiddleware = createListenerMiddleware()
-
-// Add one or more listener entries that look for specific actions.
-// They may contain any sync or async logic, similar to thunks.
-listenerMiddleware.startListening({
-  actionCreator: santaCollectedPackage,
-  effect: async (_action) => {
-    updateScore()
-  },
-})
 
 listenerMiddleware.startListening({
   actionCreator: pressedPlaybutton,
