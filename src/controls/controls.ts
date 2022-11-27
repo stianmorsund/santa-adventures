@@ -2,7 +2,6 @@ import {
   pressedCredits,
   pressedEscape,
   pressedPlaybutton,
-  pressedRestartGame,
   santaCrawled,
   santaJumped,
   santaMovedLeft,
@@ -11,13 +10,11 @@ import {
 import { store } from '../+state/effects'
 
 const playButton: HTMLElement = document.getElementById('btn-play')
-const restartButton: HTMLElement = document.getElementById('btn-restart')
 
 export class Controls {
   constructor() {
     document.onkeydown = (e) => this.handleKeyDown(e)
     playButton.addEventListener('click', () => store.dispatch(pressedPlaybutton()))
-    restartButton.addEventListener('click', () => store.dispatch(pressedRestartGame()))
   }
 
   handleKeyDown(event: KeyboardEvent) {

@@ -88,13 +88,7 @@ body.game-started {
   padding: 0.7em;
 }
 
-.gameover-text {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  text-align: center;
-  font-size: 3.3em;
-  text-shadow: 0 2px 0 var(--color-dark-blue);
-  line-height: 0.3em;
-}
+
 
 .logo {
   width: 90%;

@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { Scene } from './scene'
 import './styles/style.css'
 import './views/credits'
+import './views/game-over'
 import './views/score'
 
 const OrbitControls = require('three-orbit-controls')(THREE)
