@@ -8,7 +8,7 @@ export class Track extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   geometry: THREE.PlaneGeometry
   mesh: THREE.Mesh
-  children: MeshBase[] = [] // Children of track should follow the track
+  children: MeshBase[] = []
   currentLevel: Level
 
   constructor() {
@@ -21,7 +21,7 @@ export class Track extends MeshBase {
 
     // Add everything that are tied to track-plane
     const { gifts, hinders, poles, finishLine } = this.currentLevel
-    this.addModel(...hinders, ...gifts, ...poles, finishLine)
+    this.addMesh(...hinders, ...gifts, ...poles, finishLine)
     return this
   }
 
@@ -47,8 +47,8 @@ export class Track extends MeshBase {
     this.children.forEach((m) => m.update())
   }
 
-  addModel(...models: MeshBase[]) {
-    this.children.push(...models)
-    this.mesh.add(...models.map((m) => m.mesh))
+  addMesh(...meshes: MeshBase[]) {
+    this.children.push(...meshes)
+    this.mesh.add(...meshes.map((m) => m.mesh))
   }
 }

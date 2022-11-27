@@ -16,7 +16,7 @@ let instance = null
 
 export class Scene {
   private _threeScene: THREE.Scene
-  private _models: MeshBase[] = []
+  private _meshes: MeshBase[] = []
 
   loadingManager = new LoadingManager()
   track: Track
@@ -56,12 +56,12 @@ export class Scene {
     this._threeScene.add(sun)
 
     this.track = new Track().setLevel(new Level1())
-    this.addModel(this.track, new Santa(), new Forest(), new Snow())
+    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
   }
 
-  addModel(...models: MeshBase[]) {
-    this._models.push(...models)
-    this._threeScene.add(...models.map((m) => m.mesh))
+  addMesh(...meshes: MeshBase[]) {
+    this._meshes.push(...meshes)
+    this._threeScene.add(...meshes.map((m) => m.mesh))
   }
 
   render() {
@@ -81,7 +81,7 @@ export class Scene {
       store.dispatch(santaReachedFinishline())
     }
 
-    this._models.forEach((m) => m.update(this.clock))
+    this._meshes.forEach((m) => m.update(this.clock))
 
     const collected = getCollectedGift({ gifts, isJumping, santaPosition })
     if (collected) {
