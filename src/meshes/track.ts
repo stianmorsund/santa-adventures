@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { LoadingManager } from '../controls/loading-manager'
 import { Level } from '../levels/level.abstract'
+import { LoadingManager } from '../utils/loading-manager'
 import { TRACK_LENGTH } from './constants'
 import { MeshBase } from './meshbase.abstract'
 

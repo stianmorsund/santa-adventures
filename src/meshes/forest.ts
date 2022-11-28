@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import * as FBXLoader from 'wge-three-fbx-loader'
 
-import { LoadingManager } from '../controls/loading-manager'
+import { LoadingManager } from '../utils/loading-manager'
 import { FOREST_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 

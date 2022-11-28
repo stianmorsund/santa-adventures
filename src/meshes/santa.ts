@@ -3,9 +3,9 @@ import * as FBXLoader from 'wge-three-fbx-loader'
 import * as santa from '../+state/santa-slice'
 import { store } from '../+state/store'
 
-import { LoadingManager } from '../controls/loading-manager'
 import { SantaXPosition } from '../models/models'
 import { Scene } from '../scene'
+import { LoadingManager } from '../utils/loading-manager'
 import { MeshBase } from './meshbase.abstract'
 
 export class Santa extends MeshBase {

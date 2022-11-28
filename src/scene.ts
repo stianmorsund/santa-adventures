@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
 import { Controls } from './controls/controls'
-import { LoadingManager } from './controls/loading-manager'
 import { Level } from './levels/level.abstract'
 import { Level1 } from './levels/level1'
 import { Forest } from './meshes/forest'
@@ -11,6 +10,7 @@ import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
 import { Track } from './meshes/track'
 import { getCollectedGift, isPastFinishLine, isPoleCollision, isWallCollision } from './utils/collisions'
+import { LoadingManager } from './utils/loading-manager'
 
 let instance = null
 

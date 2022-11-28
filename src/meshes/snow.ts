@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { LoadingManager } from '../controls/loading-manager'
+import { LoadingManager } from '../utils/loading-manager'
 import { MeshBase } from './meshbase.abstract'
 
 export class Snow extends MeshBase {

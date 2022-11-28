@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import { TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
-import { LoadingManager } from '../controls/loading-manager'
 import { SantaXPosition } from '../models/models'
+import { LoadingManager } from '../utils/loading-manager'
 
 const POLE_Z = 1.2
 export class Pole extends MeshBase {

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { LoadingManager } from '../controls/loading-manager'
 import { SantaXPosition } from '../models/models'
+import { LoadingManager } from '../utils/loading-manager'
 import { getRandomInteger } from '../utils/utils'
 import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
