@@ -24,7 +24,7 @@ export class Level1 extends Level {
       new Gift({ position: { x: 1, y: 70 } }),
       new Gift({ position: { x: 1, y: 80 } }),
 
-      new Wall({ position: { x: 0, y: 100 } }),
+      new Pole({ position: { x: 0, y: 100 } }),
 
       new Gift({ position: { x: 1, y: 105 } }),
       new Gift({ position: { x: 1, y: 107 } }),
@@ -35,7 +35,7 @@ export class Level1 extends Level {
 
       new Wall({ position: { x: 0, y: 135 } }),
 
-      new Wall({ position: { x: 0, y: 150 } }),
+      new Pole({ position: { x: 0, y: 150 } }),
       new Gift({ position: { x: -1, y: 150 } }),
       new Gift({ position: { x: 0, y: 150 } }),
 
@@ -43,14 +43,14 @@ export class Level1 extends Level {
       new Gift({ position: { x: 0, y: 165 } }),
       new Gift({ position: { x: 1, y: 170 } }),
       new Gift({ position: { x: 0, y: 175 } }),
-      new Wall({ position: { x: 0, y: 175 } }),
+      new Pole({ position: { x: 0, y: 175 } }),
 
       new Gift({ position: { x: 1, y: 180 } }),
       new Gift({ position: { x: -1, y: 182 } }),
       new Gift({ position: { x: 0, y: 185 } }),
       new Gift({ position: { x: -1, y: 187 } }),
 
-      new Wall({ position: { x: 0, y: 195 } }),
+      new Pole({ position: { x: 0, y: 195 } }),
       new Gift({ position: { x: -1, y: 195 } }),
       new Gift({ position: { x: 0, y: 195 } }),
 
