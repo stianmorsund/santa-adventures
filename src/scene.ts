@@ -51,6 +51,10 @@ export class Scene {
     this._threeScene.add(hemisphereLight)
     this._threeScene.add(sun)
 
+    store.subscribe(() => {
+      const { currentLevel } = store.getState().santa
+    })
+
     this.track = new Track().setLevel(new Level1())
     this.addMesh(this.track, new Santa(), new Forest(), new Snow())
     this.clock.start()
