@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { assetsFailed, assetsFinishedLoading, assetsProgress } from '../+state/actions'
+import * as assets from '../+state/assets-slice'
 import { store } from '../+state/effects'
 
 let instance = null
@@ -22,9 +22,9 @@ export class LoadingManager {
       instance = this
     }
     this.manager.onStart = (url, itemsLoaded, itemsTotal) => {}
-    this.manager.onLoad = () => store.dispatch(assetsFinishedLoading())
+    this.manager.onLoad = () => store.dispatch(assets.loaded())
     this.manager.onProgress = (_url, itemsLoaded, itemsTotal) =>
-      store.dispatch(assetsProgress({ itemsLoaded, itemsTotal }))
-    this.manager.onError = (_url) => store.dispatch(assetsFailed())
+      store.dispatch(assets.progress({ itemsLoaded, itemsTotal }))
+    this.manager.onError = (_url) => store.dispatch(assets.failed())
   }
 }

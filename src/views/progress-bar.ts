@@ -12,7 +12,7 @@ export class ProgressBar extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { isAssetsLoaded, assetsProgress } = store.getState().game
+      const { isAssetsLoaded, assetsProgress } = store.getState().assets
       this.isAssetsLoaded = isAssetsLoaded
       this.setProgress(assetsProgress)
     })

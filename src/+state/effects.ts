@@ -1,5 +1,6 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit'
 import { pressedPlaybutton, pressedRestartGame } from './actions'
+import assetsSlice from './assets-slice'
 import { gameReducer } from './reducers'
 import santaReducer from './santa-slice'
 
@@ -20,7 +21,7 @@ listenerMiddleware.startListening({
 })
 
 export const store = configureStore({
-  reducer: { game: gameReducer, santa: santaReducer },
+  reducer: { game: gameReducer, assets: assetsSlice, santa: santaReducer },
   devTools: true,
   // Add the listener middleware to the store.
   // NOTE: Since this can receive actions with functions inside,
