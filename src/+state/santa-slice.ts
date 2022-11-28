@@ -10,7 +10,7 @@ interface SantaState {
   crashReason: CrashReason | undefined
   score: number
   currentLevel: number
-  isGameFinished: boolean
+  isCurrentLevelFinished: boolean
 }
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
   crashReason: undefined,
   score: 0,
   currentLevel: 0,
-  isGameFinished: false,
+  isCurrentLevelFinished: false,
 } as SantaState
 
 const santaSlice = createSlice({
@@ -51,7 +51,7 @@ const santaSlice = createSlice({
       state.collectedPackages.push(action.payload)
     },
     reachedFinishline: (state) => {
-      state.isGameFinished = true
+      state.isCurrentLevelFinished = true
       state.currentLevel++
     },
     crashedOnPole: (state) => {

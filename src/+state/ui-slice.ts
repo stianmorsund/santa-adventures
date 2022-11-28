@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface UIState {
-  isGameFinished: boolean
   isCreditsOpened: boolean
   isGamePaused: boolean
   hasGameStarted: boolean
 }
 
 const initialState = {
-  isGamePaused: true,
-  isGameFinished: false,
+  isGamePaused: true, 
   isCreditsOpened: false,
   hasGameStarted: false,
 } as UIState
