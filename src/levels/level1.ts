@@ -5,14 +5,14 @@ import { Wall } from '../meshes/wall'
 import { Level } from './level.abstract'
 
 export class Level1 extends Level {
-  level: Array<Pole | Wall | Gift | FinishLine>
+  meshes: Array<Pole | Wall | Gift | FinishLine>
   constructor() {
     super()
     this.build()
   }
 
   private build() {
-    this.level = [
+    this.meshes = [
       new Gift({ position: { x: -1, y: 30 } }),
       new Gift({ position: { x: 0, y: 30 } }),
       new Gift({ position: { x: 1, y: 30 } }),

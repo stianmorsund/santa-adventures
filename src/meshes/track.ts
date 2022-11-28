@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+
 import { Level } from '../levels/level.abstract'
 import { LoadingManager } from '../utils/loading-manager'
 import { TRACK_LENGTH } from './constants'
@@ -18,10 +19,9 @@ export class Track extends MeshBase {
 
   setLevel(level: Level) {
     this.currentLevel = level
-
+    
     // Add everything that are tied to track-plane
-    const { gifts, walls, poles, finishLine } = this.currentLevel
-    this.addMesh(...walls, ...gifts, ...poles, finishLine)
+    this.addMesh(...this.currentLevel.meshes)
     return this
   }
 

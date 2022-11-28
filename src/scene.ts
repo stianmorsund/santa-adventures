@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
 import { Controls } from './controls/controls'
-import { Level } from './levels/level.abstract'
 import { Level1 } from './levels/level1'
 import { Forest } from './meshes/forest'
 import { MeshBase } from './meshes/meshbase.abstract'
@@ -21,7 +20,6 @@ export class Scene {
   loadingManager = new LoadingManager()
   track: Track
   clock = new THREE.Clock()
-  level: Level
 
   get threeScene() {
     return this._threeScene
@@ -44,7 +42,6 @@ export class Scene {
     }
     this._threeScene = new THREE.Scene()
     this._threeScene.fog = new THREE.FogExp2(0x16122d, 0.06)
-    this.clock.start()
 
     const hemisphereLight = new THREE.HemisphereLight(0x1f305e, 0xffffff, 1.2)
     const sun = new THREE.DirectionalLight(0xf3e87f, 0.7)
@@ -56,6 +53,7 @@ export class Scene {
 
     this.track = new Track().setLevel(new Level1())
     this.addMesh(this.track, new Santa(), new Forest(), new Snow())
+    this.clock.start()
   }
 
   addMesh(...meshes: MeshBase[]) {
