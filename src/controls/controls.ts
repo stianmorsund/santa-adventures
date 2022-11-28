@@ -1,11 +1,6 @@
-import {
-  pressedCredits,
-  pressedEscape,
-  santaCrawled,
-  santaJumped,
-  santaMovedLeft,
-  santaMovedRight
-} from '../+state/actions'
+import * as santa from '../+state/santa-slice'
+
+import { pressedCredits, pressedEscape } from '../+state/actions'
 import { store } from '../+state/effects'
 
 export class Controls {
@@ -14,7 +9,8 @@ export class Controls {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    const { isCreditsOpened, isJumping, isCrawling, santaPosition } = store.getState()
+    const { isJumping, isCrawling, santaPosition } = store.getState().santa
+    const { isCreditsOpened } = store.getState().game
     const { key } = event
     if (key === 'Escape') {
       if (isCreditsOpened) {
@@ -29,21 +25,21 @@ export class Controls {
       case 'a':
       case 'ArrowLeft':
         if (santaPosition === -1) return
-        store.dispatch(santaMovedLeft())
+        store.dispatch(santa.movedLeft())
         break
       case 'd':
       case 'ArrowRight':
         if (santaPosition === 1) return
-        store.dispatch(santaMovedRight())
+        store.dispatch(santa.movedRight())
         break
       case ' ':
       case 'ArrowUp':
-        store.dispatch(santaJumped())
+        store.dispatch(santa.jumped())
         break
       case 's':
       case 'ArrowDown':
         if (isCrawling) return
-        store.dispatch(santaCrawled())
+        store.dispatch(santa.crawled())
         break
     }
   }

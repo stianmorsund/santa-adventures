@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { santaCollectedPackage, santaCrashedOnPole, santaCrashedOnWall, santaReachedFinishline } from './+state/actions'
 import { store } from './+state/effects'
+import * as santa from './+state/santa-slice'
 import { Controls } from './controls/controls'
 import { LoadingManager } from './controls/loading-manager'
 import { Level } from './levels/level.abstract'
@@ -65,27 +65,28 @@ export class Scene {
 
   render() {
     const { gifts, hinders, poles, finishLine } = this.track.currentLevel
-    const { isGameFinished, hasGameStarted, isGamePaused, isAlive, isJumping, isCrawling, santaPosition } =
-      store.getState()
+    const { isGameFinished, hasGameStarted, isGamePaused } = store.getState().game
+    const { isAlive, isJumping, isCrawling, santaPosition } = store.getState().santa
+
     if (!hasGameStarted || isGamePaused || !isAlive || isGameFinished) return
 
     if (isHinderCollision({ hinders, isJumping })) {
-      store.dispatch(santaCrashedOnWall())
+      store.dispatch(santa.crashedOnWall())
     }
 
     if (isPoleCollision({ poles, isCrawling })) {
-      store.dispatch(santaCrashedOnPole())
+      store.dispatch(santa.crashedOnPole())
     }
 
     if (isPastFinishLine(finishLine)) {
-      store.dispatch(santaReachedFinishline())
+      store.dispatch(santa.reachedFinishline())
     }
 
     this._meshes.forEach((m) => m.update(this.clock))
 
     const collected = getCollectedGift({ gifts, isJumping, santaPosition })
     if (collected) {
-      store.dispatch(santaCollectedPackage(collected.id))
+      store.dispatch(santa.collectedPackage(collected.id))
     }
   }
 }

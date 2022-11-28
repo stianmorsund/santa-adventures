@@ -11,7 +11,7 @@ export class Score extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { score } = store.getState()
+      const { score } = store.getState().santa
       if (score !== this.score) {
         this.score = score
         this.animateScore()

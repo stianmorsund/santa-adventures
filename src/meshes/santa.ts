@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import * as FBXLoader from 'wge-three-fbx-loader'
-
-import { santaLanded } from '../+state/actions'
 import { store } from '../+state/effects'
+import * as santa from '../+state/santa-slice'
+
 import { LoadingManager } from '../controls/loading-manager'
 import { SantaXPosition } from '../models/models'
 import { Scene } from '../scene'
@@ -94,7 +94,7 @@ export class Santa extends MeshBase {
   }
 
   update(clock: THREE.Clock) {
-    const { isJumping, santaPosition, isCrawling } = store.getState()
+    const { isJumping, santaPosition, isCrawling } = store.getState().santa
 
     // Allow jumping slightly above ground level for better experience
 
@@ -110,7 +110,7 @@ export class Santa extends MeshBase {
       this.animateJump()
       // Reset y-position when landing
       if (this.mesh.position.y < this.GROUND_POSITION) {
-        store.dispatch(santaLanded())
+        store.dispatch(santa.landed())
         this.mesh.position.y = this.GROUND_POSITION
       }
     } else {

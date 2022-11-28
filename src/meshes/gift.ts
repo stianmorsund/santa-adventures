@@ -36,7 +36,7 @@ export class Gift extends MeshBase {
   }
 
   isCollected(): boolean {
-    return store.getState().collectedPackages.includes(this.id)
+    return store.getState().santa.collectedPackages.includes(this.id)
   }
 
   update() {

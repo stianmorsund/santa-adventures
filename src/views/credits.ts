@@ -16,7 +16,7 @@ export class Credits extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { isCreditsOpened } = store.getState()
+      const { isCreditsOpened } = store.getState().game
       if (isCreditsOpened !== this.isOpened) {
         this.isOpened = isCreditsOpened
       }

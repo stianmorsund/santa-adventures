@@ -33,7 +33,7 @@ export class GameOver extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { isAlive, crashReason, score } = store.getState()
+      const { isAlive, crashReason, score } = store.getState().santa
       if (isAlive !== this.isAlive) {
         this.isAlive = isAlive
         this.crashReason = crashReason

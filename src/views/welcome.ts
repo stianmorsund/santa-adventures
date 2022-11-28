@@ -47,7 +47,8 @@ export class Welcome extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { hasGameStarted, isAlive, isGamePaused, isAssetsLoaded, isErrorLoadingAssets } = store.getState()
+      const { hasGameStarted, isGamePaused, isAssetsLoaded, isErrorLoadingAssets } = store.getState().game
+      const { isAlive } = store.getState().santa
       this.hasGameStarted = hasGameStarted
       if (!isAlive) return
       this.isErrorLoadingAssets = isErrorLoadingAssets
