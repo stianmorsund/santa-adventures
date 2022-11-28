@@ -1,7 +1,9 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit'
 import { CrashReason, SantaXPosition } from '../models/models'
 import {
-  assetsFailed, assetsFinishedLoading, assetsProgress,
+  assetsFailed,
+  assetsFinishedLoading,
+  assetsProgress,
   pressedCredits,
   pressedEscape,
   pressedPlaybutton,
@@ -31,6 +33,7 @@ interface GameState {
   isAssetsLoaded: boolean
   assetsProgress: { itemsLoaded: number; itemsTotal: number }
   isErrorLoadingAssets: boolean
+  hasGameStarted: boolean
 }
 
 const initialState: GameState = {
@@ -48,6 +51,7 @@ const initialState: GameState = {
   isAssetsLoaded: false,
   assetsProgress: { itemsLoaded: 0, itemsTotal: 0 },
   isErrorLoadingAssets: false,
+  hasGameStarted: false,
 }
 
 export const santaReducer = createReducer(initialState, (builder) => {
@@ -96,6 +100,9 @@ export const santaReducer = createReducer(initialState, (builder) => {
     })
     .addCase(assetsProgress, (state, action) => {
       state.assetsProgress = action.payload
+    })
+    .addCase(pressedPlaybutton, (state, action) => {
+      state.hasGameStarted = true
     })
     .addMatcher(isAnyOf(pressedEscape, pressedPlaybutton), (state, action) => {
       state.isGamePaused = !state.isGamePaused

@@ -1,6 +1,7 @@
 import { css } from 'lit'
 
 export const animations = css`
+  .hidden { display: none !important;}
   .animated {
     animation-duration: 0.5s;
     animation-fill-mode: both;

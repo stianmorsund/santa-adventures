@@ -10,6 +10,7 @@ import './progress-bar'
 
 @customElement('sa-welcome')
 export class Welcome extends LitElement {
+  @property() hasGameStarted = true
   @property() isGamePaused = false
   @property() isAssetsLoaded = false
   @property() isErrorLoadingAssets = false
@@ -46,7 +47,8 @@ export class Welcome extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { isAlive, isGamePaused, isAssetsLoaded, isErrorLoadingAssets } = store.getState()
+      const { hasGameStarted, isAlive, isGamePaused, isAssetsLoaded, isErrorLoadingAssets } = store.getState()
+      this.hasGameStarted = hasGameStarted
       if (!isAlive) return
       this.isErrorLoadingAssets = isErrorLoadingAssets
       this.isAssetsLoaded = isAssetsLoaded
@@ -63,10 +65,15 @@ export class Welcome extends LitElement {
 
   render() {
     return html`
-      <div class="overlay ${!this.isGamePaused ? 'hidden' : ''}">
+      <div class="overlay ${!this.hasGameStarted || this.isGamePaused ? '' : 'hidden'}">
         <div class="content ">
           <img src="assets/logo.png" class="logo" alt="Santa Adventures" />
-          <sa-progress-bar></sa-progress-bar>
+          ${(() => {
+            if (!this.hasGameStarted) {
+              return html`<sa-progress-bar></sa-progress-bar>`
+            }
+          })()}
+
           <p class="intro-text">
             Hjelp nissen med å samle alle presangene, men pass deg for hinderne! Bruk piltastene for å styre. Trykk
             <kbd>Esc</kbd> for å pause spillet.

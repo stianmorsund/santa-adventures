@@ -65,8 +65,9 @@ export class Scene {
 
   render() {
     const { gifts, hinders, poles, finishLine } = this.track.currentLevel
-    const { isGameFinished, isGamePaused, isAlive, isJumping, isCrawling, santaPosition } = store.getState()
-    if (isGamePaused || !isAlive || isGameFinished) return
+    const { isGameFinished, hasGameStarted, isGamePaused, isAlive, isJumping, isCrawling, santaPosition } =
+      store.getState()
+    if (!hasGameStarted || isGamePaused || !isAlive || isGameFinished) return
 
     if (isHinderCollision({ hinders, isJumping })) {
       store.dispatch(santaCrashedOnWall())
