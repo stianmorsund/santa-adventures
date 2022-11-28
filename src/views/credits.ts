@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property, query } from 'lit/decorators.js'
-import { pressedCredits } from '../+state/actions'
 import { store } from '../+state/effects'
+import { pressedCredits } from '../+state/ui-slice'
 import { animations } from '../styles/animations.css'
 import { buttons } from '../styles/buttons.css'
 import { overlays } from '../styles/overlay.css'
@@ -16,7 +16,7 @@ export class Credits extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { isCreditsOpened } = store.getState().game
+      const { isCreditsOpened } = store.getState().ui
       if (isCreditsOpened !== this.isOpened) {
         this.isOpened = isCreditsOpened
       }

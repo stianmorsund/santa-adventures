@@ -65,7 +65,7 @@ export class Scene {
 
   render() {
     const { gifts, hinders, poles, finishLine } = this.track.currentLevel
-    const { isGameFinished, hasGameStarted, isGamePaused } = store.getState().game
+    const { isGameFinished, hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, santaPosition } = store.getState().santa
 
     if (!hasGameStarted || isGamePaused || !isAlive || isGameFinished) return

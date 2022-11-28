@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { pressedRestartGame } from '../+state/actions'
 import { store } from '../+state/effects'
+import { pressedRestartGame } from '../+state/ui-slice'
 import { CrashReason } from '../models/models'
 import { animations } from '../styles/animations.css'
 import { buttons } from '../styles/buttons.css'

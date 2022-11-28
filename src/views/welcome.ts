@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { pressedPlaybutton } from '../+state/actions'
 import { store } from '../+state/effects'
+import { pressedPlay } from '../+state/ui-slice'
 import { animations } from '../styles/animations.css'
 import { buttons } from '../styles/buttons.css'
 import { logo } from '../styles/logo.css'
@@ -47,8 +47,8 @@ export class Welcome extends LitElement {
   constructor() {
     super()
     store.subscribe(() => {
-      const { game, assets, santa } = store.getState()
-      const { hasGameStarted, isGamePaused } = game
+      const { ui, assets, santa } = store.getState()
+      const { hasGameStarted, isGamePaused } = ui
       const { isAssetsLoaded, isErrorLoadingAssets } = assets
       const { isAlive } = santa
       this.hasGameStarted = hasGameStarted
@@ -63,7 +63,7 @@ export class Welcome extends LitElement {
   }
 
   play() {
-    store.dispatch(pressedPlaybutton())
+    store.dispatch(pressedPlay())
   }
 
   render() {

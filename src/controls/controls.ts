@@ -1,7 +1,6 @@
-import * as santa from '../+state/santa-slice'
-
-import { pressedCredits, pressedEscape } from '../+state/actions'
 import { store } from '../+state/effects'
+import * as santa from '../+state/santa-slice'
+import { pressedCredits, pressedEscape } from '../+state/ui-slice'
 
 export class Controls {
   constructor() {
@@ -10,7 +9,7 @@ export class Controls {
 
   handleKeyDown(event: KeyboardEvent) {
     const { isJumping, isCrawling, santaPosition } = store.getState().santa
-    const { isCreditsOpened } = store.getState().game
+    const { isCreditsOpened } = store.getState().ui
     const { key } = event
     if (key === 'Escape') {
       if (isCreditsOpened) {
