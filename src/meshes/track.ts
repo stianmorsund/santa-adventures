@@ -20,8 +20,8 @@ export class Track extends MeshBase {
     this.currentLevel = level
 
     // Add everything that are tied to track-plane
-    const { gifts, hinders, poles, finishLine } = this.currentLevel
-    this.addMesh(...hinders, ...gifts, ...poles, finishLine)
+    const { gifts, walls, poles, finishLine } = this.currentLevel
+    this.addMesh(...walls, ...gifts, ...poles, finishLine)
     return this
   }
 

@@ -10,7 +10,7 @@ import { MeshBase } from './meshes/meshbase.abstract'
 import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
 import { Track } from './meshes/track'
-import { getCollectedGift, isHinderCollision, isPastFinishLine, isPoleCollision } from './utils/collisions'
+import { getCollectedGift, isPastFinishLine, isPoleCollision, isWallCollision } from './utils/collisions'
 
 let instance = null
 
@@ -64,13 +64,13 @@ export class Scene {
   }
 
   render() {
-    const { gifts, hinders, poles, finishLine } = this.track.currentLevel
+    const { gifts, walls, poles, finishLine } = this.track.currentLevel
     const { hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, isCurrentLevelFinished, santaPosition } = store.getState().santa
 
     if (!hasGameStarted || isGamePaused || !isAlive || isCurrentLevelFinished) return
 
-    if (isHinderCollision({ hinders, isJumping })) {
+    if (isWallCollision({ walls, isJumping })) {
       store.dispatch(santa.crashedOnWall())
     }
 

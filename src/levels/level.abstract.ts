@@ -1,17 +1,17 @@
 import { FinishLine } from '../meshes/finish-line'
 import { Gift } from '../meshes/gift'
-import { Hinder } from '../meshes/hinder'
 import { Pole } from '../meshes/pole'
+import { Wall } from '../meshes/wall'
 
 export abstract class Level {
-  level: Array<Pole | Hinder | Gift | FinishLine>
+  level: Array<Pole | Wall | Gift | FinishLine>
 
   get gifts(): Gift[] {
     return this.level.filter((entity) => entity instanceof Gift) as Gift[]
   }
 
-  get hinders(): Hinder[] {
-    return this.level.filter((entity) => entity instanceof Hinder) as Hinder[]
+  get walls(): Wall[] {
+    return this.level.filter((entity) => entity instanceof Wall) as Wall[]
   }
 
   get poles(): Pole[] {

@@ -5,7 +5,7 @@ import { getRandomInteger } from '../utils/utils'
 import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
-export class Hinder extends MeshBase {
+export class Wall extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   geometry: THREE.BoxGeometry
   mesh: THREE.Mesh

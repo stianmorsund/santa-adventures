@@ -1,7 +1,7 @@
 import { FinishLine } from '../meshes/finish-line'
 import { Gift } from '../meshes/gift'
-import { Hinder } from '../meshes/hinder'
 import { Pole } from '../meshes/pole'
+import { Wall } from '../meshes/wall'
 import { SantaXPosition } from '../models/models'
 
 export function getCollectedGift({
@@ -16,8 +16,8 @@ export function getCollectedGift({
   return gifts.find((g) => Math.floor(g.mesh.position.y * 2) === 0 && g.mesh.position.x === santaPosition && !isJumping)
 }
 
-export function isHinderCollision({ hinders, isJumping }: { hinders: Hinder[]; isJumping: boolean }): boolean {
-  return hinders.some((hinder) => Math.floor(hinder.mesh.position.y * 2) === 0 && !isJumping)
+export function isWallCollision({ walls, isJumping }: { walls: Wall[]; isJumping: boolean }): boolean {
+  return walls.some((wall) => Math.floor(wall.mesh.position.y * 2) === 0 && !isJumping)
 }
 
 export function isPoleCollision({ poles, isCrawling }: { poles: Pole[]; isCrawling: boolean }): boolean {

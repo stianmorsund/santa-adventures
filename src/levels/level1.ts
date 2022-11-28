@@ -1,11 +1,11 @@
 import { FinishLine } from '../meshes/finish-line'
 import { Gift } from '../meshes/gift'
-import { Hinder } from '../meshes/hinder'
 import { Pole } from '../meshes/pole'
+import { Wall } from '../meshes/wall'
 import { Level } from './level.abstract'
 
 export class Level1 extends Level {
-  level: Array<Pole | Hinder | Gift | FinishLine>
+  level: Array<Pole | Wall | Gift | FinishLine>
   constructor() {
     super()
     this.build()
@@ -17,7 +17,7 @@ export class Level1 extends Level {
       new Gift({ position: { x: 0, y: 30 } }),
       new Gift({ position: { x: 1, y: 30 } }),
 
-      new Hinder({ position: { x: 0, y: 60 } }),
+      new Wall({ position: { x: 0, y: 60 } }),
 
       new Gift({ position: { x: -1, y: 70 } }),
       new Gift({ position: { x: 0, y: 70 } }),
@@ -33,7 +33,7 @@ export class Level1 extends Level {
       new Gift({ position: { x: 0, y: 113 } }),
       new Gift({ position: { x: -1, y: 115 } }),
 
-      new Hinder({ position: { x: 0, y: 135 } }),
+      new Wall({ position: { x: 0, y: 135 } }),
 
       new Pole({ position: { x: 0, y: 150 } }),
       new Gift({ position: { x: -1, y: 150 } }),
@@ -54,13 +54,13 @@ export class Level1 extends Level {
       new Gift({ position: { x: -1, y: 195 } }),
       new Gift({ position: { x: 0, y: 195 } }),
 
-      new Hinder({ position: { x: 0, y: 200 } }),
+      new Wall({ position: { x: 0, y: 200 } }),
 
       new Gift({ position: { x: 1, y: 202 } }),
       new Gift({ position: { x: 1, y: 205 } }),
       new Gift({ position: { x: 1, y: 208 } }),
 
-      new Hinder({ position: { x: 0, y: 209 } }),
+      new Wall({ position: { x: 0, y: 209 } }),
       new Gift({ position: { x: 1, y: 212 } }),
       new Gift({ position: { x: 0, y: 215 } }),
       new Gift({ position: { x: -1, y: 219 } }),
