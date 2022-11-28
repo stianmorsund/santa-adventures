@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { store } from '../+state/effects'
+import { store } from '../+state/store'
 import { SantaXPosition } from '../models/models'
 import { getRandomInteger } from '../utils/utils'
 import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { store } from './+state/effects'
 import * as santa from './+state/santa-slice'
+import { store } from './+state/store'
 import { Controls } from './controls/controls'
 import { LoadingManager } from './controls/loading-manager'
 import { Level } from './levels/level.abstract'

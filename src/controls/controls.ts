@@ -1,5 +1,5 @@
-import { store } from '../+state/effects'
 import * as santa from '../+state/santa-slice'
+import { store } from '../+state/store'
 import { pressedCredits, pressedEscape } from '../+state/ui-slice'
 
 export class Controls {

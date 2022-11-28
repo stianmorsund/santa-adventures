@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-import { store } from '../+state/effects'
+import { store } from '../+state/store'
 import { pressedPlay } from '../+state/ui-slice'
 import { animations } from '../styles/animations.css'
 import { buttons } from '../styles/buttons.css'

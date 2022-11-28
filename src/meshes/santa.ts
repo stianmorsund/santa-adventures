@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import * as FBXLoader from 'wge-three-fbx-loader'
-import { store } from '../+state/effects'
 import * as santa from '../+state/santa-slice'
+import { store } from '../+state/store'
 
 import { LoadingManager } from '../controls/loading-manager'
 import { SantaXPosition } from '../models/models'
