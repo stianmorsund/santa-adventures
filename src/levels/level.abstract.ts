@@ -4,7 +4,7 @@ import { Pole } from '../meshes/pole'
 import { Wall } from '../meshes/wall'
 
 export abstract class Level {
-  meshes: Array<Pole | Wall | Gift | FinishLine> = []
+  abstract meshes: Array<Pole | Wall | Gift | FinishLine>
 
   get gifts(): Gift[] {
     return this.meshes.filter((entity) => entity instanceof Gift) as Gift[]
