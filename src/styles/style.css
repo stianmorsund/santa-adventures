@@ -8,7 +8,7 @@
   --color-white: rgba(255, 255, 255, 0.7);
 }
 
-canvas {display:none;}
+canvas { display:none; }
 button, div { display: block; }
 html, body { margin: 0; padding: 0; }
 
