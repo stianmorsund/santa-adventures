@@ -14,7 +14,7 @@ export class Wall extends MeshBase {
     super()
 
     this.geometry = new THREE.BoxGeometry(7, 0.2, 1)
-    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(require(`../assets/textures/snow.jpg`))
+    const texture = new THREE.TextureLoader(this.loadingManager.manager).load(require(`../assets/textures/ice.jpg`))
     texture.anisotropy = 4
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
