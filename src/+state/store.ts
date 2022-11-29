@@ -8,6 +8,8 @@ export const listenerMiddleware = createListenerMiddleware()
 listenerMiddleware.startListening({
   actionCreator: pressedPlay,
   effect: async (_action) => {
+    // Show ccanvas when starting game
+    document.getElementsByTagName('canvas')[0].style.display = 'block'
     document.body.classList.add('game-started')
   },
 })
