@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+
 import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
 import { Controls } from './controls/controls'
@@ -70,10 +71,11 @@ export class Scene {
     const { hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, isCurrentLevelFinished, santaPosition } = store.getState().santa
 
-    if (!hasGameStarted || isGamePaused || !isAlive || isCurrentLevelFinished) return
+    if (!hasGameStarted || isGamePaused || !isAlive) return
 
     if (isWallCollision({ walls, isJumping })) {
       store.dispatch(santa.crashedOnWall())
+      
     }
 
     if (isPoleCollision({ poles, isCrawling })) {
@@ -82,6 +84,7 @@ export class Scene {
 
     if (isPastFinishLine(finishLine)) {
       store.dispatch(santa.reachedFinishline())
+      
     }
 
     this._meshes.forEach((m) => m.update(this.clock))
