@@ -11,7 +11,16 @@ export class Credits extends LitElement {
   @property() isOpened = false
   @query('#credits-modal') modal: HTMLElement
 
-  static styles = [animations, overlays, buttons, css``]
+  static styles = [
+    animations,
+    overlays,
+    buttons,
+    css`
+      .credits-list {
+        font-size: 1.5em;
+      }
+    `,
+  ]
 
   constructor() {
     super()
@@ -41,8 +50,12 @@ export class Credits extends LitElement {
           <h2>Credits</h2>
 
           <ul class="credits-list">
-            <li>Santa blender modell</li>
-            <li>Tre modell</li>
+            <li>Modeller</li>
+            <ul>
+              <li>Santa</li>
+              <li>Tre</li>
+            </ul>
+            
             <li>
               <a target="_blank" href="https://www.freepik.com/free-vector/mountain-landscape-night_2381971.htm"
                 >Bakgrunn</a
