@@ -1,6 +1,7 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit'
+import { Camera } from '../camera/camera'
 import assetsSlice from './assets-slice'
-import santaReducer from './santa-slice'
+import santaReducer, { reachedFinishline } from './santa-slice'
 import uiSlice, { pressedPlay, pressedRestartGame } from './ui-slice'
 
 export const listenerMiddleware = createListenerMiddleware()
@@ -18,6 +19,13 @@ listenerMiddleware.startListening({
   actionCreator: pressedRestartGame,
   effect: async (_action) => {
     window.location.reload()
+  },
+})
+
+listenerMiddleware.startListening({
+  actionCreator: reachedFinishline,
+  effect: async (_action) => {
+    Camera.getInstance().setRotation({ x: -0.15, y: Math.PI, z: 0 }).setPosition({ x: 0, y: 1.2, z: -0.8 })
   },
 })
 
