@@ -78,7 +78,7 @@ export class Welcome extends LitElement {
           })()}
 
           <p class="intro-text">
-            Hjelp nissen med å samle alle presangene, men pass deg for wallne! Bruk piltastene for å styre. Trykk
+            Hjelp nissen med å samle alle presangene, men pass deg for hinderne! Bruk piltastene for å styre. Trykk
             <kbd>Esc</kbd> for å pause spillet.
           </p>
 
