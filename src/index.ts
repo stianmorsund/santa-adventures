@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { Camera } from './camera/camera'
 import { Scene } from './scene'
 import './styles/style.css'
 import './views/credits'
@@ -17,7 +18,7 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 const canvas = renderer.domElement
-const camera = addCamera()
+const camera = Camera.getInstance().setPosition().setRotation().threeCamera
 document.body.appendChild(canvas)
 
 // addOrbitControls()
@@ -38,14 +39,6 @@ function animate(): void {
 function render(): void {
   scene.render()
   renderer.render(threeScene, camera)
-}
-
-function addCamera(): THREE.PerspectiveCamera {
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.z = 7.5
-  camera.position.y = 1.2
-  camera.rotation.x = -0.15
-  return camera
 }
 
 function addOrbitControls() {
