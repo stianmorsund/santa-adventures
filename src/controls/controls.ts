@@ -8,9 +8,13 @@ export class Controls {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    const { isJumping, isCrawling, santaPosition } = store.getState().santa
+    const { isJumping, isCrawling, santaPosition, isCurrentLevelFinished } = store.getState().santa
     const { isCreditsOpened } = store.getState().ui
     const { key } = event
+
+    // Controsl are disabled when level is finished
+    if(isCurrentLevelFinished) return;
+
     if (key === 'Escape') {
       if (isCreditsOpened) {
         store.dispatch(pressedCredits())
