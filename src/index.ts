@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { Camera } from './camera/camera'
+import { createRenderer } from './renderer'
 import { Scene } from './scene'
 import './styles/style.css'
 import './views/credits'
@@ -11,15 +12,8 @@ const OrbitControls = require('three-orbit-controls')(THREE)
 
 const scene: Scene = Scene.getInstance()
 const threeScene: THREE.Scene = scene.threeScene
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-renderer.setClearColor(0x000000, 0)
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.shadowMap.enabled = true
-renderer.shadowMap.type = THREE.PCFSoftShadowMap
-
-const canvas = renderer.domElement
+const renderer = createRenderer()
 const camera = Camera.getInstance().setPosition().setRotation().threeCamera
-document.body.appendChild(canvas)
 
 // addOrbitControls()
 
