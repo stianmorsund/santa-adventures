@@ -63,7 +63,7 @@ export class GameOver extends LitElement {
                   return html`Trykk <kbd>Space</kbd> for å hoppe over veggene`
                 }
                 if (this.crashReason === 'pole') {
-                  return html`Trykk <kbd>Pil ned</kbd> for å dukke under stolpene`
+                  return html`Trykk <kbd>&darr;</kbd> for å dukke under stolpene`
                 }
               })()}
             </p>
