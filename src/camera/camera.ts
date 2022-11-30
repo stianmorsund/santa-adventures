@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 import { Coordinates } from '../models/models'
 
-let instance = null
+let instance: Camera = null
 
 export class Camera {
-  _threeCamera: THREE.Camera
+  _threeCamera: THREE.PerspectiveCamera
   readonly defaultPosition: Coordinates = {
     x: 0,
     y: 1.2,
@@ -39,19 +39,19 @@ export class Camera {
     return this._threeCamera
   }
 
-  setPosition(coordinates: Coordinates) {
+  setPosition(coordinates?: Coordinates) {
     const { x, y, z } = coordinates ?? this.defaultPosition
     this._threeCamera.position.x = x
     this._threeCamera.position.y = y
     this._threeCamera.position.z = z
-    return this;
+    return this
   }
 
-  setRotation(coordinates: Coordinates) {
+  setRotation(coordinates?: Coordinates) {
     const { x, y, z } = coordinates || this.defaultRotation
     this._threeCamera.rotation.x = x
     this._threeCamera.rotation.y = y
     this._threeCamera.rotation.z = z
-    return this;
+    return this
   }
 }
