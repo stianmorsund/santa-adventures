@@ -20,7 +20,7 @@ listenerMiddleware.startListening({
   effect: async (_action) => {
     // Reset level
     Scene.getInstance().resetLevel()
-    // Reset camera position
+    // Reset camera
     Camera.getInstance().setRotation().setPosition()
   },
 })

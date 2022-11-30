@@ -12,7 +12,7 @@ import { Track } from './meshes/track'
 import { getCollectedGift, isPastFinishLine, isPoleCollision, isWallCollision } from './utils/collisions'
 import { LoadingManager } from './utils/loading-manager'
 
-let instance = null
+let instance: Scene = null
 
 export class Scene {
   private _threeScene: THREE.Scene

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as assets from '../+state/assets-slice'
 import { store } from '../+state/store'
 
-let instance = null
+let instance: LoadingManager = null
 
 export class LoadingManager {
   static getInstance() {
