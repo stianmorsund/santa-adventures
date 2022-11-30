@@ -66,7 +66,14 @@ export class Credits extends LitElement {
               <a
                 target="_blank"
                 href="https://www.vecteezy.com/vector-art/346477-black-and-white-checkered-seamless-repeating-pattern-background-vector-illustration"
-                >Tekstur for mållinje</a
+                >Tekstur mållinje</a
+              >
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="https://www.123rf.com/photo_43273153_seamless-ice-texture-computer-graphic-big-collection.html"
+                >Tekstur is</a
               >
             </li>
           </ul>
