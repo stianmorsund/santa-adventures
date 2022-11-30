@@ -18,11 +18,17 @@ export class Track extends MeshBase {
   }
 
   setLevel(level: Level) {
+    this.resetTrackChildren()
     this.currentLevel = level
-    
+
     // Add everything that are tied to track-plane
     this.addMesh(...this.currentLevel.meshes)
     return this
+  }
+
+  resetTrackChildren() {
+    this.mesh.remove(...this.children.map((c) => c.mesh))
+    this.children = []
   }
 
   private buildPlane() {

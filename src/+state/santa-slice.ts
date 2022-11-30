@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CrashReason, SantaXPosition } from '../models/models'
+import { pressedRestartGame } from './ui-slice'
 
 interface SantaState {
   santaPosition: SantaXPosition
@@ -63,6 +64,7 @@ const santaSlice = createSlice({
       state.crashReason = 'wall'
     },
   },
+  extraReducers: (builder) => builder.addCase(pressedRestartGame, () => initialState),
 })
 
 export const {

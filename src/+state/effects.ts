@@ -1,5 +1,6 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit'
 import { Camera } from '../camera/camera'
+import { Scene } from '../scene'
 import { reachedFinishline } from './santa-slice'
 import { pressedPlay, pressedRestartGame } from './ui-slice'
 
@@ -17,7 +18,10 @@ listenerMiddleware.startListening({
 listenerMiddleware.startListening({
   actionCreator: pressedRestartGame,
   effect: async (_action) => {
-    window.location.reload()
+    // Reset level
+    Scene.getInstance().resetLevel()
+    // Reset camera position
+    Camera.getInstance().setRotation().setPosition()
   },
 })
 

@@ -61,6 +61,10 @@ export class Scene {
     this.clock.start()
   }
 
+  resetLevel() {
+    this.track.setLevel(new Level1())
+  }
+
   addMesh(...meshes: MeshBase[]) {
     this._meshes.push(...meshes)
     this._threeScene.add(...meshes.map((m) => m.mesh))
@@ -75,7 +79,6 @@ export class Scene {
 
     if (isWallCollision({ walls, isJumping })) {
       store.dispatch(santa.crashedOnWall())
-      
     }
 
     if (isPoleCollision({ poles, isCrawling })) {
@@ -84,7 +87,6 @@ export class Scene {
 
     if (isPastFinishLine(finishLine)) {
       store.dispatch(santa.reachedFinishline())
-      
     }
 
     this._meshes.forEach((m) => m.update(this.clock))
