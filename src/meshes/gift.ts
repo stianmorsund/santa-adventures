@@ -40,9 +40,6 @@ export class Gift extends MeshBase {
   }
 
   update() {
-    if (this.isBehindCamera()) {
-      return
-    }
     if (this.isCollected()) {
       this.animateCollected()
     } else {
