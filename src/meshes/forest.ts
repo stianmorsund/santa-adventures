@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import * as FBXLoader from 'wge-three-fbx-loader'
+import { store } from '../+state/store'
 
 import { LoadingManager } from '../utils/loading-manager'
 import { FOREST_SPEED } from './constants'
@@ -20,7 +21,10 @@ export class Forest extends MeshBase {
   }
 
   update(_clock: THREE.Clock) {
-    this.mesh.position.z += FOREST_SPEED
+    const { isCurrentLevelFinished } = store.getState().santa
+    // Slow down speed when level is finished.
+    const speed = isCurrentLevelFinished ? FOREST_SPEED * 0.5 : FOREST_SPEED
+    this.mesh.position.z += speed
 
     if (this.mesh.position.z > -40) {
       this.mesh.position.z = -65
