@@ -26,6 +26,12 @@ export class GameOver extends LitElement {
         font-size: 3.3em;
         text-shadow: 0 2px 0 var(--color-dark-blue);
         line-height: 0.3em;
+        max-width: 500px;
+      }
+      .tips {
+        font-size: 0.7em;
+        font-family: 'Crimson Text';
+        line-height: 1.2em;
       }
     `,
   ]
@@ -50,6 +56,17 @@ export class GameOver extends LitElement {
           <div class="gameover-text">
             <h2>Game over!</h2>
             <p>Du fikk ${this.score} presanger</p>
+            <p class="tips">
+              Tips!
+              ${(() => {
+                if (this.crashReason === 'wall') {
+                  return html`Trykk <kbd>Space</kbd> for å hoppe over veggene`
+                }
+                if (this.crashReason === 'pole') {
+                  return html`Trykk <kbd>Pil ned</kbd> for å dukke under stolpene`
+                }
+              })()}
+            </p>
           </div>
           <button class="btn" @click=${() => store.dispatch(pressedRestartGame())}>Spill igjen</button>
         </div>
