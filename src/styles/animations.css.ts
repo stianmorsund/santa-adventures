@@ -22,6 +22,12 @@ export const animations = css`
     animation-name: fadeOut;
   }
 
+  .fade-in {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn !important;
+    animation-duration: 3s !important;
+  }
+
   @keyframes glow {
     from {
       box-shadow: 10px 10px -126px 6px #aef4af;
@@ -91,6 +97,29 @@ export const animations = css`
 
     to {
       opacity: 0;
+    }
+  }
+
+
+    @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
 `
