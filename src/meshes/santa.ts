@@ -11,19 +11,15 @@ import { MeshBase } from './meshbase.abstract'
 export class Santa extends MeshBase {
   mesh: THREE.Group = new THREE.Group()
   scene: Scene = Scene.getInstance()
-  mixer: THREE.AnimationMixer
-
-  isJumpAllowed = true
-
+  private mixer: THREE.AnimationMixer
+  private loadingManager = LoadingManager.getInstance()
+  private loader = new FBXLoader(this.loadingManager.manager)
   private readonly SANTA_MODEL_PATH = 'assets/models/santa/santa_blender.fbx'
   private readonly BASE_BOUNCEVALUE = 0.16
   private bounceValue = this.BASE_BOUNCEVALUE
   private readonly GROUND_POSITION = 0.6
   private readonly LERP_FACTOR = 1500
   private readonly GRAVITY = 120 / 10000
-
-  private loadingManager: LoadingManager = LoadingManager.getInstance()
-  private loader = new FBXLoader(this.loadingManager.manager)
 
   constructor() {
     super()
@@ -72,13 +68,11 @@ export class Santa extends MeshBase {
   }
 
   animateCrawl() {
-    this.isJumpAllowed = false
     this.mesh.rotation.x = -0.5
     this.mesh.position.y = this.GROUND_POSITION
   }
 
   animateJump() {
-    this.isJumpAllowed = false
     this.mesh.rotation.x -= 0.2
     this.mesh.position.y += this.bounceValue
     this.bounceValue -= this.GRAVITY
@@ -86,6 +80,7 @@ export class Santa extends MeshBase {
 
   resetToWalkingPosition() {
     this.mesh.rotation.x = -(Math.PI / 2)
+    this.mesh.position.y = this.GROUND_POSITION
     this.bounceValue = this.BASE_BOUNCEVALUE
   }
 
@@ -96,9 +91,6 @@ export class Santa extends MeshBase {
   update(clock: THREE.Clock) {
     const { isJumping, santaPosition, isCrawling } = store.getState().santa
 
-    // Allow jumping slightly above ground level for better experience
-
-    this.isJumpAllowed = this.mesh.position.y <= 0.8
     if (this.mixer) {
       this.mixer.update(clock.getDelta() * 2)
     }
