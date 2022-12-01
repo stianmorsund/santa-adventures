@@ -55,7 +55,7 @@ export class GameOver extends LitElement {
           <img src="assets/logo.png" class="logo" alt="Santa Adventures" />
           <div class="gameover-text">
             <h2>Game over!</h2>
-            <p>Du fikk ${this.score} presanger</p>
+            <p>Du fikk ${this.score} presang${this.score === 1 ? '' : 'er'}.</p>
             <p class="tips">
               Tips!
               ${(() => {
