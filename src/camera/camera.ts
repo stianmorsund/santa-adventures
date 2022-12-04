@@ -46,7 +46,7 @@ export class Camera {
   }
 
   setRotation(coordinates?: Coordinates) {
-    const { x, y, z } = coordinates || this.defaultRotation
+    const { x, y, z } = coordinates ?? this.defaultRotation
     this._threeCamera.rotation.set(x, y, z)
     return this
   }
