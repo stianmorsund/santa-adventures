@@ -4,10 +4,10 @@ import { MeshBase } from './meshbase.abstract'
 
 export class Snow extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
-  public readonly NUMBER_OF_SNOWFLAKES = 2000
-  public readonly SPEED = 2
-  public material: THREE.PointsMaterial
-  public particles: THREE.Geometry
+  private readonly NUMBER_OF_SNOWFLAKES = 2000
+  private readonly SPEED = 2
+  private material: THREE.PointsMaterial
+  private particles: THREE.Geometry
   public mesh: THREE.Points
 
   constructor() {

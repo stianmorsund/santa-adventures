@@ -10,7 +10,6 @@ import { MeshBase } from './meshbase.abstract'
 
 export class Santa extends MeshBase {
   mesh: THREE.Group = new THREE.Group()
-  scene: Scene = Scene.getInstance()
   private mixer: THREE.AnimationMixer
   private loadingManager = LoadingManager.getInstance()
   private loader = new FBXLoader(this.loadingManager.manager)
@@ -51,7 +50,7 @@ export class Santa extends MeshBase {
       this.mesh.position.z = 6
 
       // Todo, mesh should be added by scene
-      this.scene.threeScene.add(this.mesh)
+      Scene.getInstance().threeScene.add(this.mesh)
       action.timeScale = 1.2
 
       action.play()

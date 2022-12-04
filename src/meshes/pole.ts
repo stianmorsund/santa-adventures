@@ -5,16 +5,15 @@ import { MeshBase } from './meshbase.abstract'
 import { SantaXPosition } from '../models/models'
 import { LoadingManager } from '../utils/loading-manager'
 
-const POLE_Z = 1.2
 export class Pole extends MeshBase {
+  private readonly Z_POSITION = 1.2
   private loadingManager: LoadingManager = LoadingManager.getInstance()
-  geometry: THREE.CylinderGeometry
   mesh: THREE.Mesh
 
   constructor({ position }: { position?: { x: SantaXPosition; y: number } } = {}) {
     super()
 
-    this.geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32)
+    const geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 32)
     const texture = new THREE.TextureLoader(this.loadingManager.manager).load(
       require(`../assets/textures/candycane.jpg`)
     )
@@ -27,12 +26,12 @@ export class Pole extends MeshBase {
       flatShading: true,
       map: texture,
     })
-    this.mesh = new THREE.Mesh(this.geometry, material)
+    this.mesh = new THREE.Mesh(geometry, material)
     this.mesh.rotation.z = Math.PI / 2
     this.mesh.castShadow = true
     this.mesh.receiveShadow = false
     const { x, y } = position
-    this.mesh.position.set(x, y, POLE_Z)
+    this.mesh.position.set(x, y, this.Z_POSITION)
   }
 
   update() {

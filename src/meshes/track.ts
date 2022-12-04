@@ -6,11 +6,10 @@ import { TRACK_LENGTH } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 export class Track extends MeshBase {
-  private loadingManager: LoadingManager = LoadingManager.getInstance()
-  geometry: THREE.PlaneGeometry
   mesh: THREE.Mesh
-  children: MeshBase[] = []
   currentLevel: Level
+  private loadingManager: LoadingManager = LoadingManager.getInstance()
+  private children: MeshBase[] = []
 
   constructor() {
     super()

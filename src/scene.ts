@@ -17,10 +17,10 @@ let instance: Scene = null
 export class Scene {
   private _threeScene: THREE.Scene
   private _meshes: MeshBase[] = []
-  controls = new Controls()
-  loadingManager = new LoadingManager()
-  track: Track
-  clock = new THREE.Clock()
+  private controls = new Controls()
+  private loadingManager = new LoadingManager()
+  private track: Track
+  private clock = new THREE.Clock()
 
   get threeScene() {
     return this._threeScene

@@ -7,7 +7,7 @@ import { MeshBase } from './meshbase.abstract'
 
 export class Wall extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
-  geometry: THREE.BoxGeometry
+  private geometry: THREE.BoxGeometry
   mesh: THREE.Mesh
 
   constructor({ position }: { position?: { x: SantaXPosition; y: number } } = {}) {

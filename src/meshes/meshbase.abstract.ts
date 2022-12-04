@@ -6,6 +6,6 @@ export abstract class MeshBase {
   get id() {
     return this._id
   }
-  abstract mesh: THREE.Mesh | THREE.Points | THREE.Group
-  abstract update(clock?: THREE.Clock): void // all meshes must inherit update for rendering
+  public abstract mesh: THREE.Mesh | THREE.Points | THREE.Group
+  public abstract update(clock?: THREE.Clock): void // all meshes must inherit update for rendering
 }
