@@ -10,7 +10,6 @@ import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
 import { Track } from './meshes/track'
 import { getCollectedGift, isPastFinishLine, isPoleCollision, isWallCollision } from './utils/collisions'
-import { LoadingManager } from './utils/loading-manager'
 
 let instance: Scene = null
 
@@ -18,7 +17,6 @@ export class Scene {
   private _threeScene: THREE.Scene
   private _meshes: MeshBase[] = []
   private controls = new Controls()
-  private loadingManager = new LoadingManager()
   private track: Track
   private clock = new THREE.Clock()
 
