@@ -48,7 +48,7 @@ export class Track extends MeshBase {
     this.mesh.rotation.x = 4.75
   }
 
-  update(_clock: THREE.Clock) {
+  update() {
     this.children.forEach((m) => m.update())
   }
 

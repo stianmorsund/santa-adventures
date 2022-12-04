@@ -20,7 +20,7 @@ export class Forest extends MeshBase {
     this.buildForest()
   }
 
-  update(_clock: THREE.Clock) {
+  update() {
     const { isCurrentLevelFinished } = store.getState().santa
     // Slow down speed when level is finished.
     const speed = isCurrentLevelFinished ? FOREST_SPEED * 0.5 : FOREST_SPEED

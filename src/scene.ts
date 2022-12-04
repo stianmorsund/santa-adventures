@@ -14,9 +14,9 @@ import { getCollectedGift, isPastFinishLine, isPoleCollision, isWallCollision } 
 let instance: Scene = null
 
 export class Scene {
-  private _threeScene: THREE.Scene
+  private _threeScene: THREE.Scene = new THREE.Scene()
   private _meshes: MeshBase[] = []
-  private track: Track
+  private track: Track = new Track().setLevel(new Level1())
   private clock = new THREE.Clock()
 
   get threeScene() {
@@ -38,15 +38,12 @@ export class Scene {
     } else {
       instance = this
     }
-    this._threeScene = new THREE.Scene()
 
     this.addFog()
     this.addLights()
     addControls()
 
-    this.track = new Track().setLevel(new Level1())
     this.addMesh(this.track, new Santa(), new Forest(), new Snow())
-    this.clock.start()
   }
 
   addFog() {
