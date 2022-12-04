@@ -50,20 +50,27 @@ export class Credits extends LitElement {
           <h2>Credits</h2>
 
           <ul class="credits-list">
-            <li>Modeller</li>
-            <ul>
-              <li>Santa</li>
-              <li>Tre</li>
-            </ul>
-            
             <li>
-              <a target="_blank" href="https://www.freepik.com/free-vector/mountain-landscape-night_2381971.htm"
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://www.turbosquid.com/3d-models/cartoony-santa-3ds/698877"
+                >Santa</a
+              >
+            </li>
+
+            <li>
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://www.freepik.com/free-vector/mountain-landscape-night_2381971.htm"
                 >Bakgrunn</a
               >
             </li>
 
             <li>
               <a
+                rel="noopener noreferrer"
                 target="_blank"
                 href="https://www.vecteezy.com/vector-art/346477-black-and-white-checkered-seamless-repeating-pattern-background-vector-illustration"
                 >Tekstur mållinje</a
@@ -71,6 +78,7 @@ export class Credits extends LitElement {
             </li>
             <li>
               <a
+                rel="noopener noreferrer"
                 target="_blank"
                 href="https://www.123rf.com/photo_43273153_seamless-ice-texture-computer-graphic-big-collection.html"
                 >Tekstur is</a
