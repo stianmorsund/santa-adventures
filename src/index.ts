@@ -10,7 +10,6 @@ import './views/score'
 import './views/welcome'
 
 const OrbitControls = require('three-orbit-controls')(THREE)
-
 const scene: Scene = Scene.getInstance()
 const threeScene: THREE.Scene = scene.threeScene
 const renderer = createRenderer()

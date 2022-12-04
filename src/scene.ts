@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
-import { Controls } from './controls/controls'
+import { addControls } from './controls/controls'
 import { Level1 } from './levels/level1'
 import { Forest } from './meshes/forest'
 import { MeshBase } from './meshes/meshbase.abstract'
@@ -16,7 +16,6 @@ let instance: Scene = null
 export class Scene {
   private _threeScene: THREE.Scene
   private _meshes: MeshBase[] = []
-  private controls = new Controls()
   private track: Track
   private clock = new THREE.Clock()
 
@@ -40,8 +39,21 @@ export class Scene {
       instance = this
     }
     this._threeScene = new THREE.Scene()
-    this._threeScene.fog = new THREE.FogExp2(0x16122d, 0.06)
 
+    this.addFog()
+    this.addLights()
+    addControls()
+
+    this.track = new Track().setLevel(new Level1())
+    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
+    this.clock.start()
+  }
+
+  addFog() {
+    this._threeScene.fog = new THREE.FogExp2(0x16122d, 0.06)
+  }
+
+  addLights() {
     const hemisphereLight = new THREE.HemisphereLight(0x1f305e, 0xffffff, 1.2)
     const sun = new THREE.DirectionalLight(0xf3e87f, 0.7)
     sun.position.set(10, 100, -70)
@@ -49,14 +61,6 @@ export class Scene {
 
     this._threeScene.add(hemisphereLight)
     this._threeScene.add(sun)
-
-    store.subscribe(() => {
-      const { currentLevel } = store.getState().santa
-    })
-
-    this.track = new Track().setLevel(new Level1())
-    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
-    this.clock.start()
   }
 
   resetLevel() {
