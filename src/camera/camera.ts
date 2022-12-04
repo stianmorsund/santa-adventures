@@ -41,17 +41,13 @@ export class Camera {
 
   setPosition(coordinates?: Coordinates) {
     const { x, y, z } = coordinates ?? this.defaultPosition
-    this._threeCamera.position.x = x
-    this._threeCamera.position.y = y
-    this._threeCamera.position.z = z
+    this._threeCamera.position.set(x, y, z)
     return this
   }
 
   setRotation(coordinates?: Coordinates) {
     const { x, y, z } = coordinates || this.defaultRotation
-    this._threeCamera.rotation.x = x
-    this._threeCamera.rotation.y = y
-    this._threeCamera.rotation.z = z
+    this._threeCamera.rotation.set(x, y, z)
     return this
   }
 }

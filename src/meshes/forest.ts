@@ -64,9 +64,7 @@ export class Forest extends MeshBase {
     })
     const size = 0.0015
     tree.scale.set(size, size, size)
-    tree.position.y = 0.5
-    tree.position.x = side === 'left' ? -3.1 : 3.1
-    tree.position.z = index * 1.5
+    tree.position.set(side === 'left' ? -3.1 : 3.1, 0.5, index * 1.5)
     return tree
   }
 }
