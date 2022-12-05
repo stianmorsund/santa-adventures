@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { SantaXPosition } from '../models/models'
 import { LoadingManager } from '../utils/loading-manager'
 import { getRandomInteger } from '../utils/utils'
-import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
+import { BEHIND_CAMERA_THRESHOLD, TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 export class Wall extends MeshBase {
@@ -32,6 +32,7 @@ export class Wall extends MeshBase {
   }
 
   update() {
+    if (this.isBehindCamera()) return
     this.mesh.position.y -= TRACK_SPEED
   }
 
@@ -43,6 +44,6 @@ export class Wall extends MeshBase {
   }
 
   isBehindCamera(): boolean {
-    return this.mesh.position.y <= -1
+    return this.mesh.position.y <= BEHIND_CAMERA_THRESHOLD
   }
 }

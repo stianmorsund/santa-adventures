@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { LoadingManager } from '../utils/loading-manager'
-import { TRACK_SPEED } from './constants'
+import { BEHIND_CAMERA_THRESHOLD, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 export class FinishLine extends MeshBase {
@@ -87,7 +87,12 @@ export class FinishLine extends MeshBase {
     ;(this.flagFabric.geometry as THREE.Geometry).verticesNeedUpdate = true
   }
 
+  isBehindCamera(): boolean {
+    return this.mesh.position.y <= BEHIND_CAMERA_THRESHOLD
+  }
+
   update() {
+    if (this.isBehindCamera()) return
     this.updateFlagfabric()
     this.mesh.position.y -= TRACK_SPEED
   }

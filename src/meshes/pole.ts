@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { TRACK_SPEED } from './constants'
+import { BEHIND_CAMERA_THRESHOLD, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 import { SantaXPosition } from '../models/models'
@@ -34,7 +34,12 @@ export class Pole extends MeshBase {
     this.mesh.position.set(x, y, this.Z_POSITION)
   }
 
+  isBehindCamera(): boolean {
+    return this.mesh.position.y <= BEHIND_CAMERA_THRESHOLD
+  }
+
   update() {
+    if (this.isBehindCamera()) return
     this.mesh.position.y -= TRACK_SPEED
   }
 }

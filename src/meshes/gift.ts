@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { store } from '../+state/store'
 import { SantaXPosition } from '../models/models'
 import { getRandomInteger } from '../utils/utils'
-import { TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
+import { BEHIND_CAMERA_THRESHOLD, TRACKBASE_Z, TRACK_LENGTH, TRACK_SPEED } from './constants'
 import { MeshBase } from './meshbase.abstract'
 
 export class Gift extends MeshBase {
@@ -32,7 +32,7 @@ export class Gift extends MeshBase {
   }
 
   isBehindCamera(): boolean {
-    return this.mesh.position.y <= -5
+    return this.mesh.position.y <= BEHIND_CAMERA_THRESHOLD
   }
 
   isCollected(): boolean {
@@ -40,6 +40,8 @@ export class Gift extends MeshBase {
   }
 
   update() {
+    if (this.isBehindCamera()) return
+
     if (this.isCollected()) {
       this.animateCollected()
     } else {
