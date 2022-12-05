@@ -10,7 +10,7 @@ listenerMiddleware.startListening({
   actionCreator: pressedPlay,
   effect: async (_action) => {
     // Show ccanvas when starting game
-    document.getElementsByTagName('canvas')[0].style.display = 'block'
+    document.getElementById('game-canvas').style.display = 'block'
     document.body.classList.add('game-started')
   },
 })
