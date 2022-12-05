@@ -48,7 +48,7 @@ export class Scene {
 
     this.addMesh(this.track, new Santa(), new Forest(), new Snow())
 
-    this.addStats()
+    // this.addStats()
   }
 
   addFog() {
