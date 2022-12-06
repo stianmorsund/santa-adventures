@@ -48,7 +48,7 @@ export class Scene {
 
     this.addMesh(this.track, new Santa(), new Forest(), new Snow())
 
-    // this.addStats()
+    this.addStats()
   }
 
   addFog() {
@@ -81,6 +81,7 @@ export class Scene {
   }
 
   render() {
+    this.stats.begin()
     const { gifts, walls, poles, finishLine } = this.track.currentLevel
     const { hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, santaPosition } = store.getState().santa
@@ -108,5 +109,6 @@ export class Scene {
     if (collected) {
       store.dispatch(santa.collectedPackage(collected.id))
     }
+    this.stats.end()
   }
 }
