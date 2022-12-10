@@ -93,7 +93,7 @@ export class FinishLine extends MeshBase {
 
   update() {
     if (this.isBehindCamera()) return
-    this.updateFlagfabric()
+    // this.updateFlagfabric()
     this.mesh.position.y -= TRACK_SPEED
   }
 }
