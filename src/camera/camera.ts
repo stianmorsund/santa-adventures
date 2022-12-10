@@ -32,7 +32,7 @@ export class Camera {
     } else {
       instance = this
     }
-    this._threeCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 60)
+    this._threeCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 40)
   }
 
   get threeCamera() {
