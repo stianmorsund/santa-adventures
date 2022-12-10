@@ -11,8 +11,8 @@ export class Forest extends MeshBase {
   private readonly TREE_MODEL_PATH = 'assets/models/tree2.fbx'
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   private loader = new FBXLoader(this.loadingManager.manager)
-  private readonly NUMBER_OF_TREES = 40
-  private readonly STARTING_Z_POSITION = -40
+  private readonly NUMBER_OF_TREES = 20
+  private readonly STARTING_Z_POSITION = -20
   private leftside: THREE.Group
   private rightside: THREE.Group
 
