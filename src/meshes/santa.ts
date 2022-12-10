@@ -83,8 +83,8 @@ export class Santa extends MeshBase {
     this.bounceValue = this.BASE_BOUNCEVALUE
   }
 
-  interpolateXMovements({ clock, santaPosition }: { clock: THREE.Clock; santaPosition: SantaXPosition }) {
-    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition,this.LERP_FACTOR)
+  interpolateXMovements(santaPosition: SantaXPosition) {
+    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition, this.LERP_FACTOR)
   }
 
   update(clock: THREE.Clock) {
@@ -95,7 +95,7 @@ export class Santa extends MeshBase {
     }
 
     this.animateInitialTurn()
-    this.interpolateXMovements({ clock, santaPosition })
+    this.interpolateXMovements(santaPosition)
 
     if (isJumping) {
       this.animateJump()
