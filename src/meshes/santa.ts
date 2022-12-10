@@ -17,7 +17,7 @@ export class Santa extends MeshBase {
   private readonly BASE_BOUNCEVALUE = 0.16
   private bounceValue = this.BASE_BOUNCEVALUE
   private readonly GROUND_POSITION = 0.6
-  private readonly LERP_FACTOR = 1500
+  private readonly LERP_FACTOR = 0.3
   private readonly GRAVITY = 120 / 10000
 
   constructor() {
@@ -84,7 +84,7 @@ export class Santa extends MeshBase {
   }
 
   interpolateXMovements({ clock, santaPosition }: { clock: THREE.Clock; santaPosition: SantaXPosition }) {
-    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition, this.LERP_FACTOR * clock.getDelta())
+    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaPosition,this.LERP_FACTOR)
   }
 
   update(clock: THREE.Clock) {
