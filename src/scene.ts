@@ -1,12 +1,8 @@
-import * as Stats from 'stats.js'
-
 import * as THREE from 'three'
-
 import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
 import { addControls } from './controls/controls'
 import { Level1 } from './levels/level1'
-import { Forest } from './meshes/forest'
 import { MeshBase } from './meshes/meshbase.abstract'
 import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
@@ -20,7 +16,6 @@ export class Scene {
   private _meshes: MeshBase[] = []
   private track: Track = new Track().setLevel(new Level1())
   private clock = new THREE.Clock()
-  private stats = new Stats()
 
   get threeScene() {
     return this._threeScene
@@ -46,9 +41,12 @@ export class Scene {
     this.addLights()
     addControls()
 
-    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
-
-    this.addStats()
+    this.addMesh(
+      this.track,
+      new Santa(),
+      // new Forest(),
+      new Snow()
+    )
   }
 
   addFog() {
@@ -65,12 +63,6 @@ export class Scene {
     this._threeScene.add(sun)
   }
 
-  addStats() {
-    this.stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild(this.stats.dom)
-    this.stats.begin()
-  }
-
   resetLevel() {
     this.track.setLevel(new Level1())
   }
@@ -81,13 +73,11 @@ export class Scene {
   }
 
   render() {
-    this.stats.begin()
     const { gifts, walls, poles, finishLine } = this.track.currentLevel
     const { hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, santaPosition } = store.getState().santa
 
     if (!hasGameStarted || isGamePaused || !isAlive) {
-      this.stats.end()
       return
     }
 
@@ -109,6 +99,5 @@ export class Scene {
     if (collected) {
       store.dispatch(santa.collectedPackage(collected.id))
     }
-    this.stats.end()
   }
 }
