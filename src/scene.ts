@@ -3,6 +3,7 @@ import * as santa from './+state/santa-slice'
 import { store } from './+state/store'
 import { addControls } from './controls/controls'
 import { Level1 } from './levels/level1'
+import { Forest } from './meshes/forest'
 import { MeshBase } from './meshes/meshbase.abstract'
 import { Santa } from './meshes/santa'
 import { Snow } from './meshes/snow'
@@ -41,12 +42,7 @@ export class Scene {
     this.addLights()
     addControls()
 
-    this.addMesh(
-      this.track,
-      new Santa(),
-      // new Forest(),
-      new Snow()
-    )
+    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
   }
 
   addFog() {
@@ -84,15 +80,15 @@ export class Scene {
     this._meshes.forEach((m) => m.update(this.clock))
 
     if (isWallCollision({ walls, isJumping })) {
-      // store.dispatch(santa.crashedOnWall())
+      store.dispatch(santa.crashedOnWall())
     }
 
     if (isPoleCollision({ poles, isCrawling })) {
-      // store.dispatch(santa.crashedOnPole())
+      store.dispatch(santa.crashedOnPole())
     }
 
     if (isPastFinishLine(finishLine)) {
-      // store.dispatch(santa.reachedFinishline())
+      store.dispatch(santa.reachedFinishline())
     }
 
     const collected = getCollectedGift({ gifts, isJumping, santaXPosition })
