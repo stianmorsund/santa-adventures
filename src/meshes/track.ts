@@ -41,7 +41,7 @@ export class Track extends MeshBase {
     const geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32)
     const material = new THREE.MeshLambertMaterial({ color: 0xffffff, map: texture })
     this.mesh = new THREE.Mesh(geometry, material)
-    this.mesh.castShadow = true
+    this.mesh.castShadow = false
     this.mesh.receiveShadow = true
     this.mesh.position.y = 0
     this.mesh.position.z = 5
