@@ -42,11 +42,14 @@ export class Scene {
     this.addLights()
     addControls()
 
-    this.addMesh(this.track, new Santa(), new Forest(), new Snow())
+    this.addMesh(this.track, 
+      new Santa(), 
+      new Forest(), 
+      new Snow())
   }
 
   addFog() {
-    this._threeScene.fog = new THREE.FogExp2(0x16122d, 0.06)
+    this._threeScene.fog = new THREE.Fog(0x16122d, 10, 30)
   }
 
   addLights() {
