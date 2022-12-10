@@ -3,7 +3,7 @@ import { CrashReason, SantaXPosition } from '../models/models'
 import { pressedRestartGame } from './ui-slice'
 
 interface SantaState {
-  santaPosition: SantaXPosition
+  santaXPosition: SantaXPosition
   isJumping: boolean
   isCrawling: boolean
   isAlive: boolean
@@ -15,7 +15,7 @@ interface SantaState {
 }
 
 const initialState = {
-  santaPosition: 0,
+  santaXPosition: 0,
   isJumping: false,
   isCrawling: false,
   isAlive: true,
@@ -31,10 +31,10 @@ const santaSlice = createSlice({
   initialState,
   reducers: {
     movedLeft: (state) => {
-      state.santaPosition = state.santaPosition === 1 ? 0 : -1
+      state.santaXPosition = state.santaXPosition === 1 ? 0 : -1
     },
     movedRight: (state) => {
-      state.santaPosition = state.santaPosition === -1 ? 0 : 1
+      state.santaXPosition = state.santaXPosition === -1 ? 0 : 1
     },
     jumped: (state) => {
       state.isJumping = true

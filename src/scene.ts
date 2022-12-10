@@ -75,7 +75,7 @@ export class Scene {
   render() {
     const { gifts, walls, poles, finishLine } = this.track.currentLevel
     const { hasGameStarted, isGamePaused } = store.getState().ui
-    const { isAlive, isJumping, isCrawling, santaPosition } = store.getState().santa
+    const { isAlive, isJumping, isCrawling, santaXPosition } = store.getState().santa
 
     if (!hasGameStarted || isGamePaused || !isAlive) {
       return
@@ -84,18 +84,18 @@ export class Scene {
     this._meshes.forEach((m) => m.update(this.clock))
 
     if (isWallCollision({ walls, isJumping })) {
-      store.dispatch(santa.crashedOnWall())
+      // store.dispatch(santa.crashedOnWall())
     }
 
     if (isPoleCollision({ poles, isCrawling })) {
-      store.dispatch(santa.crashedOnPole())
+      // store.dispatch(santa.crashedOnPole())
     }
 
     if (isPastFinishLine(finishLine)) {
-      store.dispatch(santa.reachedFinishline())
+      // store.dispatch(santa.reachedFinishline())
     }
 
-    const collected = getCollectedGift({ gifts, isJumping, santaPosition })
+    const collected = getCollectedGift({ gifts, isJumping, santaXPosition })
     if (collected) {
       store.dispatch(santa.collectedPackage(collected.id))
     }

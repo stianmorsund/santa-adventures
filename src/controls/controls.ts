@@ -7,7 +7,7 @@ export function addControls() {
 }
 
 function handleKeyDown(event: KeyboardEvent) {
-  const { isJumping, isCrawling, santaPosition, isCurrentLevelFinished } = store.getState().santa
+  const { isJumping, isCrawling, santaXPosition, isCurrentLevelFinished } = store.getState().santa
   const { isCreditsOpened, hasGameStarted } = store.getState().ui
   const { key } = event
 
@@ -25,12 +25,12 @@ function handleKeyDown(event: KeyboardEvent) {
   switch (key) {
     case 'a':
     case 'ArrowLeft':
-      if (santaPosition === -1) return
+      if (santaXPosition === -1) return
       store.dispatch(santa.movedLeft())
       break
     case 'd':
     case 'ArrowRight':
-      if (santaPosition === 1) return
+      if (santaXPosition === 1) return
       store.dispatch(santa.movedRight())
       break
     case ' ':
