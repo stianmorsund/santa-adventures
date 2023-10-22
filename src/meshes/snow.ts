@@ -7,7 +7,7 @@ export class Snow extends MeshBase {
   private readonly NUMBER_OF_SNOWFLAKES = 2000
   private readonly SPEED = 100
   private material: THREE.PointsMaterial
-  private particles: THREE.Geometry
+  private particles: THREE.BufferGeometry
   public mesh: THREE.Points
 
   constructor() {
@@ -20,7 +20,7 @@ export class Snow extends MeshBase {
       blending: THREE.AdditiveBlending,
       depthTest: true,
       transparent: true,
-      flatShading: true,
+      // flatShading: true,
       fog: false,
     })
 
@@ -28,17 +28,17 @@ export class Snow extends MeshBase {
   }
 
   simulateSnow(delta: number) {
-    let pCount = this.NUMBER_OF_SNOWFLAKES
-    while (pCount--) {
-      const particle = this.particles.vertices[pCount]
-      if (particle.y < -200) {
-        particle.y = 200
-      }
-      const velocity = 0 - Math.random() * this.SPEED * delta
-      particle.y += velocity
-    }
+    // let pCount = this.NUMBER_OF_SNOWFLAKES
+    // while (pCount--) {
+    //   const particle = this.particles.vertices[pCount]
+    //   if (particle.y < -200) {
+    //     particle.y = 200
+    //   }
+    //   const velocity = 0 - Math.random() * this.SPEED * delta
+    //   particle.y += velocity
+    // }
 
-    this.particles.verticesNeedUpdate = true
+    // this.particles.verticesNeedUpdate = true
   }
 
   update(delta: number) {
@@ -50,14 +50,14 @@ export class Snow extends MeshBase {
   }
 
   private makeSnow() {
-    this.particles = new THREE.Geometry()
+    this.particles = new THREE.BufferGeometry()
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
       const particle = new THREE.Vector3(
         Math.random() * 500 - 250,
         Math.random() * 500 - 250,
         Math.random() * 500 - 250
       )
-      this.particles.vertices.push(particle)
+      // this.particles.vertices.push(particle)
     }
     this.mesh = new THREE.Points(this.particles, this.material)
   }

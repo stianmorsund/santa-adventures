@@ -78,13 +78,15 @@ export class FinishLine extends MeshBase {
 
     for (let y = 0; y < this.heightSegments + 1; y++) {
       for (let x = 0; x < this.widthSegments + 1; x++) {
+        const position = new THREE.Vector3()
         const index = x + y * (this.widthSegments + 1)
-        const vertex = (this.flagFabric.geometry as THREE.Geometry).vertices[index]
+        const geometry = this.flagFabric.geometry as THREE.BufferGeometry 
+        const vertex = geometry.getAttribute('position').getX(index)
         const time = (Date.now() * s) / 50
-        vertex.z = (Math.sin(h * x + v * y - time) * w * x) / 4
+        // vertex.z = (Math.sin(h * x + v * y - time) * w * x) / 4
       }
     }
-    ;(this.flagFabric.geometry as THREE.Geometry).verticesNeedUpdate = true
+    // ;(this.flagFabric.geometry as THREE.Geometry).verticesNeedUpdate = true
   }
 
   isBehindCamera(): boolean {

@@ -1,8 +1,7 @@
 import * as THREE from 'three'
-import * as FBXLoader from 'wge-three-fbx-loader'
 import * as santa from '../+state/santa-slice'
 import { store } from '../+state/store'
-
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { SantaXPosition } from '../models/models'
 import { Scene } from '../scene'
 import { LoadingManager } from '../utils/loading-manager'
@@ -46,6 +45,9 @@ export class Santa extends MeshBase {
       skinnedMesh.receiveShadow = true
       skinnedMesh.castShadow = true
 
+      const size = 0.009
+      this.mesh.scale.set(size,size,size)
+      this.mesh.rotation.x = -(Math.PI)
       this.mesh.position.y = this.GROUND_POSITION
       this.mesh.position.z = 6
 
@@ -84,7 +86,7 @@ export class Santa extends MeshBase {
   }
 
   interpolateXMovements(santaXPosition: SantaXPosition) {
-    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaXPosition, this.LERP_FACTOR)
+    this.mesh.position.x = THREE.MathUtils.lerp(this.mesh.position.x, santaXPosition, this.LERP_FACTOR)
   }
 
   update(delta: number) {
