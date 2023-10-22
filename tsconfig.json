@@ -7,7 +7,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
     "sourceMap": true,
     "outDir": "./lib/",
     "types": ["node"],
