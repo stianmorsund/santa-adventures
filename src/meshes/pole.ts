@@ -38,8 +38,8 @@ export class Pole extends MeshBase {
     return this.mesh.position.y <= BEHIND_CAMERA_THRESHOLD
   }
 
-  update() {
+  update(delta: number) {
     if (this.isBehindCamera()) return
-    this.mesh.position.y -= TRACK_SPEED
+    this.mesh.position.y -= TRACK_SPEED * delta
   }
 }

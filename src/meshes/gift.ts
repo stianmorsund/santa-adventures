@@ -8,7 +8,7 @@ import { MeshBase } from './meshbase.abstract'
 export class Gift extends MeshBase {
   mesh: THREE.Mesh
 
-  private readonly ROTATION_SPEED = 0.05
+  private readonly ROTATION_SPEED = 5
   private readonly SIZE = 0.4
 
   constructor({ position }: { position?: { x: SantaXPosition; y: number } } = {}) {
@@ -39,14 +39,14 @@ export class Gift extends MeshBase {
     return store.getState().santa.collectedPackages.includes(this.id)
   }
 
-  update() {
+  update(delta: number) {
     if (this.isBehindCamera()) return
 
     if (this.isCollected()) {
       this.animateCollected()
     } else {
-      this.mesh.rotation.z += this.ROTATION_SPEED
-      this.mesh.position.y -= TRACK_SPEED
+      this.mesh.rotation.z += this.ROTATION_SPEED * delta
+      this.mesh.position.y -= TRACK_SPEED * delta
     }
   }
 

@@ -16,7 +16,6 @@ export class Scene {
   private _threeScene: THREE.Scene = new THREE.Scene()
   private _meshes: MeshBase[] = []
   private track: Track = new Track().setLevel(new Level1())
-  private clock = new THREE.Clock()
 
   get threeScene() {
     return this._threeScene
@@ -71,7 +70,8 @@ export class Scene {
     this._threeScene.add(...meshes.map((m) => m.mesh))
   }
 
-  render() {
+  render(clock: THREE.Clock) {
+    const delta = clock.getDelta()
     const { gifts, walls, poles, finishLine } = this.track.currentLevel
     const { hasGameStarted, isGamePaused } = store.getState().ui
     const { isAlive, isJumping, isCrawling, santaXPosition } = store.getState().santa
@@ -80,7 +80,7 @@ export class Scene {
       return
     }
 
-    this._meshes.forEach((m) => m.update(this.clock))
+    this._meshes.forEach((m) => m.update(delta))
 
     if (isWallCollision({ walls, isJumping })) {
       store.dispatch(santa.crashedOnWall())

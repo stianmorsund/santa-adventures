@@ -31,9 +31,9 @@ export class Wall extends MeshBase {
     this.mesh.position.set(x, y, TRACKBASE_Z)
   }
 
-  update() {
+  update(delta: number) {
     if (this.isBehindCamera()) return
-    this.mesh.position.y -= TRACK_SPEED
+    this.mesh.position.y -= TRACK_SPEED * delta
   }
 
   getPosition(): { x: number; y: number; z: number } {

@@ -5,7 +5,7 @@ import { MeshBase } from './meshbase.abstract'
 export class Snow extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   private readonly NUMBER_OF_SNOWFLAKES = 2000
-  private readonly SPEED = 2
+  private readonly SPEED = 100
   private material: THREE.PointsMaterial
   private particles: THREE.Geometry
   public mesh: THREE.Points
@@ -15,7 +15,7 @@ export class Snow extends MeshBase {
     const snowFlake = require('../assets/textures/snowflake.png')
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 2,
+      size: 1,
       map: new THREE.TextureLoader(this.loadingManager.manager).load(snowFlake),
       blending: THREE.AdditiveBlending,
       depthTest: true,
@@ -27,22 +27,22 @@ export class Snow extends MeshBase {
     this.makeSnow()
   }
 
-  simulateSnow() {
+  simulateSnow(delta: number) {
     let pCount = this.NUMBER_OF_SNOWFLAKES
     while (pCount--) {
       const particle = this.particles.vertices[pCount]
       if (particle.y < -200) {
         particle.y = 200
       }
-      const velocity = 0 - Math.random() * this.SPEED
+      const velocity = 0 - Math.random() * this.SPEED * delta
       particle.y += velocity
     }
 
     this.particles.verticesNeedUpdate = true
   }
 
-  update() {
-    this.simulateSnow()
+  update(delta: number) {
+    this.simulateSnow(delta)
   }
 
   getMesh() {

@@ -87,11 +87,11 @@ export class Santa extends MeshBase {
     this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaXPosition, this.LERP_FACTOR)
   }
 
-  update(clock: THREE.Clock) {
+  update(delta: number) {
     const { isJumping, santaXPosition, isCrawling } = store.getState().santa
 
     if (this.mixer) {
-      this.mixer.update(clock.getDelta() * 2)
+      this.mixer.update(delta * 2)
     }
 
     this.animateInitialTurn()

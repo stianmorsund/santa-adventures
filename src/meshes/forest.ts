@@ -21,11 +21,11 @@ export class Forest extends MeshBase {
     this.buildForest()
   }
 
-  update() {
+  update(delta: number) {
     const { isCurrentLevelFinished } = store.getState().santa
     // Slow down speed when level is finished.
     const speed = isCurrentLevelFinished ? FOREST_SPEED * 0.5 : FOREST_SPEED
-    this.mesh.position.z += speed
+    this.mesh.position.z += speed * delta
 
     if (this.mesh.position.z > this.STARTING_Z_POSITION * 0.6) {
       this.mesh.position.z = this.STARTING_Z_POSITION

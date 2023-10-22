@@ -10,6 +10,7 @@ import './views/score'
 import './views/welcome'
 
 const OrbitControls = require('three-orbit-controls')(THREE)
+const clock = new THREE.Clock()
 const scene: Scene = Scene.getInstance()
 const threeScene: THREE.Scene = scene.threeScene
 const renderer = createRenderer()
@@ -26,18 +27,14 @@ function onWindowResize() {
 }
 
 function animate(): void {
-  requestAnimationFrame(animate)
-  render()
-}
-
-function render(): void {
-  scene.render()
+  scene.render(clock)
   renderer.render(threeScene, camera)
+  requestAnimationFrame(animate)
 }
 
 function addOrbitControls() {
   const orbitControl = new OrbitControls(camera, renderer.domElement)
-  orbitControl.addEventListener('change', render)
+  orbitControl.addEventListener('change', animate)
   orbitControl.enableDamping = true
   orbitControl.dampingFactor = 0.8
   orbitControl.enableZoom = true

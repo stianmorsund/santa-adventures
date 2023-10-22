@@ -7,5 +7,5 @@ export abstract class MeshBase {
     return this._id
   }
   public abstract mesh: THREE.Mesh | THREE.Points | THREE.Group
-  public abstract update(clock?: THREE.Clock): void // all meshes must inherit update for rendering
+  public abstract update(delta: number): void // all meshes must inherit update for rendering
 }

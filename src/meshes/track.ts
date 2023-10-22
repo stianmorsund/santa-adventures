@@ -48,8 +48,8 @@ export class Track extends MeshBase {
     this.mesh.rotation.x = 4.75
   }
 
-  update() {
-    this.children.forEach((m) => m.update())
+  update(delta: number) {
+    this.children.forEach((m) => m.update(delta))
   }
 
   addMesh(...meshes: MeshBase[]) {
