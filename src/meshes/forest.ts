@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import * as FBXLoader from 'wge-three-fbx-loader'
 import { store } from '../+state/store'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
 import { LoadingManager } from '../utils/loading-manager'
 import { FOREST_SPEED } from './constants'
@@ -37,7 +37,7 @@ export class Forest extends MeshBase {
   }
 
   buildForest() {
-    this.loader.load(this.TREE_MODEL_PATH, (tree: THREE.Mesh) => {
+    this.loader.load(this.TREE_MODEL_PATH, (tree) => {
       this.leftside = new THREE.Group()
       let i = 0
       for (; i < this.NUMBER_OF_TREES; i++) {

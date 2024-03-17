@@ -33,8 +33,11 @@ function handleKeyDown(event: KeyboardEvent) {
       if (santaXPosition === 1) return
       store.dispatch(santa.movedRight())
       break
-    case ' ':
+    case 'w':
     case 'ArrowUp':
+      store.dispatch(santa.stoodUp())
+      break
+    case ' ':
       store.dispatch(santa.jumped())
       break
     case 's':

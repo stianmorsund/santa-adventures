@@ -71,20 +71,21 @@ export class FinishLine extends MeshBase {
   }
 
   updateFlagfabric() {
-    const h = 0.5
-    const v = 0.3
-    const w = 0.2
-    const s = 0.5
+    // const h = 0.5
+    // const v = 0.3
+    // const w = 0.2
+    // const s = 0.5
 
-    for (let y = 0; y < this.heightSegments + 1; y++) {
-      for (let x = 0; x < this.widthSegments + 1; x++) {
-        const index = x + y * (this.widthSegments + 1)
-        const vertex = (this.flagFabric.geometry as THREE.Geometry).vertices[index]
-        const time = (Date.now() * s) / 50
-        vertex.z = (Math.sin(h * x + v * y - time) * w * x) / 4
-      }
-    }
-    ;(this.flagFabric.geometry as THREE.Geometry).verticesNeedUpdate = true
+    // for (let y = 0; y < this.heightSegments + 1; y++) {
+    //   for (let x = 0; x < this.widthSegments + 1; x++) {
+    //     const position = new THREE.Vector3()
+    //     const index = x + y * (this.widthSegments + 1)
+    //     const geometry = this.flagFabric.geometry as THREE.BufferGeometry 
+    //     // const vertex = geometry.getAttribute('position').getX(index)
+    //     // const time = (Date.now() * s) / 50
+    //     // vertex.z = (Math.sin(h * x + v * y - time) * w * x) / 4
+    //   }
+    // }
   }
 
   isBehindCamera(): boolean {

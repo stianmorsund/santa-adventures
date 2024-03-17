@@ -1,8 +1,7 @@
 import * as THREE from 'three'
-import * as FBXLoader from 'wge-three-fbx-loader'
 import * as santa from '../+state/santa-slice'
 import { store } from '../+state/store'
-
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { SantaXPosition } from '../models/models'
 import { Scene } from '../scene'
 import { LoadingManager } from '../utils/loading-manager'
@@ -14,11 +13,13 @@ export class Santa extends MeshBase {
   private loadingManager = LoadingManager.getInstance()
   private loader = new FBXLoader(this.loadingManager.manager)
   private readonly SANTA_MODEL_PATH = 'assets/models/santa/santa_blender.fbx'
-  private readonly BASE_BOUNCEVALUE = 0.16
+  private readonly BASE_BOUNCEVALUE = 0.18
   private bounceValue = this.BASE_BOUNCEVALUE
-  private readonly GROUND_POSITION = 0.6
+  private readonly GROUND_POSITION = 0.3
   private readonly LERP_FACTOR = 0.3
   private readonly GRAVITY = 120 / 10000
+  private readonly DISTANCE_FROM_CAMERA = 5.5;
+
 
   constructor() {
     super()
@@ -46,8 +47,11 @@ export class Santa extends MeshBase {
       skinnedMesh.receiveShadow = true
       skinnedMesh.castShadow = true
 
-      this.mesh.position.y = this.GROUND_POSITION
-      this.mesh.position.z = 6
+      const size = 0.009
+      this.mesh.scale.set(size, size, size)
+      this.mesh.position.z = this.DISTANCE_FROM_CAMERA;
+      this.resetToWalkingPosition()
+
 
       // Todo, mesh should be added by scene
       Scene.getInstance().threeScene.add(this.mesh)
@@ -57,44 +61,36 @@ export class Santa extends MeshBase {
     })
   }
 
-  animateInitialTurn() {
-    if (this.mesh.position.z > 4.4) {
-      this.mesh.position.z -= 0.2
-    }
-    if (this.mesh.rotation.z < Math.PI) {
-      this.mesh.rotation.z += 0.2
-    }
-  }
-
   animateCrawl() {
-    this.mesh.rotation.x = -0.5
+    this.mesh.rotation.x = Math.PI / 2
     this.mesh.position.y = this.GROUND_POSITION
   }
 
   animateJump() {
-    this.mesh.rotation.x -= 0.2
+    this.mesh.rotation.x -= 0.12
     this.mesh.position.y += this.bounceValue
     this.bounceValue -= this.GRAVITY
   }
 
   resetToWalkingPosition() {
-    this.mesh.rotation.x = -(Math.PI / 2)
+    this.mesh.rotation.x = 0
+    this.mesh.rotation.y = -(Math.PI)
     this.mesh.position.y = this.GROUND_POSITION
     this.bounceValue = this.BASE_BOUNCEVALUE
   }
 
   interpolateXMovements(santaXPosition: SantaXPosition) {
-    this.mesh.position.x = THREE.Math.lerp(this.mesh.position.x, santaXPosition, this.LERP_FACTOR)
+    this.mesh.position.x = THREE.MathUtils.lerp(this.mesh.position.x, santaXPosition, this.LERP_FACTOR)
   }
 
   update(delta: number) {
     const { isJumping, santaXPosition, isCrawling } = store.getState().santa
 
     if (this.mixer) {
-      this.mixer.update(delta * 2)
+      // Sync santa animation with world movement
+      this.mixer.update(delta * 2.5)
     }
 
-    this.animateInitialTurn()
     this.interpolateXMovements(santaXPosition)
 
     if (isJumping) {

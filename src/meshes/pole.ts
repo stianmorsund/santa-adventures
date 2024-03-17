@@ -20,7 +20,7 @@ export class Pole extends MeshBase {
     texture.anisotropy = 4
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.format = THREE.RGBFormat
+    texture.format = THREE.RGBAFormat
     const material = new THREE.MeshLambertMaterial({
       // color: Math.random() * 0xffffff,
       flatShading: true,

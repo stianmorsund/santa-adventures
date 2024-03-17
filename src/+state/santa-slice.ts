@@ -47,6 +47,10 @@ const santaSlice = createSlice({
       state.isJumping = false
       state.isCrawling = true
     },
+    stoodUp: (state) => {
+      state.isJumping = false
+      state.isCrawling = false
+    },
     collectedPackage: (state, action: PayloadAction<string>) => {
       state.score++
       state.collectedPackages.push(action.payload)
@@ -73,6 +77,7 @@ export const {
   jumped,
   landed,
   crawled,
+  stoodUp,
   collectedPackage,
   crashedOnPole,
   crashedOnWall,

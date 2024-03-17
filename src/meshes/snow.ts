@@ -5,9 +5,9 @@ import { MeshBase } from './meshbase.abstract'
 export class Snow extends MeshBase {
   private loadingManager: LoadingManager = LoadingManager.getInstance()
   private readonly NUMBER_OF_SNOWFLAKES = 2000
-  private readonly SPEED = 100
+  private readonly SPEED = 50
   private material: THREE.PointsMaterial
-  private particles: THREE.Geometry
+  private particles: THREE.BufferGeometry
   public mesh: THREE.Points
 
   constructor() {
@@ -15,12 +15,11 @@ export class Snow extends MeshBase {
     const snowFlake = require('../assets/textures/snowflake.png')
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 1,
+      size: 2,
       map: new THREE.TextureLoader(this.loadingManager.manager).load(snowFlake),
       blending: THREE.AdditiveBlending,
       depthTest: true,
       transparent: true,
-      flatShading: true,
       fog: false,
     })
 
@@ -28,17 +27,17 @@ export class Snow extends MeshBase {
   }
 
   simulateSnow(delta: number) {
-    let pCount = this.NUMBER_OF_SNOWFLAKES
-    while (pCount--) {
-      const particle = this.particles.vertices[pCount]
-      if (particle.y < -200) {
-        particle.y = 200
+    const positions = this.particles.attributes.position.array as unknown as number[];
+
+    for (let i = 0; i < positions.length; i += 3) {
+      positions[i + 1] -= Math.random() * this.SPEED * delta;
+
+      if (positions[i + 1] < -200) {
+        positions[i + 1] = 200;
       }
-      const velocity = 0 - Math.random() * this.SPEED * delta
-      particle.y += velocity
     }
 
-    this.particles.verticesNeedUpdate = true
+    this.particles.attributes.position.needsUpdate = true;
   }
 
   update(delta: number) {
@@ -50,15 +49,19 @@ export class Snow extends MeshBase {
   }
 
   private makeSnow() {
-    this.particles = new THREE.Geometry()
+    const vertices = [];
+
     for (let i = 0; i < this.NUMBER_OF_SNOWFLAKES; i++) {
-      const particle = new THREE.Vector3(
-        Math.random() * 500 - 250,
-        Math.random() * 500 - 250,
-        Math.random() * 500 - 250
-      )
-      this.particles.vertices.push(particle)
+      const x = Math.random() * 500 - 250;
+      const y = Math.random() * 500 - 250;
+      const z = Math.random() * 500 - 250;
+
+      vertices.push(x, y, z);
     }
-    this.mesh = new THREE.Points(this.particles, this.material)
+
+    this.particles = new THREE.BufferGeometry();
+    this.particles.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    this.mesh = new THREE.Points(this.particles, this.material);
   }
 }

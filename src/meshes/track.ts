@@ -37,7 +37,7 @@ export class Track extends MeshBase {
     texture.anisotropy = 4
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.format = THREE.RGBFormat
+    texture.format = THREE.RGBAFormat
     const geometry = new THREE.PlaneGeometry(10, TRACK_LENGTH, 32)
     const material = new THREE.MeshLambertMaterial({ color: 0xffffff, map: texture })
     this.mesh = new THREE.Mesh(geometry, material)
